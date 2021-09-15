@@ -3,7 +3,7 @@ import './index.scss';
 const DEFAULT_MAX_COL_WIDTH = 500;
 const DEFAULT_COLS = 'auto';
 const DEFAULT_DEBOUNCE_MS = 300;
-const DEFAULT_GAP_PX = 24;
+const DEFAULT_GAP_PX = 12;
 const ELEMENT_NODE_TYPE = 1;
 
 const COL_COUNT_CSS_VAR_NAME = `--_masonry-layout-col-count`;
@@ -11,44 +11,37 @@ const GAP_CSS_VAR_NAME = `--_masonry-layout-gap`;
 
 const $template = document.createElement('template');
 $template.innerHTML = `
-<style>
-:host {
-  display: flex;
-  align-items: flex-start;
-  justify-content: stretch;
-}
-.column {
-  max-width: calc(
-    (
-      100% / var(${COL_COUNT_CSS_VAR_NAME}, 1) -
-        (
-          (
-            var(${GAP_CSS_VAR_NAME}, ${DEFAULT_GAP_PX}px) * (var(${COL_COUNT_CSS_VAR_NAME}, 1) - 1) /
-              var(${COL_COUNT_CSS_VAR_NAME}, 1)
-          )
-        )
-    )
-  );
-  width: 100%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.column:not(:last-child) {
-  margin-right: var(${GAP_CSS_VAR_NAME}, ${DEFAULT_GAP_PX}px);
-}
-.column ::slotted(*) {
-  margin-bottom: var(${GAP_CSS_VAR_NAME}, ${DEFAULT_GAP_PX}px);
-  box-sizing: border-box;
-  width: 100%;
-}
-#unset-items {
-  opacity: 0;
-  position: absolute;
-  pointer-events: none;
-}
-</style>
-<div id="unset-items"><slot></slot></div>`;
+    <style>
+      :host {
+        display: flex;
+        align-items: flex-start;
+        justify-content: stretch;
+      }
+      .column {
+      max-width: calc((100% / var(${COL_COUNT_CSS_VAR_NAME}, 1) - ((var(${GAP_CSS_VAR_NAME}, ${DEFAULT_GAP_PX}px) * (var(${COL_COUNT_CSS_VAR_NAME}, 1) - 1) / var(${COL_COUNT_CSS_VAR_NAME}, 1)))));
+      width: 100%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      .column:not(:last-child) {
+        margin-right: var(${GAP_CSS_VAR_NAME}, ${DEFAULT_GAP_PX}px);
+      }
+      .column ::slotted(*) {
+        margin-bottom: var(${GAP_CSS_VAR_NAME}, ${DEFAULT_GAP_PX}px);
+        box-sizing: border-box;
+        width: 100%;
+      }
+      #unset-items {
+        opacity: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+    </style>
+    <div id="unset-items">
+      <slot></slot>
+    </div>
+  `;
 
 const getNumberAttribute = ($elem, name, defaultValue) => {
   const value = parseFloat($elem.getAttribute(name) || '');
@@ -61,19 +54,18 @@ const getColCount = (totalWidth, cols, maxColWidth) => {
 
 const debounce = (cb, ms, id) => {
   const DEBOUNCE_MAP = new Map();
-  const existingTimeout = DEBOUNCE_MAP.get(id);
 
+  const existingTimeout = DEBOUNCE_MAP.get(id);
   if (existingTimeout != null) window.clearTimeout(existingTimeout);
   DEBOUNCE_MAP.set(id, window.setTimeout(cb, ms));
 };
-
 const findSmallestColIndex = (colHeights) => {
   let smallestIndex = 0;
-  let smallestHeight = 1 / 0;
-  colHeights.forEach((height, idx) => {
+  let smallestHeight = Infinity;
+  colHeights.forEach((height, i) => {
     if (height < smallestHeight) {
       smallestHeight = height;
-      smallestIndex = idx;
+      smallestIndex = i;
     }
   });
 
@@ -96,31 +88,24 @@ class MasonryLayout extends HTMLElement {
   set cols(v) {
     this.setAttribute('cols', v.toString());
   }
-
   get cols() {
     return getNumberAttribute(this, 'cols', DEFAULT_COLS);
   }
-
   set gap(v) {
     this.setAttribute('gap', v.toString());
   }
-
   get gap() {
     return getNumberAttribute(this, 'gap', DEFAULT_GAP_PX);
   }
-
   set debounce(v) {
     this.setAttribute('debounce', v.toString());
   }
-
   get debounce() {
     return getNumberAttribute(this, 'debounce', DEFAULT_DEBOUNCE_MS);
   }
-
   get $columns() {
     return Array.from(this.shadowRoot.querySelectorAll(`.column`));
   }
-
   debounceId = `layout_${Math.random()}`;
   $unsetElementsSlot;
   ro = undefined;
@@ -152,7 +137,7 @@ class MasonryLayout extends HTMLElement {
   disconnectedCallback() {
     this.$unsetElementsSlot.removeEventListener('slotchange', this.onSlotChange);
     window.removeEventListener('resize', this.onResize);
-    if (!!this.ro) {
+    if (this.ro != null) {
       this.ro.unobserve(this);
     }
   }
@@ -192,7 +177,9 @@ class MasonryLayout extends HTMLElement {
 
   renderCols(colCount) {
     const $columns = this.$columns;
-    if ($columns.length === colCount) return;
+
+    if ($columns.length === colCount)   return;
+    
 
     for (const $column of $columns) {
       $column.parentNode && $column.parentNode.removeChild($column);
@@ -200,17 +187,18 @@ class MasonryLayout extends HTMLElement {
 
     for (let i = 0; i < colCount; i++) {
       const $column = document.createElement(`div`);
-      $column.classList.add('column');
-      $column.setAttribute('part', 'column column-${i}');
+      $column.classList.add(`column`);
+      $column.setAttribute(`part`, `column column-${i}`);
 
-      const $slot = document.createElement('slot');
-      $slot.setAttribute('name', i.toString());
+      const $slot = document.createElement(`slot`);
+      $slot.setAttribute(`name`, i.toString());
 
       $column.appendChild($slot);
       this.shadowRoot.appendChild($column);
     }
 
     this.style.setProperty(COL_COUNT_CSS_VAR_NAME, colCount.toString());
+
   }
 
   scheduleLayout(ms = this.debounce) {
@@ -218,8 +206,9 @@ class MasonryLayout extends HTMLElement {
   }
 
   layout() {
-    if (!this.currentRequestAnimationFrameCallback)
-      return window.cancelAnimationFrame(this.currentRequestAnimationFrameCallback);
+    if (this.currentRequestAnimationFrameCallback != null) {
+      window.cancelAnimationFrame(this.currentRequestAnimationFrameCallback);
+    }
 
     this.currentRequestAnimationFrameCallback = requestAnimationFrame(() => {
       const gap = this.gap;
