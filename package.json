@@ -1,0 +1,29 @@
+{
+  "name": "js_internship",
+  "version": "1.0.0",
+  "description": "js_internship",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pas8/js_internship.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pas8/js_internship/issues"
+  },
+  "homepage": "https://github.com/pas8/js_internship#readme",
+  "dependencies": {
+    "webpack": "^5.52.1"
+  },
+  "devDependencies": {
+    "css-loader": "^6.2.0",
+    "mini-css-extract-plugin": "^2.3.0",
+    "node-sass": "^6.0.1",
+    "sass-loader": "^12.1.0",
+    "webpack-cli": "^4.8.0"
+  }
+}
