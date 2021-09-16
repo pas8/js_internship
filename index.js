@@ -1,4 +1,38 @@
-import './index.scss';
+
+import Glide from '@glidejs/glide';
+import './index.scss'
+const d = document.querySelector('.main-row__links');
+const findedLink = [...d.childNodes]
+  .filter((__, idx) => !(idx & 1))
+  .find((el) => el.classList[1] === window.location.pathname);
+findedLink.classList.add('main-row__links__link-wrapper--active');
+
+
+
+const favouriteNode = document.querySelector('.button-favourite');
+const basketNode = document.querySelector('.button-basket');
+// console.log(favouriteNode.setAttributeNS)
+favouriteNode.classList.add('with-label')
+favouriteNode.setAttribute('data-label','42')
+
+
+
+basketNode.classList.add('with-label')
+basketNode.setAttribute('data-label','8')
+// 
+// attr
+
+// class Navigation extends HTMLElement {
+//   connectedCallback() {
+//     const currentHref = window.location.href;
+//     const hrefsArr = this.getAttribute('hrefs-arr')
+//     console.log(hrefsArr);
+//     this.innerHTML = `<h1>${hrefsArr}</h1>`;
+//   }
+// }
+// customElements.define('nav-layout', Navigation);
+
+new Glide('.glide').mount();
 
 const DEFAULT_MAX_COL_WIDTH = 500;
 const DEFAULT_COLS = 'auto';
@@ -178,8 +212,7 @@ class MasonryLayout extends HTMLElement {
   renderCols(colCount) {
     const $columns = this.$columns;
 
-    if ($columns.length === colCount)   return;
-    
+    if ($columns.length === colCount) return;
 
     for (const $column of $columns) {
       $column.parentNode && $column.parentNode.removeChild($column);
@@ -198,7 +231,6 @@ class MasonryLayout extends HTMLElement {
     }
 
     this.style.setProperty(COL_COUNT_CSS_VAR_NAME, colCount.toString());
-
   }
 
   scheduleLayout(ms = this.debounce) {
