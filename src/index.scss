@@ -1,0 +1,505 @@
+@import 'node_modules/@glidejs/glide/src/assets/sass/glide.core';
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import 'node_modules/@glidejs/glide/src/assets/sass/glide.theme';
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+$header-utils-bgcolor: #fceee7;
+$text-secondary: #111;
+$primary: #88b13e;
+$background: #fff;
+$ping: #ff95d3;
+$yellow: #fec200;
+$blue: #a2d4eb;
+$red: #e32d2d;
+$star-color: #fda72f;
+
+@mixin centered_flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin space-between_flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin button_normalize {
+  background-color: transparent;
+  display: grid;
+  font-family: 'Jost';
+  width: fit-content;
+  transition: 0.24s ease-in all;
+
+  text-transform: uppercase;
+  outline: none;
+  place-items: center;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.button-outlined {
+  padding: 0.42rem;
+  @include button_normalize;
+  color: $text-secondary;
+  background-color: $background;
+  border-color: currentColor;
+
+  &--active {
+    background-color: $primary;
+    color: $background;
+  }
+}
+
+.button {
+  @include button_normalize;
+  letter-spacing: 4px;
+  padding: 1em 2em;
+  border: 1px solid $background;
+  color: $background;
+  &:hover {
+    background-color: $background;
+    color: $text-secondary;
+  }
+  &--contained {
+    @include button_normalize;
+
+    font-size: 1rem;
+    padding: 0.6em 1.2em;
+
+    font-weight: 600;
+    letter-spacing: 1px;
+
+    background-color: $background;
+    color: $text-secondary;
+    border: 1px solid transparent;
+
+    &:hover {
+      border-color: currentColor;
+
+      color: $primary;
+    }
+  }
+}
+
+.icon-button {
+  @include button_normalize;
+  border-radius: 50%;
+  width: 2.8em;
+  border: 1px solid transparent;
+  height: 2.8em;
+  transition: 0.42s ease all;
+  &:hover {
+    background: $primary;
+    border-color: $text-secondary;
+  }
+  & svg {
+    width: 1.8em;
+    height: 1.8em;
+  }
+}
+
+.with-label {
+  position: relative;
+  &::before {
+    font-family: 'Jost';
+    content: attr(data-label);
+    position: absolute;
+    display: grid;
+    border: 1px solid $background;
+
+    place-items: center;
+    top: -0.42rem;
+    right: -0.42rem;
+    width: 1.42rem;
+    height: 1.42rem;
+    color: $background;
+    border-radius: 50%;
+    background-color: $primary;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+* {
+  margin: 0;
+}
+body {
+  margin: 0;
+  & div img {
+    width: 100%;
+  }
+}
+.container {
+  @include centered_flex;
+  width: 80vw;
+}
+
+header {
+  width: 100%;
+  flex-direction: column;
+
+  @include centered_flex;
+  & .utils {
+    width: 100%;
+    @include centered_flex;
+
+    background-color: $header-utils-bgcolor;
+
+    &-row {
+      padding: 0.42rem 0;
+      @include space-between_flex;
+      &__contact-info {
+        display: flex;
+        & svg {
+          & path {
+            fill: $text-secondary;
+          }
+          width: 1.16rem;
+          height: 1.16rem;
+        }
+        &__social {
+          display: flex;
+          gap: 0.42rem;
+        }
+        &__email {
+          padding-left: 2rem;
+          margin-left: 2rem;
+          border-left: 2px solid $text-secondary;
+          display: flex;
+          align-items: center;
+          gap: 0.42rem;
+          p {
+            font-family: 'Jost';
+          }
+        }
+      }
+      &__utils {
+      }
+    }
+  }
+
+  & .main {
+    width: 100%;
+    @include centered_flex;
+    &-row {
+      @include space-between_flex;
+      &__links {
+        display: flex;
+        gap: 1rem;
+        &__link-wrapper {
+          cursor: pointer;
+          @include centered_flex;
+          padding: 0.42rem;
+          height: 4rem;
+          position: relative;
+          &:hover {
+            &::before {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              width: 100%;
+              height: 4px;
+              background-color: $text-secondary;
+            }
+          }
+          &--active {
+            color: $primary;
+            &::before {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              width: 100%;
+              height: 4px;
+              background-color: $primary;
+            }
+          }
+        }
+
+        a {
+          font-size: 1.2rem;
+          font-family: 'Jost';
+        }
+      }
+      &__logo {
+        @include centered_flex;
+
+        & svg {
+          width: 10rem;
+          & path {
+            fill: $text-secondary;
+          }
+        }
+      }
+      &__utils {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        &-hotline {
+          display: flex;
+          gap: 0.42rem;
+          & p {
+            font-family: 'Jost';
+          }
+          & .phone-number {
+            font-weight: 600;
+          }
+        }
+        &-buttons-container {
+          display: flex;
+          gap: 0.42rem;
+        }
+      }
+    }
+  }
+}
+
+.glide__bullets {
+  bottom: 320px;
+}
+.introduction {
+  position: relative;
+  width: 100%;
+
+  .wave {
+    position: absolute;
+    bottom: 0;
+    & path {
+      fill: $background;
+    }
+  }
+
+  .glide__slide {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    &-abstraction {
+      width: 42%;
+    }
+    &-content {
+      width: 42%;
+      color: $background;
+      display: flex;
+      flex-direction: column;
+      gap: 0.42rem;
+      &__caption {
+        font-family: 'Jost';
+
+        text-transform: uppercase;
+        font-size: 1.24rem;
+        font-weight: 600;
+      }
+
+      &__title {
+        font-family: 'Lobster Two';
+        font-size: 4rem;
+      }
+
+      &__text {
+        font-family: 'Jost';
+        margin-bottom: 4rem;
+      }
+    }
+
+    &:first-child {
+      background-color: #ef909a;
+    }
+    // &.first {
+    // }
+  }
+  &-row {
+    @include centered_flex;
+  }
+}
+
+.categories {
+  @include centered_flex;
+  margin-bottom: 4rem;
+  &-row {
+    @include space-between_flex;
+    &__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.42rem;
+      img {
+        width: 120px;
+        height: 120px;
+      }
+      p {
+        font-family: 'Lobster Two';
+        font-size: 1.42rem;
+      }
+    }
+  }
+}
+
+.banner {
+  @include centered_flex;
+  margin-bottom: 4rem;
+  &-row {
+    color: $background;
+    @include space-between_flex;
+    gap: 2rem;
+    &__item:first-child {
+      background-color: $ping;
+    }
+    &__item:nth-child(2) {
+      background-color: $yellow;
+      width: 50%;
+    }
+    &__item:nth-child(3) {
+      background-color: $blue;
+    }
+    &__item {
+      padding: 6rem 2rem;
+
+      width: 25%;
+      &__caption {
+        font-family: 'Jost';
+
+        text-transform: uppercase;
+        font-size: 1.24rem;
+        font-weight: 600;
+      }
+
+      &__title {
+        font-family: 'Lobster Two';
+        font-size: 2.8rem;
+      }
+
+      &__text {
+        font-family: 'Jost';
+        margin-bottom: 2rem;
+      }
+    }
+  }
+}
+
+.specical-products {
+  @include centered_flex;
+  margin-bottom: 4rem;
+  &-row {
+    gap: 4rem;
+    @include space-between_flex;
+
+  }
+  &__preview {
+    width: 20%;
+    & img {
+      width: 100%;
+      height: 424px;
+    }
+  }
+  &__content {
+    height:100% ;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 80%;
+
+    &-title {
+      @include space-between_flex;
+      font-size: 2.4rem;
+
+      font-family: 'Lobster Two';
+    }
+    &-products {
+      @include space-between_flex;
+      gap: 1rem;
+    }
+  }
+}
+
+.special-product {
+  &:hover {
+    .special-product-content__utils {
+      display: flex;
+    }
+  }
+  @include centered_flex;
+  flex-direction: column;
+
+  &__stars {
+    @include centered_flex;
+    margin: 0.42rem 0;
+    & svg {
+      color: $star-color;
+      & path {
+      }
+      width: 1.16rem;
+      height: 1.16rem;
+    }
+  }
+  &__caption {
+    font-family: 'Jost';
+    font-weight: 500;
+    @include centered_flex;
+  }
+
+  &__price {
+    @include centered_flex;
+    font-size: 1.16rem;
+
+    font-family: 'Jost';
+  }
+
+  &-content {
+    position: relative;
+    & img {
+      aspect-ratio: 1;
+      width: 242px;
+    }
+    &__labels {
+      @include centered_flex;
+      // gap:8px;
+      top: -10px;
+      right: 0;
+      left: 0;
+      position: absolute;
+      color: $background;
+      font-family: 'Jost';
+      & > div {
+        width: fit-content;
+        font-weight: 500;
+        padding: 0rem 0.8rem;
+        text-transform: uppercase;
+      }
+      &-sale {
+        background-color: $red;
+      }
+      &-new {
+        background-color: $blue;
+      }
+    }
+
+    &__utils {
+      @include centered_flex;
+
+      position: absolute;
+      display: none;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      gap: 4px;
+      &-add-to-card {
+        font-size: 0.96rem;
+        text-transform: capitalize;
+      }
+      &-compare,
+      &-search {
+        & svg {
+          width: 1.42rem;
+          height: 1.42rem;
+        }
+      }
+    }
+  }
+}

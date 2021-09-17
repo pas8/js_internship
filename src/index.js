@@ -1,36 +1,99 @@
-
 import Glide from '@glidejs/glide';
-import './index.scss'
+import './index.scss';
 const d = document.querySelector('.main-row__links');
 const findedLink = [...d.childNodes]
   .filter((__, idx) => !(idx & 1))
   .find((el) => el.classList[1] === window.location.pathname);
 findedLink.classList.add('main-row__links__link-wrapper--active');
 
-
-
 const favouriteNode = document.querySelector('.button-favourite');
 const basketNode = document.querySelector('.button-basket');
 // console.log(favouriteNode.setAttributeNS)
-favouriteNode.classList.add('with-label')
-favouriteNode.setAttribute('data-label','42')
+favouriteNode.classList.add('with-label');
+favouriteNode.setAttribute('data-label', '42');
 
+basketNode.classList.add('with-label');
+basketNode.setAttribute('data-label', '8');
 
+class SpecicalProduct extends HTMLElement {
+  connectedCallback() {
+    // let isHovering = false;
+    const sale_percent = this.getAttribute('sale_percent');
+    const img_href = this.getAttribute('img_href');
+    const stars = this.getAttribute('stars');
+    const caption = this.getAttribute('caption');
+    const is_new = this.getAttribute('is_new');
+    const is_favourite = this.getAttribute('is_favourite');
+    const current_price = this.getAttribute('current_price');
+    const old_price = this.getAttribute('old_price');
+    console.log(stars)
+    // this.onmouseenter = () => (isHovering = true);
+    // this.onmouseleave = () => (isHovering = false);
 
-basketNode.classList.add('with-label')
-basketNode.setAttribute('data-label','8')
-// 
-// attr
+    this.innerHTML = `<div class='special-product'>
 
-// class Navigation extends HTMLElement {
-//   connectedCallback() {
-//     const currentHref = window.location.href;
-//     const hrefsArr = this.getAttribute('hrefs-arr')
-//     console.log(hrefsArr);
-//     this.innerHTML = `<h1>${hrefsArr}</h1>`;
-//   }
-// }
-// customElements.define('nav-layout', Navigation);
+    <div class='special-product-content'>
+      <div class='special-product-content__utils'>
+        <div class='special-product-content__utils-compare button-outlined'>
+          <svg viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12,18A6,6 0 0,1 6,12C6,11 6.25,10.03 6.7,9.2L5.24,7.74C4.46,8.97 4,10.43 4,12A8,8 0 0,0 12,20V23L16,19L12,15M12,4V1L8,5L12,9V6A6,6 0 0,1 18,12C18,13 17.75,13.97 17.3,14.8L18.76,16.26C19.54,15.03 20,13.57 20,12A8,8 0 0,0 12,4Z" />
+          </svg>
+        </div>
+        <div class='special-product-content__utils-add-to-card button-outlined'>
+          Add to card
+        </div>
+        <div class='special-product-content__utils-search button-outlined'>
+          <svg  viewBox="0 0 24 24">
+            <path fill="currentColor" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+          </svg>
+        </div>
+
+      </div>
+
+      
+    <div class='special-product-content__labels'>
+    ${!!sale_percent ? `<div class='special-product-content__labels-sale'> -${sale_percent}% </div>` : ''}
+    ${!!is_new ? `<div class='special-product-content__labels-new'> New </div>` : ''}
+    </div>
+
+    <img src=${img_href}/>
+    </div>
+
+      <div class='special-product__stars'>
+      ${Array(5)
+        .fill(null)
+        .map((__, idx) => (
+          `<svg viewBox='0 0 24 24'>
+            <path
+              fill=${+stars <= idx ? 'none' : 'currentColor'}
+              stroke='currentColor'
+              d='M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z'
+            ></path>
+          </svg>`
+        )).join('')}
+      </div>
+      <div class='special-product__caption'>
+      ${caption}
+      </div>
+
+      <div class='special-product__price'>
+        <p class='special-product__price-current'>
+        ${current_price}
+        </p>
+        ${
+          !!old_price ? 
+          ` <p class='special-product__price-current'>
+        ${old_price}
+        </p>` : ''
+        }
+
+      </div>
+      </div>
+
+    </div>`;
+  }
+}
+customElements.define('special-product', SpecicalProduct);
 
 new Glide('.glide').mount();
 
