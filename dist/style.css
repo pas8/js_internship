@@ -1,14 +1,14 @@
-/*!*****************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./index.scss ***!
-  \*****************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
+  \*********************************************************************************************************/
 @import url(https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
-/*!*********************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./index.scss (1) ***!
-  \*********************************************************************************************************/
+/*!*************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/index.scss (1) ***!
+  \*************************************************************************************************************/
 @import url(https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap);
-/*!*********************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./index.scss (2) ***!
-  \*********************************************************************************************************/
+/*!*************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/index.scss (2) ***!
+  \*************************************************************************************************************/
 .glide {
   position: relative;
   width: 100%;
@@ -122,28 +122,80 @@
   cursor: -moz-grabbing;
   cursor: -webkit-grabbing; }
 
+.input {
+  font-family: 'Jost';
+  outline: none;
+  color: #111;
+  background: none;
+  border: 1px solid #888888;
+  padding: 0.92rem; }
+
+.button-outlined {
+  padding: 0.42rem;
+  background-color: transparent;
+  display: grid;
+  font-family: 'Jost';
+  width: fit-content;
+  transition: 0.24s ease-in all;
+  text-transform: uppercase;
+  outline: none;
+  place-items: center;
+  color: #111;
+  background-color: #fff;
+  border-color: currentColor; }
+  .button-outlined:hover {
+    cursor: pointer; }
+  .button-outlined--active {
+    background-color: #88b13e;
+    color: #fff; }
+
 .button {
   background-color: transparent;
   display: grid;
+  font-family: 'Jost';
+  width: fit-content;
+  transition: 0.24s ease-in all;
+  text-transform: uppercase;
   outline: none;
   place-items: center;
   letter-spacing: 4px;
   padding: 1em 2em;
   border: 1px solid #fff;
-  color: #fff;
-  font-family: 'Jost';
-  width: fit-content;
-  text-transform: uppercase;
-  transition: 0.42s ease-in all; }
+  color: #fff; }
   .button:hover {
     cursor: pointer; }
   .button:hover {
     background-color: #fff;
     color: #111; }
+  .button--contained {
+    background-color: transparent;
+    display: grid;
+    font-family: 'Jost';
+    width: fit-content;
+    transition: 0.24s ease-in all;
+    text-transform: uppercase;
+    outline: none;
+    place-items: center;
+    font-size: 1rem;
+    padding: 0.6em 1.2em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    background-color: #fff;
+    color: #111;
+    border: 1px solid transparent; }
+    .button--contained:hover {
+      cursor: pointer; }
+    .button--contained:hover {
+      border-color: currentColor;
+      color: #88b13e; }
 
 .icon-button {
   background-color: transparent;
   display: grid;
+  font-family: 'Jost';
+  width: fit-content;
+  transition: 0.24s ease-in all;
+  text-transform: uppercase;
   outline: none;
   place-items: center;
   border-radius: 50%;
@@ -335,4 +387,512 @@ header {
     display: flex;
     align-items: center;
     justify-content: center; }
+
+.categories {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4rem; }
+  .categories-row {
+    display: flex;
+    justify-content: space-between; }
+    .categories-row__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.42rem; }
+      .categories-row__item img {
+        width: 120px;
+        height: 120px; }
+      .categories-row__item p {
+        font-family: 'Lobster Two';
+        font-size: 1.42rem; }
+
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4rem; }
+  .banner-row {
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem; }
+    .banner-row__item:first-child {
+      background-color: #ff95d3; }
+    .banner-row__item:nth-child(2) {
+      background-color: #fec200;
+      width: 50%; }
+    .banner-row__item:nth-child(3) {
+      background-color: #a2d4eb; }
+    .banner-row__item {
+      padding: 6rem 2rem;
+      width: 25%; }
+      .banner-row__item__caption {
+        font-family: 'Jost';
+        text-transform: uppercase;
+        font-size: 1.24rem;
+        font-weight: 600; }
+      .banner-row__item__title {
+        font-family: 'Lobster Two';
+        font-size: 2.8rem; }
+      .banner-row__item__text {
+        font-family: 'Jost';
+        margin-bottom: 2rem; }
+
+.time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.42rem 0.92rem;
+  border: 1px solid red; }
+  .time-item {
+    display: flex;
+    align-items: center;
+    font-family: 'Jost'; }
+    .time-item__value {
+      font-size: 1.6rem;
+      font-weight: 600; }
+    .time-item__caption {
+      margin-left: 0.2rem;
+      padding-top: 0.2rem;
+      font-size: 1rem; }
+    .time-item__dispencer {
+      font-size: 1.2rem;
+      margin: 0 0.8rem; }
+
+.specical-products {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4rem; }
+  .specical-products-row {
+    gap: 4rem;
+    display: flex;
+    justify-content: space-between; }
+  .specical-products__preview {
+    width: 20%; }
+    .specical-products__preview img {
+      width: 100%;
+      height: 424px; }
+  .specical-products__content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 80%; }
+    .specical-products__content-header {
+      display: flex;
+      justify-content: space-between; }
+      .specical-products__content-header__title {
+        font-size: 2.4rem;
+        font-family: 'Lobster Two'; }
+    .specical-products__content-products {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem; }
+
+@keyframes f {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+.special-product {
+  transition: 0.42s ease-in-out all;
+  padding-bottom: 1.42rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; }
+  .special-product:hover {
+    background-color: #fff;
+    box-shadow: 0px 5px 25px rgba(138, 159, 168, 0.42); }
+    .special-product:hover .special-product-content__utils,
+    .special-product:hover .special-product-content__favourite-button {
+      display: flex;
+      animation: 0.42s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s alternate f; }
+  .special-product__stars {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.42rem 0; }
+    .special-product__stars svg {
+      color: #fda72f;
+      width: 1.16rem;
+      height: 1.16rem; }
+  .special-product__caption {
+    font-family: 'Jost';
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+  .special-product__price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.16rem;
+    font-family: 'Jost'; }
+    .special-product__price-old {
+      color: #888888;
+      font-size: 1rem;
+      text-decoration: line-through; }
+  .special-product-content {
+    position: relative; }
+    .special-product-content__favourite-button {
+      position: absolute;
+      border: 1px solid #888888;
+      top: 8px;
+      display: none;
+      right: 8px; }
+      .special-product-content__favourite-button svg {
+        width: 1.42rem;
+        height: 1.42rem; }
+    .special-product-content img {
+      aspect-ratio: 1;
+      width: 242px; }
+    .special-product-content__labels {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: -10px;
+      right: 0;
+      left: 0;
+      position: absolute;
+      color: #fff;
+      font-family: 'Jost'; }
+      .special-product-content__labels > div {
+        width: fit-content;
+        font-weight: 500;
+        padding: 0rem 0.8rem;
+        text-transform: uppercase; }
+      .special-product-content__labels-sale {
+        background-color: #e32d2d; }
+      .special-product-content__labels-new {
+        background-color: #a2d4eb; }
+    .special-product-content__utils {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      display: none;
+      bottom: 6px;
+      right: 0;
+      left: 0;
+      gap: 4px; }
+      .special-product-content__utils button {
+        border: 1px solid #dddddd; }
+      .special-product-content__utils-add-to-card {
+        font-size: 0.96rem;
+        text-transform: capitalize; }
+      .special-product-content__utils-compare svg, .special-product-content__utils-search svg {
+        width: 1.42rem;
+        height: 1.42rem; }
+
+.workshop {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2; }
+  .workshop .wave {
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    fill: #fff2f2; }
+  .workshop-row {
+    background-color: #fff;
+    border: 1px solid #888888;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between; }
+  .workshop-abstraction {
+    width: 42%;
+    padding-left: 3.2rem; }
+  .workshop-content {
+    padding: 3.2rem;
+    width: 42%; }
+    .workshop-content__caption {
+      font-family: 'Jost';
+      text-transform: uppercase;
+      font-size: 1.24rem;
+      font-weight: 600; }
+    .workshop-content__title {
+      font-family: 'Lobster Two';
+      font-size: 2.8rem; }
+    .workshop-content__text {
+      font-family: 'Jost';
+      margin-bottom: 2rem; }
+    .workshop-content__utils {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      gap: 10px;
+      flex-wrap: wrap; }
+      .workshop-content__utils input {
+        width: 44%; }
+      .workshop-content__utils textarea {
+        width: 100%; }
+
+.feature-products {
+  background-color: #fff2f2;
+  padding-top: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 4rem; }
+  .feature-products-row {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+  .feature-products-title {
+    margin: 1rem 0;
+    font-family: 'Lobster Two';
+    font-size: 2.4rem; }
+  .feature-products-tab-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; }
+    .feature-products-tab-panel .feature-products-glide {
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem; }
+      .feature-products-tab-panel .feature-products-glide .slider-prev-button {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 2px;
+        margin: auto; }
+      .feature-products-tab-panel .feature-products-glide .slider-next-button {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 2px;
+        margin: auto; }
+      .feature-products-tab-panel .feature-products-glide > svg {
+        background: #fff2f2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        z-index: 100;
+        color: #888888;
+        fill: currentColor;
+        border: 1px solid transparent;
+        width: 2.8rem; }
+        .feature-products-tab-panel .feature-products-glide > svg:hover {
+          cursor: pointer;
+          border-color: currentColor; }
+      .feature-products-tab-panel .feature-products-glide__slides {
+        gap: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center; }
+      .feature-products-tab-panel .feature-products-glide__track {
+        padding-top: 1rem;
+        padding-bottom: 2rem;
+        position: relative;
+        transition: 0.42s ease-in-out all; }
+        .feature-products-tab-panel .feature-products-glide__track .special-product {
+          padding: 0; }
+    .feature-products-tab-panel p {
+      font-family: 'Jost';
+      padding: 0.2rem 0.8rem;
+      margin-right: 0.6rem;
+      border: 1px solid #dddddd;
+      background-color: #fff;
+      font-size: 1rem;
+      margin-bottom: 2rem; }
+      .feature-products-tab-panel p.selected {
+        border-color: #88b13e;
+        position: relative; }
+        .feature-products-tab-panel p.selected::before, .feature-products-tab-panel p.selected::after {
+          position: absolute;
+          bottom: -0.5rem;
+          left: 0;
+          right: 0;
+          margin-left: auto;
+          margin-right: auto;
+          height: 0px;
+          width: 0px;
+          content: ''; }
+        .feature-products-tab-panel p.selected::before {
+          z-index: 3;
+          border-right: solid 0.52rem transparent;
+          border-left: solid 0.52rem transparent;
+          border-top: solid 0.52rem #88b13e; }
+        .feature-products-tab-panel p.selected::after {
+          z-index: 4;
+          bottom: -0.42rem;
+          border-right: solid 0.42rem transparent;
+          border-left: solid 0.42rem transparent;
+          border-top: solid 0.42rem #fff; }
+      .feature-products-tab-panel p:hover {
+        cursor: pointer; }
+      .feature-products-tab-panel p:last-of-type {
+        margin-right: 0; }
+
+.benifit {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .benifit-row {
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+  .benifit-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; }
+    .benifit-content-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.42rem;
+      gap: 1rem; }
+      .benifit-content-item p {
+        font-family: 'Jost'; }
+      .benifit-content-item__denotation-text {
+        font-size: 0.92rem; }
+      .benifit-content-item__denotation-title {
+        font-size: 1.08rem;
+        font-weight: 600; }
+
+.call-to-action {
+  background-color: pink;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 0 8rem 0; }
+  .call-to-action-row {
+    flex-direction: column;
+    gap: 0.42rem;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+  .call-to-action__caption {
+    font-family: 'Jost';
+    text-transform: uppercase;
+    font-size: 1.16rem; }
+  .call-to-action__title {
+    font-family: 'Lobster Two';
+    font-size: 2.8rem; }
+  .call-to-action button {
+    margin-top: 1.42rem; }
+
+.contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -4rem; }
+  .contact-row {
+    background-color: #fff;
+    border-bottom: 1px solid #888888;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+  .contact .call-us__phone-number {
+    margin-top: 0.8rem;
+    font-family: 'Jost';
+    font-weight: 800;
+    font-size: 1.42rem; }
+  .contact .subscribe__utils {
+    margin-top: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+    .contact .subscribe__utils input {
+      width: 100%; }
+    .contact .subscribe__utils-button {
+      font-family: 'Jost';
+      border: none;
+      transition: 0.42s ease-out all;
+      padding: 0.82rem 1.6rem;
+      font-size: 1rem;
+      height: 100%;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: #fff;
+      background-color: #88b13e; }
+      .contact .subscribe__utils-button:hover {
+        cursor: pointer;
+        background-color: #111;
+        color: #fff; }
+  .contact-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 3.2rem; }
+    .contact-content__item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem; }
+      .contact-content__item svg {
+        width: 4.2rem;
+        background-color: #fff2f2;
+        padding: 1.2rem;
+        border-radius: 50%; }
+      .contact-content__item-content__title {
+        font-family: 'Lobster Two';
+        font-size: 1.42rem;
+        margin-bottom: 0.2rem; }
+      .contact-content__item-content__text {
+        font-family: 'Jost';
+        font-size: 1rem; }
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+  .footer-content {
+    padding: 4rem 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between; }
+    .footer-content-about {
+      width: 33%;
+      border-right: 1px solid #dddddd;
+      display: flex;
+      gap: 0.8rem;
+      flex-direction: column; }
+      .footer-content-about__schedule p {
+        font-family: 'Jost'; }
+      .footer-content-about__title {
+        font-size: 2.8rem;
+        font-family: 'Lobster Two'; }
+    .footer-content-info {
+      width: 66%;
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between; }
+      .footer-content-info__links {
+        font-family: 'Jost'; }
+        .footer-content-info__links-title {
+          color: #111;
+          font-weight: 600;
+          font-size: 1.2rem;
+          margin-bottom: 1rem; }
+        .footer-content-info__links-content {
+          display: flex;
+          flex-direction: column;
+          gap: 0.42rem; }
+          .footer-content-info__links-content a {
+            color: #888888; }
+            .footer-content-info__links-content a:hover {
+              text-decoration: underline; }
+      .footer-content-info .email {
+        margin-top: 1rem; }
 

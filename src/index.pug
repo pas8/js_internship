@@ -3,27 +3,12 @@ html
     meta(charset="UTF-8")
     link(rel="stylesheet",href="/style.css")
     script(src="/bundle.js")
-
-
-
   body 
-    //- masonry-layout
-    //-   - var list = ["https://via.placeholder.com/150x200/0000FF/808080", "https://via.placeholder.com/400x500", "https://via.placeholder.com/600x300/red","https://via.placeholder.com/200x400", "https://via.placeholder.com/400x200/red/black"]
-    //-   each item in list
-    //-     div
-    //-       img(src=item)
-
     header
       section(class='utils')
         div(class='container utils-row')
           div(class='utils-row__contact-info')
-            div(class='utils-row__contact-info__social')
-              - const linksArr = [{d:'M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2m13 2h-2.5A3.5 3.5 0 0 0 12 8.5V11h-2v3h2v7h3v-7h3v-3h-3V9a1 1 0 0 1 1-1h2V5z', href:'/facebook', class:'facebook'}, {d:'M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z',href:'/twitter',class:'twitter' },                 {d:'M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z',          href:'/instagram',         class:'instagram'},       {d:'M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z',   href:'/youtube',class:'youtube'}]
-
-              each item in linksArr
-                a(href=item.href)
-                  svg(class=item.class,viewBox="0 0 24 24")
-                    path(d=item.d)
+            social-utils
 
             div(class='utils-row__contact-info__email')
               svg(viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg")
@@ -55,7 +40,6 @@ html
                 button(class=`icon-button ${item.class}`)
                   svg(viewBox="0 0 25 25"  xmlns="http://www.w3.org/2000/svg")
                     path(d=item.d,aria-label=item.caption) 
-
     section(class='introduction')
       div(class='glide')
         div(class="glide__bullets" data-glide-el="controls[nav]")
@@ -139,29 +123,29 @@ html
       div(class='container banner-row')
         - const bannerArr = [{caption:'Sale of 30 %',title:'Custard Cake',text:'Legetables and cheese'},{caption:'Special recipe',title:'Fruits Taste',text:'Made with meat, vegetables and cheese'},{caption:'Valentine’s day ',title:'Sale off 30%',text:'All Chocolate Products'}]
           each item in bannerArr 
-              div(class='banner-row__item') 
-                div(class='banner-row__item__caption') #{item.caption}
-                div(class='banner-row__item__title')  #{item.title}
-                div(class='banner-row__item__text') #{item.text}
-                button(class='banner-row__item__button button--contained ') Order now
+            div(class='banner-row__item') 
+              div(class='banner-row__item__caption') #{item.caption}
+              div(class='banner-row__item__title')  #{item.title}
+              div(class='banner-row__item__text') #{item.text}
+              button(class='banner-row__item__button button--contained ') Order now
     section(class='specical-products')
       div(class='container specical-products-row')
         div(class='specical-products__preview')
           img(src='https://via.placeholder.com/200x420')
 
         div(class='specical-products__content')
-          div(class=' specical-products__content-title') Specical Products
+          div(class=' specical-products__content-header')
+            div(class=' specical-products__content-header__title') Specical Products
+            time-left
           div(class='specical-products__content-products')
             special-product(img_href='https://via.placeholder.com/150x200/0000FF/808080',sale_percent='42',is_new='true',stars='4',caption='Test 1',current_price='$20.0')
             special-product(img_href='https://via.placeholder.com/150x200',sale_percent='42',stars='3',caption='Test 2',current_price='$40.0')
             special-product(img_href='https://via.placeholder.com/150x200',sale_percent='42',stars='4',caption='Test 3',current_price='$20.0')
-            special-product(img_href='https://via.placeholder.com/150x200',sale_percent='42',is_new='true',stars='2',caption='Test 4',current_price='$15.0')
-
-                  
+            special-product(img_href='https://via.placeholder.com/150x200',sale_percent='42',is_new='true',stars='2',caption='Test 4',current_price='$15.0')            
     section(class='workshop')
       svg(xmlns="http://www.w3.org/2000/svg", viewBox="0 0 1440 320",class='wave')
         path(d="M0,288L26.7,261.3C53.3,235,107,181,160,165.3C213.3,149,267,171,320,176C373.3,181,427,171,480,170.7C533.3,171,587,181,640,192C693.3,203,747,213,800,224C853.3,235,907,245,960,229.3C1013.3,213,1067,171,1120,154.7C1173.3,139,1227,149,1280,154.7C1333.3,160,1387,160,1413,160L1440,160L1440,320L1413.3,320C1386.7,320,1333,320,1280,320C1226.7,320,1173,320,1120,320C1066.7,320,1013,320,960,320C906.7,320,853,320,800,320C746.7,320,693,320,640,320C586.7,320,533,320,480,320C426.7,320,373,320,320,320C266.7,320,213,320,160,320C106.7,320,53,320,27,320L0,320Z")
-      
+
       div(class='container workshop-row')
         div(class='workshop-abstraction')
           svg(xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'  viewbox='0 0 1096 574.74')
@@ -401,50 +385,136 @@ html
             input(class='input',type='text',placeholder='Email') 
             textarea(class='input',type='text',placeholder='Messages',rows='4') 
             button(class='workshop-content__utils-submit-button button--contained') SEND REQUESTION
-
-
     section(class='feature-products')
-      
       div(class='container feature-products-row')
         p(class='feature-products-title') Feature Products
         tab-panel(class='feature-products-tab-panel')
-// -
-//   h1(slot='tab') Tab A
-//   div(slot='content')
-//     | Bacon ipsum dolor amet buffalo chicken pastrami pork. Fatback flank picanha spare ribs chuck alcatra. Spare ribs pork
-//     | loin sausage t-bone burgdoggen pastrami. Spare ribs kevin beef ribs alcatra ham hock turkey ribeye, prosciutto strip
-//     | steak bacon venison shank tri-tip landjaeger beef.
-//     | Tail pork loin kielbasa bresaola capicola, alcatra chislic cupim tenderloin pig brisket. Cow pork loin meatball, chislic
-//     | salami hamburger beef ribs t-bone strip steak kevin biltong pastrami landjaeger. Cupim doner pastrami, andouille
-//     | turducken sirloin landjaeger salami. Flank filet mignon short ribs, boudin sirloin ball tip landjaeger sausage ground
-//     | round buffalo. Ham hock rump leberkas, doner capicola short loin bacon chicken pig tongue jerky ball tip turducken
-//     | shankle cupim. Short ribs tongue bacon spare ribs doner. Frankfurter jowl turkey filet mignon beef kielbasa shank
-//     | meatball beef ribs ball tip turducken tail fatback cow pig.
-//   h1(slot='tab') Tab B
-//   div(slot='content')
-//     | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ultrices et velit eu rutrum. Etiam bibendum ipsum
-//     | vitae vestibulum venenatis. Mauris volutpat libero quam. Vestibulum quis ipsum tempor, egestas libero tristique,
-//     | malesuada nibh. Mauris vulputate sapien vitae nibh facilisis, ac pretium purus dictum. Mauris venenatis, turpis ac
-//     | dictum sagittis, odio purus tincidunt elit, sit amet fermentum nibh lorem vel tortor. Mauris in libero ac diam volutpat
-//     | tempor. In hendrerit sed sem sit amet pellentesque. Vestibulum ac massa vitae odio laoreet dictum at rhoncus elit.
-//     | Integer ac est vel enim bibendum tempus. Aenean dignissim a augue laoreet elementum. Vivamus sit amet facilisis ipsum,
-//     | id fringilla tortor. Integer vitae est ultricies, tincidunt purus id, eleifend enim. Integer egestas, augue vel
-//     | malesuada aliquet, elit turpis condimentum odio, a tristique ipsum nisi scelerisque erat. Vivamus tortor lacus,
-//     | tristique ut enim nec, consequat porttitor odio. Phasellus facilisis enim ut nisl molestie, sed convallis ipsum
-//     | vulputate. Donec mollis vitae nibh vitae tincidunt. Vestibulum lobortis eu eros vitae luctus. Vestibulum a augue non
-//     | lacus dignissim dignissim. Sed eget ipsum lacus. Donec a augue faucibus, vulputate nibh eu, posuere arcu. Curabitur
-//     | risus nunc, hendrerit vel mi nec, vehicula gravida nisi. Nam a dolor eu velit dignissim facilisis. Morbi tincidunt
-//     | ligula in nibh dignissim, sed ornare diam iaculis.
-//   h1(slot='tab') Tab C
-//   div(slot='content')
-//     | Veggies es bonus vobis, proinde vos postulo essum magis kohlrabi welsh onion daikon amaranth tatsoi tomatillo melon
-//     | azuki bean garlic.
-//     | Gumbo beet greens corn soko endive gumbo gourd. Parsley shallot courgette tatsoi pea sprouts fava bean collard greens
-//     | dandelion okra wakame tomato. Dandelion cucumber earthnut pea peanut soko zucchini.
-//     | Turnip greens yarrow ricebean rutabaga endive cauliflower sea lettuce kohlrabi amaranth water spinach avocado daikon
-//     | napa cabbage asparagus winter purslane kale. Celery potato scallion desert raisin horseradish spinach carrot soko. Lotus
-//     | root water spinach fennel kombu maize bamboo shoot green bean swiss chard seakale pumpkin onion chickpea gram corn pea.
-//     | Brussels sprout coriander water chestnut gourd swiss chard wakame kohlrabi beetroot carrot watercress. Corn amaranth
-//     | salsify bunya nuts nori azuki bean chickweed potato bell pepper artichoke.
+    section(class='benifit')
+      div(class='container benifit-row')
+        div(class='benifit-content')
+          div(class='benifit-content-item')
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0)"><path d="M46.3053 7.89723C42.7284 7.89723 39.8186 5.00809 39.8186 1.45703V0H10.1802V1.45703C10.1802 5.00828 7.27024 7.89723 3.6936 7.89723H2.22607V17.5867C2.22607 24.5495 4.3386 31.254 8.33554 36.9752C12.3325 42.6964 17.917 47.0101 24.4853 49.4497L24.9994 49.6407L25.5137 49.4497C32.0821 47.0101 37.6666 42.6965 41.6633 36.9752C45.6603 31.254 47.7728 24.5495 47.7728 17.5867V7.89723H46.3053ZM44.8379 17.5867H44.8378C44.8378 23.9531 42.9061 30.0831 39.2515 35.3143C35.7019 40.3955 30.7824 44.2625 24.9993 46.5242C19.2164 44.2624 14.2968 40.3955 10.7472 35.3143C7.09271 30.0832 5.16113 23.9531 5.16113 17.5867V10.6981C9.18346 10.0708 12.3694 6.90762 13.0012 2.91406H36.9978C37.6295 6.90762 40.8154 10.0708 44.8379 10.6981V17.5867Z" fill="#888888"/><path d="M31.5478 13.6885L21.8336 23.3333L18.4508 19.9747L12.2246 26.1564L21.8336 35.6967L37.774 19.8702L31.5478 13.6885ZM16.3754 26.1566L18.4509 24.0961L21.8337 27.4547L31.5479 17.8098L33.6233 19.8704L21.8337 31.5757L16.3754 26.1566Z" fill="#888888"/></g><defs><clipPath id="clip0"><rect width="49.9984" height="49.6407" fill="white"/></clipPath></defs></svg>
+            div(class='benifit-content-item__denotation')
+              p.benifit-content-item__denotation-title Free Shipping
+              p.benifit-content-item__denotation-text Free Shipping On All US
+          div(class='benifit-content-item')           
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M26.5622 10.1802V8.7259H29.4918V5.81727H26.5622V4.36295C26.5622 1.95722 24.5909 0 22.1678 0C19.7448 0 17.7734 1.95722 17.7734 4.36295V10.1802C17.7734 12.5859 19.7448 14.5432 22.1678 14.5432C24.5909 14.5432 26.5622 12.5859 26.5622 10.1802ZM23.6326 10.1802C23.6326 10.9821 22.9755 11.6345 22.1678 11.6345C21.3601 11.6345 20.703 10.9821 20.703 10.1802V8.7259H23.6326V10.1802ZM23.6326 5.81727H20.703V4.36295C20.703 3.56104 21.3601 2.90863 22.1678 2.90863C22.9755 2.90863 23.6326 3.56104 23.6326 4.36295V5.81727Z" fill="#888888"/>
+              <path d="M42.3178 29.4132C42.1835 28.4803 41.9263 26.6926 41.4337 23.2689H44.1391V14.543H39.7447C37.8351 14.543 36.207 15.759 35.6023 17.4516H26.3106C25.7062 15.7587 24.077 14.543 22.1672 14.543C21.6537 14.543 21.1609 14.6317 20.7024 14.7931V14.543H2.92959V29.0861H0V31.9938H4.93391C1.92767 34.4126 0 38.1215 0 42.2719C0 46.2915 3.27469 49.6405 7.32397 49.6405C10.9233 49.6405 13.842 47.011 14.503 43.7263H35.4952C36.1564 47.0116 39.0754 49.6405 42.6742 49.6405C46.7225 49.6405 49.9982 46.2924 49.9982 42.2719V39.3633C49.9983 34.6593 46.7661 30.5638 42.3178 29.4132ZM39.7447 17.4516H41.2095V20.3602H39.7447C38.937 20.3602 38.2799 19.7078 38.2799 18.9059C38.2799 18.104 38.937 17.4516 39.7447 17.4516ZM5.85917 17.4516H17.7728V20.3602H5.85917V17.4516ZM5.85917 23.2689H17.7728V29.0861C15.372 29.0861 9.84683 29.0861 5.85917 29.0861V23.2689ZM7.32397 46.7318C5.44102 46.7318 3.7901 45.4552 3.18046 43.7243H11.4674C10.8578 45.4552 9.20691 46.7318 7.32397 46.7318ZM23.632 40.8176H3.03271C3.73972 35.8371 8.0218 31.9948 13.1831 31.9948H23.632V40.8176ZM29.4912 40.8176H26.5616V29.0861C25.1852 29.0861 23.5392 29.0861 22.1672 29.0861C21.3595 29.0861 20.7024 28.4337 20.7024 27.6318V25.9274C21.1609 26.0888 21.6537 26.1775 22.1672 26.1775H28.0264C28.8341 26.1775 29.4912 26.8299 29.4912 27.6318V40.8176ZM22.1672 23.2689C21.3595 23.2689 20.7024 22.6165 20.7024 21.8146V18.9059C20.7024 18.104 21.3595 17.4516 22.1672 17.4516C22.9749 17.4516 23.632 18.104 23.632 18.9059V20.3593H35.0994C34.4948 22.0532 32.8658 23.2689 30.956 23.2689C29.8604 23.2689 23.1258 23.2689 22.1672 23.2689ZM35.3504 24.7192V30.5405C35.3504 32.4396 34.1082 34.1066 32.4208 34.7345V27.6318C32.4208 27.0863 32.3184 26.5642 32.1334 26.0823C33.3262 25.89 34.4234 25.4117 35.3504 24.7192ZM35.4977 40.8176H32.4208V37.76C35.7011 37.0851 38.2799 34.1225 38.2799 30.5405V23.0187C38.335 23.0381 38.3903 23.0571 38.4463 23.0744C40.645 38.3551 38.8977 26.2158 39.7133 31.9168L40.805 32.0729C43.1608 32.4098 45.134 33.889 46.2044 35.9032C45.1567 35.3286 43.9536 35.0004 42.6743 35.0004C39.1373 35.0004 36.1783 37.5026 35.4977 40.8176ZM42.6743 46.7318C40.2923 46.7318 38.2799 44.6895 38.2799 42.2719C38.2799 40.5953 39.238 39.1375 40.6386 38.4072L41.2243 42.4776L44.1245 42.0663L43.5386 37.9942C45.5491 38.3939 47.0687 40.1599 47.0687 42.2719C47.0687 44.6895 45.0564 46.7318 42.6743 46.7318Z" fill="#888888"/>
+            </svg>
+            div(class='benifit-content-item__denotation')
+              p.benifit-content-item__denotation-title Money Returns
+              p.benifit-content-item__denotation-text Return It Within 30 Days
+          div(class='benifit-content-item')           
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0)">
+              <g clip-path="url(#clip1)">
+              <path d="M28.824 12.1819L32.2498 14.6983C32.6355 14.9815 32.4406 15.6082 31.953 15.6112L30.8779 15.6177C30.8768 15.6177 30.8759 15.6177 30.8748 15.6177C30.5982 15.6177 30.3725 15.3955 30.3707 15.1209C30.3657 14.3177 29.7064 13.669 28.897 13.6756C28.0881 13.6805 27.4363 14.3357 27.4412 15.1388C27.4509 16.6906 28.5092 17.996 29.9434 18.398V18.4683C29.9434 19.2715 30.5992 19.9227 31.4081 19.9227C32.2169 19.9227 32.8728 19.2715 32.8728 18.4683V18.3949C33.4435 18.2379 33.9659 17.9358 34.3932 17.5061C35.0379 16.8578 35.3897 15.9992 35.3833 15.086V15.0769C35.376 14.0102 34.8559 12.9945 33.9921 12.36L30.5663 9.84376C30.1773 9.55794 30.3816 8.94208 30.8663 8.94208H31.943C32.221 8.94208 32.4472 9.16634 32.4472 9.44198C32.4472 10.2452 33.103 10.8963 33.9119 10.8963C34.7208 10.8963 35.3766 10.2452 35.3766 9.44198C35.3766 7.88247 34.3155 6.56505 32.8727 6.16152V6.09152C32.8727 5.28835 32.2168 4.63721 31.408 4.63721C30.5991 4.63721 29.9433 5.28835 29.9433 6.09152V6.15959C28.497 6.56088 27.4326 7.87995 27.4326 9.44198C27.4327 10.5177 27.9528 11.5419 28.824 12.1819Z" fill="#888888"/>
+              <path d="M31.4088 24.56C38.2306 24.56 43.7804 19.0513 43.7804 12.28C43.7804 5.50866 38.2305 0 31.4088 0C24.587 0 19.0371 5.50876 19.0371 12.2801C19.0371 19.0514 24.587 24.56 31.4088 24.56ZM31.4088 2.90863C36.6152 2.90863 40.8509 7.11268 40.8509 12.2801C40.8509 17.4474 36.6152 21.6515 31.4088 21.6515C26.2024 21.6515 21.9666 17.4474 21.9666 12.2801C21.9666 7.11268 26.2024 2.90863 31.4088 2.90863Z" fill="#888888"/>
+              <path d="M47.991 27.8441C46.4068 25.8191 43.5467 25.4382 41.488 26.8562L35.9149 30.558C35.1404 29.1263 33.6176 28.1504 31.8691 28.1504H27.8936C25.8868 26.2817 23.2077 25.2207 20.4443 25.2207C18.3702 25.2207 16.3526 25.8024 14.6098 26.9031C13.0395 27.8948 11.7549 29.2648 10.8723 30.8822L10.126 31.3352L9.93264 30.7738C9.67093 30.0139 8.83854 29.6084 8.07313 29.868L-0.00852346 32.6098C-0.773634 32.8693 -1.1826 33.6965 -0.920895 34.4565L3.96888 48.6566C4.23069 49.4169 5.06337 49.8218 5.82839 49.5624L13.91 46.8208C14.6318 46.5759 15.1046 45.7937 14.8062 44.9271L27.6301 44.5329C31.1224 44.5283 34.4715 43.4634 37.3164 41.4531L46.9871 34.6234C49.2042 33.0566 49.6619 29.9784 47.991 27.8441ZM6.26704 46.3398L2.32499 34.8919L7.63448 33.0907C8.20643 34.7517 10.9862 42.8242 11.5765 44.5387L6.26704 46.3398ZM45.2889 32.2534L35.6181 39.083C33.2655 40.7455 30.4952 41.6242 27.6068 41.6242C27.5918 41.6242 27.5766 41.6244 27.5615 41.6249L13.8146 42.0473L11.097 34.155L12.7488 33.1521C12.7491 33.1519 12.7494 33.1516 12.7498 33.1513C12.993 33.0035 13.1831 32.7866 13.2991 32.5519C14.6472 29.8239 17.3851 28.1291 20.4443 28.1291C22.655 28.1291 24.7082 29.0078 26.2258 30.6033C26.5053 30.8973 26.9069 31.0587 27.2907 31.0587H31.8691C32.7843 31.0587 33.5288 31.7975 33.5288 32.7057C33.5288 33.6043 32.7967 34.3526 31.8691 34.3526H23.6048C22.7959 34.3526 22.1401 35.0038 22.1401 35.807C22.1401 36.6101 22.796 37.2613 23.6048 37.2613H31.8691C33.0959 37.2613 34.2485 36.787 35.1136 35.9268C35.7189 35.3261 36.1336 34.5871 36.3293 33.782L43.128 29.2661C43.1362 29.2607 43.1443 29.2552 43.1524 29.2495C43.9541 28.6935 45.0646 28.8449 45.6778 29.6285C46.3244 30.4546 46.1476 31.6465 45.2889 32.2534Z" fill="#888888"/>
+              </g>
+              </g>
+              <defs>
+              <clipPath id="clip0">
+              <rect width="49.9983" height="49.6407" fill="white"/>
+              </clipPath>
+              <clipPath id="clip1">
+              <rect width="49.9983" height="49.6407" fill="white" transform="translate(-1)"/>
+              </clipPath>
+              </defs>
+              </svg>
+              div(class='benifit-content-item__denotation')
+                p.benifit-content-item__denotation-title Security Payment
+                p.benifit-content-item__denotation-text We Ensure Secure Payment
+          div(class='benifit-content-item')           
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0)">
+              <path d="M46.3054 39.2546L33.2277 34.9984V30.5193C34.1616 29.1487 34.7913 27.5358 35.0134 25.7899H37.3738C39.435 25.7899 41.112 24.1249 41.112 22.0784V18.1032C41.112 17.3286 40.8714 16.6089 40.4609 16.0132V15.3511C40.4609 6.88648 33.5248 0 24.9992 0C16.4736 0 9.53749 6.88648 9.53749 15.3511V16.0132C9.12705 16.609 8.88644 17.3287 8.88644 18.1032V22.0784C8.88644 24.1249 10.5634 25.7899 12.6247 25.7899H14.9851C15.2104 27.5601 15.8549 29.1932 16.8103 30.576V34.9856L3.69295 39.2546C1.48413 39.9736 0 42.0074 0 44.3152V49.6407H49.9984V44.3152C49.9984 42.0074 48.5143 39.9736 46.3054 39.2546ZM19.7399 33.4179C21.2729 34.4009 23.074 34.9683 24.9992 34.9683C26.9411 34.9683 28.7565 34.3908 30.2981 33.3921V35.399C29.1859 36.3507 26.9417 37.9231 24.9992 37.9231C23.0602 37.9231 20.8385 36.3535 19.7399 35.4037V33.4179ZM32.1731 16.9856C30.0502 16.6115 28.4326 14.7673 28.4326 12.5539H25.503C25.503 15.0365 23.4687 17.0562 20.9682 17.0562H17.8253V15.6545C17.8253 11.7271 21.0435 8.53199 24.9992 8.53199C28.9549 8.53199 32.1731 11.7271 32.1731 15.6545V16.9856ZM17.8253 20.0662V19.965H20.9682C23.4241 19.965 25.6067 18.7813 26.9678 16.9585C28.1803 18.5823 30.0445 19.6987 32.1731 19.9233V24.3842C32.1731 24.9558 32.1126 25.5122 32.0013 26.0485H26.6803V28.9571H30.7571C29.4484 30.8385 27.3548 32.0596 24.9993 32.0596C21.0437 32.0596 17.8254 28.6165 17.8254 24.3842V20.0662H17.8253ZM38.1824 22.0784C38.1824 22.5211 37.8196 22.8813 37.3737 22.8813H35.1027V17.3004H37.3737C37.8196 17.3004 38.1824 17.6605 38.1824 18.1032V22.0784ZM24.9992 2.90863C31.5854 2.90863 37.0013 7.97906 37.4947 14.3947C37.4545 14.3935 37.4143 14.3917 37.3737 14.3917H35.0228C34.3955 9.45442 30.1396 5.62336 24.9992 5.62336C19.8588 5.62336 15.6029 9.45442 14.9755 14.3917H12.6246C12.5841 14.3917 12.5438 14.3935 12.5036 14.3947C12.9971 7.97906 18.413 2.90863 24.9992 2.90863ZM11.816 22.0784V18.1032C11.816 17.6605 12.1788 17.3004 12.6247 17.3004H14.8957V22.8813H12.6247C12.1788 22.8813 11.816 22.5211 11.816 22.0784ZM47.0688 46.7321H39.9122V43.7265H36.9826V46.7321H13.0158V43.7265H10.0862V46.7321H2.92959V44.3152C2.92959 43.2678 3.60311 42.3449 4.60562 42.0186L17.9229 37.6845C19.1865 38.7544 22.0223 40.8317 24.9993 40.8317C27.9699 40.8317 30.8237 38.7614 32.0997 37.6923L45.3929 42.0187C46.3953 42.3449 47.0688 43.2679 47.0688 44.3152V46.7321Z" fill="#888888"/>
+              </g>
+              <defs>
+              <clipPath id="clip0">
+              <rect width="49.9984" height="49.6407" fill="white"/>
+              </clipPath>
+              </defs>
+            </svg>
+            div(class='benifit-content-item__denotation')
+              p.benifit-content-item__denotation-title Support 24/7
+              p.benifit-content-item__denotation-text Contact Us 24 Hours A Day
+    section(class='call-to-action')
+      div(class='call-to-action-row container')
+        p(class='call-to-action__caption') Thank you dear customers
+        p(class='call-to-action__title') Get Up To 30% Up Fruit Taste
+        button.button--contained Shop now 
+    section.contact
+      div.contact-row.container
+        div.contact-content
+          div.call-us.contact-content__item
+            <svg viewBox="-6 -6 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M30 22.0015C27.0922 22.0015 24.7266 24.273 24.7266 27.0652H28.2422C28.2422 26.1345 29.0307 25.3773 30 25.3773C30.9693 25.3773 31.7578 26.1345 31.7578 27.0652C31.7578 27.6661 31.4205 28.2268 30.8776 28.5282C29.252 29.4313 28.2422 31.1116 28.2422 32.9135V35.5047H31.7578V32.9135C31.7578 32.3126 32.0951 31.7519 32.638 31.4503C34.2636 30.5474 35.2734 28.8671 35.2734 27.0652C35.2734 24.273 32.9078 22.0015 30 22.0015Z" fill="#111111"/>
+              <path d="M28.2422 38.8804H31.7578V42.2562H28.2422V38.8804Z" fill="#111111"/>
+              <path d="M56.4425 23.9659C55.6739 10.6592 44.1082 0.0585938 30 0.0585938C15.8918 0.0585938 4.32609 10.6592 3.55746 23.9659C1.4898 24.6513 0 26.5376 0 28.753V35.5046C0 38.2967 2.36566 40.5683 5.27344 40.5683H12.7795C15.9853 46.5752 22.5009 50.6957 30 50.6957C37.4991 50.6957 44.0147 46.5752 47.2205 40.5683H52.9688V42.4812C52.9688 48.9962 47.4489 54.2966 40.6641 54.2966H28.2422V57.6724H40.6641C49.3874 57.6724 56.4844 50.8576 56.4844 42.4812V40.278C58.5303 39.5812 60 37.705 60 35.5046V28.753C60 26.5376 58.5102 24.6513 56.4425 23.9659ZM30 3.4344C42.0707 3.4344 51.9963 12.3756 52.9015 23.6892H47.2205C44.0147 17.6823 37.4991 13.5618 30 13.5618C22.5009 13.5618 15.9853 17.6823 12.7795 23.6892H7.09852C8.00367 12.3756 17.9293 3.4344 30 3.4344ZM10.6641 37.1925H5.27344C4.30418 37.1925 3.51562 36.4353 3.51562 35.5046V28.753C3.51562 27.8222 4.30418 27.065 5.27344 27.065H10.6641V37.1925ZM30 47.3199C21.2767 47.3199 14.1797 40.5051 14.1797 32.1288C14.1797 23.7524 21.2767 16.9376 30 16.9376C38.7233 16.9376 45.8203 23.7524 45.8203 32.1288C45.8203 40.5051 38.7233 47.3199 30 47.3199ZM56.4844 35.5046C56.4844 36.4353 55.6958 37.1925 54.7266 37.1925H49.3359V27.065H54.7266C55.6958 27.065 56.4844 27.8222 56.4844 28.753V35.5046Z" fill="#111111"/>
+            </svg>
+            div.contact-content__item-content
+              div.contact-content__item-content__title Call us 24/7
+              p.contact-content__item-content__text You have questions, contact us immediately for answers.
+              div.call-us__phone-number +380951194092
+
+          div.subscribe.contact-content__item
+            <svg  viewBox="-12 -12 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M60 23.7965V23.7912C60 23.7412 59.9972 23.6916 59.9931 23.6423C59.9919 23.6288 59.9902 23.6154 59.9888 23.602C59.9845 23.5633 59.9791 23.525 59.9725 23.487C59.97 23.4727 59.9675 23.4584 59.9647 23.4442C59.9554 23.3979 59.9447 23.352 59.9317 23.3069C59.9304 23.3024 59.9293 23.2979 59.928 23.2934C59.9143 23.2472 59.8984 23.2019 59.8811 23.1571C59.8745 23.14 59.8672 23.1232 59.8601 23.1063C59.8473 23.076 59.8336 23.0461 59.8191 23.0167C59.8106 22.9996 59.8025 22.9824 59.7936 22.9655C59.7717 22.9244 59.7484 22.8841 59.7233 22.8447C59.7139 22.83 59.7036 22.816 59.6938 22.8016C59.6742 22.7729 59.6539 22.7447 59.6327 22.7173C59.6214 22.7027 59.61 22.6881 59.5982 22.6737C59.5673 22.6363 59.5355 22.5998 59.5015 22.565C59.4988 22.5623 59.4962 22.5595 59.4935 22.5568C59.4572 22.5198 59.4185 22.485 59.3788 22.4513C59.3739 22.4471 59.3696 22.4424 59.3646 22.4383L56.3672 19.951V12.307C56.3672 10.0454 54.5272 8.20539 52.2656 8.20539H42.2137L34.1161 1.48527C31.7309 -0.493789 28.2689 -0.493789 25.8839 1.48527L17.7863 8.20528H7.73438C5.47277 8.20528 3.63281 10.0452 3.63281 12.3068V19.9509L0.635273 22.4385C0.630352 22.4426 0.626016 22.4473 0.621094 22.4515C0.581367 22.4853 0.542695 22.5201 0.506367 22.557C0.503672 22.5597 0.501094 22.5625 0.498398 22.5652C0.464531 22.6 0.432539 22.6366 0.401719 22.674C0.389883 22.6882 0.378516 22.7029 0.367148 22.7175C0.345937 22.7451 0.325664 22.7732 0.306094 22.8018C0.29625 22.8162 0.285937 22.8303 0.276562 22.8449C0.251484 22.8842 0.228164 22.9245 0.20625 22.9657C0.197227 22.9826 0.189141 22.9998 0.18082 23.017C0.166289 23.0464 0.152695 23.0763 0.139805 23.1065C0.132656 23.1234 0.125391 23.1402 0.118828 23.1573C0.101484 23.2021 0.0854297 23.2473 0.0718359 23.2936C0.0705469 23.2981 0.0694922 23.3025 0.0682031 23.3071C0.0551953 23.3522 0.0445313 23.3982 0.0351562 23.4445C0.0323438 23.4588 0.0298828 23.4729 0.0274219 23.4872C0.0207422 23.5252 0.0153516 23.5635 0.0111328 23.6022C0.00972656 23.6157 0.00796875 23.629 0.00679688 23.6425C0.0028125 23.6916 0 23.7412 0 23.7912V23.7965V23.7974V53.5545C0 55.3965 0.777891 57.0591 2.02102 58.2349C2.05629 58.2701 2.09168 58.305 2.12941 58.3368C3.27281 59.3697 4.78676 59.9997 6.44531 59.9997H53.5547C55.2134 59.9997 56.7274 59.3696 57.8709 58.3365C57.9083 58.3048 57.9435 58.2702 57.9785 58.2352C59.2219 57.0595 60 55.3966 60 53.5544V23.7974C60 23.7972 60 23.7968 60 23.7965ZM7.73438 11.7209H52.2656C52.5887 11.7209 52.8516 11.9838 52.8516 12.3068V25.9805L51.8569 26.806L31.871 43.3919C30.7869 44.2915 29.2131 44.2914 28.129 43.3919L8.14312 26.8061L7.14844 25.9805V12.3068C7.14844 11.9838 7.41129 11.7209 7.73438 11.7209ZM3.51562 53.5545V27.5342L4.27172 28.1617C4.27219 28.1621 4.27266 28.1625 4.27313 28.1629L21.4375 42.4072L3.69562 54.5656C3.57926 54.2504 3.51562 53.9097 3.51562 53.5545ZM24.2504 44.7415L25.8839 46.0972C28.2689 48.0765 31.7311 48.0763 34.1161 46.0972L35.7496 44.7415L52.8847 56.4842H7.11516L24.2504 44.7415ZM38.5625 42.4073L55.7268 28.1629C55.7272 28.1625 55.7277 28.1621 55.7282 28.1617L56.4843 27.5342V53.5545C56.4843 53.9097 56.4206 54.2504 56.3043 54.5656L38.5625 42.4073ZM28.129 4.19078C29.2131 3.29113 30.7869 3.29113 31.871 4.19078L36.7086 8.20539H23.2914L28.129 4.19078Z" fill="#111111"/>
+            </svg>
+            div.contact-content__item-content
+              div.contact-content__item-content__title Subscribe Newsletter
+              p.contact-content__item-content__text- Sign up for weekly newsletter and better ecommercestores
+              div.subscribe__utils
+                input.input.subscribe__utils-input(placeholder='Enter your email')
+                button.subscribe__utils-button  Subscribe
+    footer.footer
+      div.footer-row.container
+        div.footer-content
+          div.footer-content-about
+            p.footer-content-about__title OrgaFresh
+            div.footer-content-about__schedule 
+              p Monday – Saturday: 8:00 am – 4:00pm
+              p Sunday: 9:00 am – 5:00pm
+          div.footer-content-info
+            div.footer-content-info__links 
+              div.footer-content-info__links-title Quick links
+              div.footer-content-info__links-content
+                -var  quickLinksArr = [{href:'about_us',caption:'About us'},{href:'blog',caption:'Blog'},{href:'check_out',caption:'Check out'},{href:'contact',caption:'Contact'}]
+                  each item in quickLinksArr
+                    a(href=item.href) #{item.caption}
+            div.footer-content-info__links 
+              div.footer-content-info__links-title Categories
+              div.footer-content-info__links-content
+                -var  footerCategoriesArr = [{href:'Fresh Fruits',caption:'Fresh Fruits'},{href:'Fresh Meats',caption:'Fresh Meats'},{href:'/grain_&_nuts',caption:'Grain & Nuts'},{href:'/smothie',caption:'Smothie'}]
+                  each categoriesItem in footerCategoriesArr
+                    a(href=categoriesItem.href) #{categoriesItem.caption}
+            div.footer-content-info__links 
+              div.footer-content-info__links-title Help Center
+              div.footer-content-info__links-content
+                -var  helpCenterArr =   [{href:'Privacy Policy',caption:'Privacy Policy'},{href:'Terms & Conditions',caption:'Terms & Conditions'},{href:'Returns Policy',caption:'Returns Policy'},{href:'Help & FAQs',caption:'Help & FAQs'}]
+                  each helpCenterItem in helpCenterArr
+                    a(href=helpCenterItem.href ) #{helpCenterItem.caption}
+            div.footer-content-info__links 
+              div.footer-content-info__links-title Contact info
+              div.footer-content-info__links-content
+                p 29 Rue du Bourg Tibourg,
+                p 75004 Paris, France
+                p.email Organicfood@gmail.com
+      div.footer-copyright
+        div.footer-copyright__wrapper.container
+          p Copyright © 2020 Avitexthemes Inc. All rights reserved
+          social-utils
+        
+
+
+
+
+
+
+
+
+
 
 

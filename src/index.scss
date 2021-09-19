@@ -147,7 +147,14 @@ body {
   @include centered_flex;
   width: 80vw;
 }
-
+.social-utils {
+  & svg {
+    width: 1.16rem;
+    height: 1.16rem;
+  }
+  display: flex;
+  gap: 0.42rem;
+}
 header {
   width: 100%;
   flex-direction: column;
@@ -168,12 +175,6 @@ header {
           & path {
             fill: $text-secondary;
           }
-          width: 1.16rem;
-          height: 1.16rem;
-        }
-        &__social {
-          display: flex;
-          gap: 0.42rem;
         }
         &__email {
           padding-left: 2rem;
@@ -393,6 +394,31 @@ header {
   }
 }
 
+.time {
+  @include centered_flex;
+  padding: 0.42rem 0.92rem;
+  border: 1px solid red;
+  &-item {
+    display: flex;
+    align-items: center;
+    font-family: 'Jost';
+
+    &__value {
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+    &__caption {
+      margin-left: 0.2rem;
+      padding-top: 0.2rem;
+      font-size: 1rem;
+    }
+    &__dispencer {
+      font-size: 1.2rem;
+      margin: 0 0.8rem;
+    }
+  }
+}
+
 .specical-products {
   @include centered_flex;
   margin-bottom: 4rem;
@@ -415,11 +441,14 @@ header {
     gap: 2rem;
     width: 80%;
 
-    &-title {
+    &-header {
       @include space-between_flex;
-      font-size: 2.4rem;
 
-      font-family: 'Lobster Two';
+      &__title {
+        font-size: 2.4rem;
+
+        font-family: 'Lobster Two';
+      }
     }
     &-products {
       @include space-between_flex;
@@ -671,9 +700,9 @@ header {
       }
       &__track {
         padding-top: 1rem;
+        padding-bottom: 2rem;
         .special-product {
-padding: 0;
-
+          padding: 0;
         }
         position: relative;
         // padding: 0 200px;
@@ -730,5 +759,216 @@ padding: 0;
         margin-right: 0;
       }
     }
+  }
+}
+
+.benifit {
+  padding: 4rem;
+  @include centered_flex;
+  &-row {
+    @include centered_flex;
+  }
+
+  &-content {
+    width: 100%;
+
+    @include space-between_flex;
+    &-item {
+      @include centered_flex;
+      padding: 0.42rem;
+      gap: 1rem;
+      p {
+        font-family: 'Jost';
+      }
+      &__denotation {
+        &-text {
+          font-size: 0.92rem;
+        }
+        &-title {
+          font-size: 1.08rem;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+.call-to-action {
+  background-color: pink;
+  @include centered_flex;
+  padding: 4rem 0 8rem 0;
+  &-row {
+    flex-direction: column;
+    gap: 0.42rem;
+    @include centered_flex;
+  }
+
+  &__caption {
+    font-family: 'Jost';
+    text-transform: uppercase;
+    font-size: 1.16rem;
+  }
+
+  &__title {
+    font-family: 'Lobster Two';
+
+    font-size: 2.8rem;
+  }
+  button {
+    margin-top: 1.42rem;
+  }
+}
+
+.contact {
+  @include centered_flex;
+  margin-top: -4rem;
+  &-row {
+    background-color: $background;
+    border-bottom: 1px solid $input-border-color;
+    @include centered_flex;
+  }
+  .call-us {
+    &__phone-number {
+      margin-top: 0.8rem;
+      font-family: 'Jost';
+      font-weight: 800;
+      font-size: 1.42rem;
+    }
+  }
+
+  .subscribe {
+    &__utils {
+      margin-top: 0.8rem;
+      @include centered_flex;
+      input {
+        width: 100%;
+      }
+      &-button {
+        font-family: 'Jost';
+        border: none;
+        transition: 0.42s ease-out all;
+        padding: 0.82rem 1.6rem;
+        font-size: 1rem;
+        height: 100%;
+        font-weight: 500;
+        // letter-spacing: 1px;
+        text-transform: uppercase;
+        &:hover {
+          cursor: pointer;
+          background-color: $text-secondary;
+          color: $background;
+        }
+        color: $background;
+        background-color: $primary;
+      }
+    }
+  }
+
+  &-content {
+    @include space-between_flex;
+    width: 100%;
+    padding: 3.2rem;
+    &__item {
+      @include centered_flex;
+      gap: 2rem;
+      svg {
+        width: 4.2rem;
+        background-color: $pink-white;
+        padding: 1.2rem;
+        border-radius: 50%;
+      }
+      &-content {
+        &__title {
+          font-family: 'Lobster Two';
+          font-size: 1.42rem;
+          margin-bottom: 0.2rem;
+        }
+
+        &__text {
+          font-family: 'Jost';
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}
+
+.footer {
+  @include centered_flex;
+flex-direction: column;
+  &-row {
+    @include centered_flex;
+  }
+  &-copyright {
+    width: 100%;
+    @include centered_flex;
+
+    &__wrapper {
+padding: 0.8rem;
+svg {
+fill: $text-secondary;
+
+}
+      p {
+        font-family: 'Jost';
+      }
+      @include space-between_flex;
+
+    }
+
+    background-color: $light-grey;
+  }
+  &-content {
+    padding: 4rem 0;
+    width: 100%;
+    @include space-between_flex;
+
+    &-about {
+      width: 33%;
+      border-right: 1px solid $light-grey;
+      display: flex;
+      gap: 0.8rem;
+      flex-direction: column;
+      &__schedule {
+        p {
+          font-family: 'Jost';
+        }
+      }
+      &__title {
+        font-size: 2.8rem;
+        font-family: 'Lobster Two';
+      }
+    }
+    &-info {
+      width: 66%;
+      padding: 2rem 4rem;
+      @include space-between_flex;
+
+      // gap: 4rem;
+      &__links {
+        font-family: 'Jost';
+
+        &-title {
+          color: $text-secondary;
+          font-weight: 600;
+          font-size: 1.2rem;
+          margin-bottom: 1rem;
+        }
+        &-content {
+          display: flex;
+          flex-direction: column;
+          gap: 0.42rem;
+          a {
+            color: $input-border-color;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+      .email {
+        margin-top: 1rem;
+      }
+    } 
   }
 }
