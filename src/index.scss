@@ -145,7 +145,18 @@ body {
 }
 .container {
   @include centered_flex;
-  width: 80vw;
+
+  @media screen and (min-width: 96rem) {
+    width: 60vw;
+  }
+  @media screen and (min-width: 80rem) {
+    width: 70vw;
+  }
+
+  @media screen and (min-width: 60rem) {
+    width: 80vw;
+  }
+
 }
 .social-utils {
   & svg {
@@ -895,7 +906,7 @@ header {
 
 .footer {
   @include centered_flex;
-flex-direction: column;
+  flex-direction: column;
   &-row {
     @include centered_flex;
   }
@@ -904,16 +915,14 @@ flex-direction: column;
     @include centered_flex;
 
     &__wrapper {
-padding: 0.8rem;
-svg {
-fill: $text-secondary;
-
-}
+      padding: 0.8rem;
+      svg {
+        fill: $text-secondary;
+      }
       p {
         font-family: 'Jost';
       }
       @include space-between_flex;
-
     }
 
     background-color: $light-grey;
@@ -969,6 +978,6 @@ fill: $text-secondary;
       .email {
         margin-top: 1rem;
       }
-    } 
+    }
   }
 }

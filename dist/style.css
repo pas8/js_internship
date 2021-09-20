@@ -244,8 +244,23 @@ body {
 .container {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 80vw; }
+  justify-content: center; }
+  @media screen and (min-width: 96rem) {
+    .container {
+      width: 60vw; } }
+  @media screen and (min-width: 80rem) {
+    .container {
+      width: 70vw; } }
+  @media screen and (min-width: 60rem) {
+    .container {
+      width: 80vw; } }
+
+.social-utils {
+  display: flex;
+  gap: 0.42rem; }
+  .social-utils svg {
+    width: 1.16rem;
+    height: 1.16rem; }
 
 header {
   width: 100%;
@@ -265,14 +280,8 @@ header {
       justify-content: space-between; }
       header .utils-row__contact-info {
         display: flex; }
-        header .utils-row__contact-info svg {
-          width: 1.16rem;
-          height: 1.16rem; }
-          header .utils-row__contact-info svg path {
-            fill: #111; }
-        header .utils-row__contact-info__social {
-          display: flex;
-          gap: 0.42rem; }
+        header .utils-row__contact-info svg path {
+          fill: #111; }
         header .utils-row__contact-info__email {
           padding-left: 2rem;
           margin-left: 2rem;
@@ -741,6 +750,7 @@ header {
         margin-right: 0; }
 
 .benifit {
+  padding: 4rem;
   display: flex;
   align-items: center;
   justify-content: center; }
@@ -852,11 +862,26 @@ header {
 .footer {
   display: flex;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+  flex-direction: column; }
   .footer-row {
     display: flex;
     align-items: center;
     justify-content: center; }
+  .footer-copyright {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #dddddd; }
+    .footer-copyright__wrapper {
+      padding: 0.8rem;
+      display: flex;
+      justify-content: space-between; }
+      .footer-copyright__wrapper svg {
+        fill: #111; }
+      .footer-copyright__wrapper p {
+        font-family: 'Jost'; }
   .footer-content {
     padding: 4rem 0;
     width: 100%;

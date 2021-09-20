@@ -17,15 +17,21 @@ const babel = {
   exclude: '/node_modules',
   loader: { loader: 'babel-loader', options: { presets: ['@babel/preset-env'] } },
 };
-const  img = {
-test:/\.(png|jpg|jpeg)$/,
-use:['file-loader']
 
+const img  =  {
+  test: /\.(png|jpe?g|gif)$/i,
+  use: [
+    {
+      loader: 'file-loader',
+    },
+  ],
 }
+
 
 module.exports = {
   mode: 'development',
   entry: '/src/index.js',
+
   devServer: {
     static: {
       directory: path.join(__dirname, 'dist'),
