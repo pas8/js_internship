@@ -9,6 +9,9 @@ const pug = {
 
 const scss = {
   test: /\.(s*)css$/,
+  // options: {
+    // reloadAll: true,
+  // },
   use: [miniCss.loader, 'css-loader', 'sass-loader'],
 };
 
@@ -32,11 +35,11 @@ const img = {
   ],
 };
 
-const pages = ['index'];
+const pages = ['index','about'];
 
 module.exports = {
   mode: 'development',
-  entry: pages.reduce((config, page) => {
+  entry: [...pages].reduce((config, page) => {
     config[page] = `/src/${page}.js`;
     return config;
   }, {}),
@@ -64,19 +67,24 @@ module.exports = {
   module: {
     rules: [pug, scss, img, babel],
   },
-  plugins: [
-    new miniCss({
-      filename: 'style.css',
-    }),
-  ].concat(
-    pages.map(
-      (page) =>
-        new HtmlWebpackPlugin({
-          inject: true,
-          template: `/src/pages/${page}.pug`,
-          filename: `${page}.html`,
-          chunks: [page],
-        })
+  plugins: []
+    .concat(
+      pages.map(
+        (page) =>
+          new HtmlWebpackPlugin({
+            inject: true,
+            template: `/src/pages/${page}.pug`,
+            filename: `${page}.html`,
+            chunks: [page],
+          })
+      )
     )
-  ),
+    .concat(
+      pages.map(
+        (page) =>
+          new miniCss({
+            filename: `[name].css`,
+          })
+      )
+    ),
 };

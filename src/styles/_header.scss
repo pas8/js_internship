@@ -1,0 +1,120 @@
+
+@import './global.scss';
+
+
+header {
+  width: 100%;
+  flex-direction: column;
+
+  @include centered_flex;
+  & .utils {
+    width: 100%;
+    @include centered_flex;
+
+    background-color: $header-utils-bgcolor;
+
+    &-row {
+      padding: 0.42rem 0;
+      @include space-between_flex;
+      &__contact-info {
+        display: flex;
+        & svg {
+          & path {
+            fill: $text-secondary;
+          }
+        }
+        &__email {
+          padding-left: 2rem;
+          margin-left: 2rem;
+          border-left: 2px solid $text-secondary;
+          display: flex;
+          align-items: center;
+          gap: 0.42rem;
+          p {
+            font-family: 'Jost';
+          }
+        }
+      }
+      &__utils {
+      }
+    }
+  }
+
+  & .main {
+    width: 100%;
+    @include centered_flex;
+    &-row {
+      @include space-between_flex;
+      &__links {
+        display: flex;
+        gap: 1rem;
+        &__link-wrapper {
+          cursor: pointer;
+          @include centered_flex;
+          padding: 0.42rem;
+          height: 4rem;
+          position: relative;
+          &:hover {
+            &::before {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              width: 100%;
+              height: 4px;
+              background-color: $text-secondary;
+            }
+          }
+          &--active {
+            color: $primary;
+            &::before {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              width: 100%;
+              height: 4px;
+              background-color: $primary;
+            }
+          }
+        }
+
+        a {
+          font-size: 1.2rem;
+          font-family: 'Jost';
+        }
+      }
+      &__logo {
+        @include centered_flex;
+
+        & svg {
+          width: 10rem;
+          & path {
+            fill: $text-secondary;
+          }
+        }
+      }
+      &__utils {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        &-hotline {
+          display: flex;
+          gap: 0.42rem;
+          & p {
+            font-family: 'Jost';
+          }
+          & .phone-number {
+            font-weight: 600;
+          }
+        }
+        &-buttons-container {
+          display: flex;
+          gap: 0.42rem;
+        }
+      }
+    }
+  }
+}

@@ -2,15 +2,15 @@ import Glide from '@glidejs/glide';
 import './styles/index.scss';
 new Glide('.glide').mount();
 
-const d = document.querySelector('.main-row__links');
-const findedLink = [...d.childNodes]
+const findedLink = [...document.querySelector('.main-row__links').childNodes]
   .filter((__, idx) => !(idx & 1))
   .find((el) => el.classList[1] === window.location.pathname);
+
 findedLink.classList.add('main-row__links__link-wrapper--active');
 
 const favouriteNode = document.querySelector('.button-favourite');
 const basketNode = document.querySelector('.button-basket');
-// console.log(favouriteNode.setAttributeNS)
+
 favouriteNode.classList.add('with-label');
 favouriteNode.setAttribute('data-label', '42');
 

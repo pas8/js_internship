@@ -1,0 +1,27 @@
+@import './colors.scss';
+@import './fonts.scss';
+@mixin centered_flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin space-between_flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin button_normalize {
+  background-color: transparent;
+  display: grid;
+  font-family: 'Jost';
+  width: fit-content;
+  transition: 0.24s ease-in all;
+
+  text-transform: uppercase;
+  outline: none;
+  place-items: center;
+  &:hover {
+    cursor: pointer;
+  }
+}
