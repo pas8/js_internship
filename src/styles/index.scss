@@ -212,6 +212,7 @@
       height: 424px;
     }
   }
+
   &__content {
     height: 100%;
 
@@ -232,6 +233,36 @@
     &-products {
       @include space-between_flex;
       gap: 1rem;
+    }
+  }
+
+  @media screen and (max-width: $sm) {
+    &-row {
+      flex-direction: column;
+      @include centered_flex;
+    }
+
+    &__preview {
+      width: 100%;
+      & img {
+        width: 100%;
+        // height: ;
+      }
+    }
+
+    &__content {
+      &-header {
+        @include centered_flex;
+        gap: 0.42rem;
+        flex-direction: column;
+      }
+      &-products {
+        flex-direction: column;
+        img,
+        .special-product-content {
+          width: 100% !important;
+        }
+      }
     }
   }
 }
@@ -464,13 +495,10 @@
       padding: 0.42rem;
       gap: 1rem;
 
-
       @media screen and (max-width: $sm) {
-p {
-  text-align: center;
-
-
-}
+        p {
+          text-align: center;
+        }
       }
       @media screen and (max-width: $lg) {
         flex-direction: column;
@@ -482,7 +510,6 @@ p {
       }
 
       p {
-
         font-family: 'Jost';
       }
       &__denotation {
@@ -516,7 +543,7 @@ p {
 
   &__title {
     font-family: 'Lobster Two';
-text-align: center;
+    text-align: center;
     font-size: 2.8rem;
   }
   button {
@@ -597,6 +624,29 @@ text-align: center;
         &__text {
           font-family: 'Jost';
           font-size: 1rem;
+        }
+      }
+    }
+    @media screen and (max-width: $sm) {
+      &__item {
+        flex-direction: column;
+        &-content {
+          gap: 0.42rem;
+
+          p {
+            text-align: center;
+          }
+          @include centered_flex;
+          flex-direction: column;
+        }
+      }
+      .subscribe__utils {
+        gap: 0.42rem;
+        width: 100%;
+
+        flex-direction: column;
+        button {
+          width: 100%;
         }
       }
     }
