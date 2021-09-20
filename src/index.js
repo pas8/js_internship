@@ -1,5 +1,6 @@
 import Glide from '@glidejs/glide';
 import './styles/index.scss';
+import './header&footer'
 
 new Glide('.glide').mount();
 

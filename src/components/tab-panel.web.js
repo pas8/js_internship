@@ -1,65 +1,22 @@
+import { get_random_int } from '@utils/get_random_int.util.js';
+import { get_random_img } from '@utils/get_random_img.util.js';
 
-import {get_random_int} from '@utils/get_random_int.util.js'
-import h from  '../assets/food1.jpeg'
+const tabpanelArr = 
+['Cup cakes','Cookies','Donut','Custard',].map((el,idx)=> ( {
+  id:idx+"",
+  caption: el,
+  productsArr: Array.from({ length: get_random_int(6, 10) }, (__, idx) => ({
+    img_href: get_random_img(),
+    sale_percent: get_random_int(8,92),
+    is_new: !!~~get_random_int(0,1),
+    stars: get_random_int(0,5),
+    caption: el,
+    current_price: '$'+get_random_int(8,42),
+  })),
+}))
 
-const tabpanelArr = [
-  {
-    id: '1',
-    caption: 'Cup cakes',
-    productsArr:Array.from({length: get_random_int(6,10)},(__,idx)=>( {
-      img_href:h,
-      sale_percent: '42',
-      is_new: 'true',
-      stars: '4',
-      caption: 'Test 1',
-      current_price: '$20.0',
-    })) 
-  },
-  {
-    id: '2',
-    caption: 'Cookies',
-    productsArr: [
-      {
-        img_href: 'https://via.placeholder.com/150x200/0000FF/808080',
-        sale_percent: '42',
-        is_new: 'true',
-        stars: '4',
-        caption: 'Test 1',
-        current_price: '$20.0',
-      },
-    ],
-  },
-  {
-    id: '3',
-    caption: 'Donut',
-    productsArr: [
-      {
-        img_href: 'https://via.placeholder.com/150x200/0000FF/808080',
-        sale_percent: '42',
-        is_new: 'true',
-        stars: '4',
-        caption: 'Test 1',
-        current_price: '$20.0',
-      },
-    ],
-  },
-  {
-    id: '4',
-    caption: 'Custard',
-    productsArr: [
-      {
-        img_href: 'https://via.placeholder.com/150x200/0000FF/808080',
-        sale_percent: '42',
-        is_new: 'true',
-        stars: '4',
-        caption: 'Test 1',
-        current_price: '$20.0',
-      },
-    ],
-  }]
+const featureProductsTabPanel = document.querySelector('.feature-products-tab-panel');
 
-    const featureProductsTabPanel = document.querySelector('.feature-products-tab-panel');
-    
 featureProductsTabPanel.innerHTML = `
 ${tabpanelArr
   .map(

@@ -1,5 +1,6 @@
 import './styles/_header.scss'
 import './styles/_footer.scss'
+import '@components/social-utils.web.js'
 
 const findedLink = [...document.querySelector('.main-row__links').childNodes]
   .filter((__, idx) => !(idx & 1))

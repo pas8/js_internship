@@ -1,3 +1,6 @@
+
+import '@styles/_web-social-utils.scss'
+
 class SocialUtils extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `<div class="social-utils">
