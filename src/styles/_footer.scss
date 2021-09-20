@@ -1,6 +1,5 @@
 @import './global.scss';
 
-
 .footer {
   @include centered_flex;
   flex-direction: column;
@@ -74,6 +73,44 @@
       }
       .email {
         margin-top: 1rem;
+      }
+    }
+  }
+
+  @media screen and (max-width: $md) {
+
+    &-content {
+      &-about {
+        @include centered_flex;
+        padding-bottom: 4rem;
+        p {
+          text-align: center;
+        }
+        border-right: 0;
+        border-bottom: 1px solid $input-border-color;
+      }
+      flex-direction: column;
+      & > div {
+        width: 100% !important;
+      }
+    }
+  }
+
+  @media screen and (max-width: $sm) {
+    &-content {
+
+      &-info {
+        gap: 2rem;
+        & div {
+
+          @include centered_flex;
+        flex-direction: column;
+
+        }
+        flex-direction: column;
+        @include centered_flex;
+
+        
       }
     }
   }

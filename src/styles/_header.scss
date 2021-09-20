@@ -131,17 +131,17 @@ header {
   @media screen and (max-width: $md) {
     @include centered_flex;
     position: fixed;
-    inset: 0;
     background-color: transparent;
-
+    inset: -100%;
     &.closed {
       .wrapper {
-
         display: none;
       }
     }
     &.open {
-    background-color: #000000cc;
+      inset: 0;
+
+      background-color: #000000cc;
 
       .wrapper {
         width: auto;
@@ -155,9 +155,9 @@ header {
             @include centered_flex;
           }
           &__utils {
-border-bottom: 1px solid $light-grey;
-border-top: 1px solid $light-grey;
-padding: 0.42rem 0;
+            border-bottom: 1px solid $light-grey;
+            border-top: 1px solid $light-grey;
+            padding: 0.42rem 0;
           }
         }
         background-color: $header-utils-bgcolor;
@@ -181,6 +181,7 @@ padding: 0.42rem 0;
 
     .menu-button {
       top: 8px;
+      z-index: 10;
       padding: 0.42rem;
       @include centered_flex;
       &:hover {
