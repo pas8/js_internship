@@ -1,5 +1,6 @@
-import {get_random_int} from  '@utils/get_random_int.util.js'
-import '@styles/_web-time-left.scss'
+import { get_random_int } from '@utils/get_random_int.util.js';
+import '@styles/_web-time-left.scss';
+
 class TimeLeft extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `<div class='time'> ${[

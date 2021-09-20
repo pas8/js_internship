@@ -1,8 +1,8 @@
-
-
 @import './global.scss';
 
-
+social-utils {
+  @include centered_flex;
+}
 .social-utils {
   & a {
     display: grid;
@@ -22,4 +22,4 @@
   }
   display: flex;
   gap: 0.42rem;
-} 
+}

@@ -1,8 +1,13 @@
-
 @import './global.scss';
 
-
 header {
+  z-index: 100;
+  .menu-button {
+    background-color: $header-utils-bgcolor;
+    position: relative;
+    display: none;
+  }
+
   width: 100%;
   flex-direction: column;
 
@@ -36,8 +41,14 @@ header {
         }
       }
       &__utils {
+        font-family: 'Jost';
       }
     }
+  }
+  .wrapper {
+    width: 100%;
+    flex-direction: column;
+    display: flex;
   }
 
   & .main {
@@ -116,5 +127,79 @@ header {
         }
       }
     }
+  }
+  @media screen and (max-width: $md) {
+    @include centered_flex;
+    position: fixed;
+    inset: 0;
+    background-color: transparent;
+
+    &.closed {
+      .wrapper {
+
+        display: none;
+      }
+    }
+    &.open {
+    background-color: #000000cc;
+
+      .wrapper {
+        width: auto;
+        flex-direction: column-reverse;
+
+        .utils-row {
+          flex-direction: column-reverse;
+          padding-bottom: 1rem;
+          gap: 0.8rem;
+          & > div {
+            @include centered_flex;
+          }
+          &__utils {
+border-bottom: 1px solid $light-grey;
+border-top: 1px solid $light-grey;
+padding: 0.42rem 0;
+          }
+        }
+        background-color: $header-utils-bgcolor;
+        display: flex;
+      }
+
+      .main-row {
+        flex-direction: column-reverse;
+        align-items: center;
+        padding: 1rem 0;
+        &__logo {
+          margin: 1rem 0;
+          order: 3;
+        }
+        &__links {
+          gap: 0;
+          flex-direction: column;
+        }
+      }
+    }
+
+    .menu-button {
+      top: 8px;
+      padding: 0.42rem;
+      @include centered_flex;
+      &:hover {
+        cursor: pointer;
+        & path {
+          fill: $primary;
+        }
+      }
+      & svg {
+        width: 2rem;
+      }
+      right: 8px;
+      border-radius: 50%;
+      & path {
+        transition: cubic-bezier(0.165, 0.84, 0.44, 1) 0.16s all;
+        fill: $text-secondary;
+      }
+      position: fixed;
+    }
+    position: fixed;
   }
 }

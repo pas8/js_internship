@@ -8,15 +8,13 @@ const tabpanelArr =
   productsArr: Array.from({ length: get_random_int(6, 10) }, (__, idx) => ({
     img_href: get_random_img(),
     sale_percent: get_random_int(8,92),
-    is_new: !!~~get_random_int(0,1),
+    is_new: '1',
     stars: get_random_int(0,5),
     caption: el,
     current_price: '$'+get_random_int(8,42),
   })),
 }))
-
 const featureProductsTabPanel = document.querySelector('.feature-products-tab-panel');
-
 featureProductsTabPanel.innerHTML = `
 ${tabpanelArr
   .map(

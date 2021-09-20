@@ -1,10 +1,6 @@
 @import 'node_modules/@glidejs/glide/src/assets/sass/glide.core';
 @import 'node_modules/@glidejs/glide/src/assets/sass/glide.theme';
 @import './global.scss';
-@import './header.scss';
-
-
-
 
 .glide__bullets {
   bottom: 320px;
@@ -23,15 +19,22 @@
 
   .glide__slide {
     min-height: 100vh;
-    display: flex;
-    align-items: center;
+    .container {
+      @include centered_flex;
+      gap: 1rem;
+      flex-direction: column-reverse;
+    }
+    @include centered_flex;
+
     &-abstraction {
-      width: 42%;
+      width: 100%;
     }
     &-content {
-      width: 42%;
+      width: 100%;
+
       color: $background;
       display: flex;
+      justify-content: center;
       flex-direction: column;
       gap: 0.42rem;
       &__caption {
@@ -52,12 +55,29 @@
         margin-bottom: 4rem;
       }
     }
+    @media screen and (min-width: $md) {
+      .container {
+        @include space-between_flex;
 
+        flex-direction: row;
+      }
+      &-abstraction {
+        width: 42%;
+      }
+      &-content {
+        width: 42%;
+      }
+    }
     &:first-child {
       background-color: #ef909a;
     }
-    // &.first {
-    // }
+
+    &:nth-child(2) {
+      background-color: #9793de;
+    }
+    &:nth-child(3) {
+      background-color: #fbc77c;
+    }
   }
   &-row {
     @include centered_flex;
@@ -69,6 +89,7 @@
   margin-bottom: 4rem;
   &-row {
     @include space-between_flex;
+
     &__item {
       display: flex;
       flex-direction: column;
@@ -127,8 +148,6 @@
     }
   }
 }
-
-
 
 .specical-products {
   @include centered_flex;
@@ -191,6 +210,7 @@
   }
   &-abstraction {
     width: 42%;
+    @include centered_flex;
     padding-left: 3.2rem;
   }
 
@@ -218,12 +238,20 @@
     &__utils {
       @include space-between_flex;
       width: 100%;
-      gap: 10px;
+      gap: 0.8rem;
+
       flex-wrap: wrap;
-      input {
-        width: 44%;
+      &-inputs-wrapper {
+        width: 100%;
+        display: flex;
+        gap: 0.8rem;
+        input {
+          width: 50%;
+        }
       }
+
       textarea {
+        min-width: 50%;
         width: 100%;
       }
     }
