@@ -156,10 +156,24 @@ body {
   @media screen and (min-width: 60rem) {
     width: 80vw;
   }
-
 }
 .social-utils {
+  & a {
+    display: grid;
+    place-items: center;
+    &:hover {
+      & svg path {
+        fill: $primary;
+      }
+    }
+  }
   & svg {
+& path {
+
+  transition: 0.16s ease-in-out all;
+
+
+}
     width: 1.16rem;
     height: 1.16rem;
   }
@@ -770,6 +784,14 @@ header {
         margin-right: 0;
       }
     }
+  }
+}
+
+.gallery {
+  @include centered_flex;
+
+  &-row {
+    @include centered_flex;
   }
 }
 

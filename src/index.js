@@ -1,5 +1,5 @@
 import Glide from '@glidejs/glide';
-import './index.scss';
+import './styles/index.scss';
 new Glide('.glide').mount();
 
 const d = document.querySelector('.main-row__links');

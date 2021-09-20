@@ -1,14 +1,14 @@
-/*!*********************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
-  \*********************************************************************************************************/
+/*!****************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/index.scss ***!
+  \****************************************************************************************************************/
 @import url(https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
-/*!*************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/index.scss (1) ***!
-  \*************************************************************************************************************/
+/*!********************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/index.scss (1) ***!
+  \********************************************************************************************************************/
 @import url(https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap);
-/*!*************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/index.scss (2) ***!
-  \*************************************************************************************************************/
+/*!********************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/index.scss (2) ***!
+  \********************************************************************************************************************/
 .glide {
   position: relative;
   width: 100%;
@@ -258,9 +258,16 @@ body {
 .social-utils {
   display: flex;
   gap: 0.42rem; }
+  .social-utils a {
+    display: grid;
+    place-items: center; }
+    .social-utils a:hover svg path {
+      fill: #88b13e; }
   .social-utils svg {
     width: 1.16rem;
     height: 1.16rem; }
+    .social-utils svg path {
+      transition: 0.16s ease-in-out all; }
 
 header {
   width: 100%;
@@ -748,6 +755,15 @@ header {
         cursor: pointer; }
       .feature-products-tab-panel p:last-of-type {
         margin-right: 0; }
+
+.gallery {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .gallery-row {
+    display: flex;
+    align-items: center;
+    justify-content: center; }
 
 .benifit {
   padding: 4rem;

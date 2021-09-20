@@ -13,20 +13,24 @@ const scss = {
 };
 
 const babel = {
-  test: /\.js$/,
-  exclude: '/node_modules',
-  loader: { loader: 'babel-loader', options: { presets: ['@babel/preset-env'] } },
+  test: /\.m?js$/,
+  exclude: /(node_modules|bower_components)/,
+  use: {
+    loader: 'babel-loader',
+    options: {
+      presets: ['@babel/preset-env'],
+    },
+  },
 };
 
-const img  =  {
+const img = {
   test: /\.(png|jpe?g|gif)$/i,
   use: [
     {
       loader: 'file-loader',
     },
   ],
-}
-
+};
 
 module.exports = {
   mode: 'development',
@@ -42,7 +46,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
-    rules: [pug, scss,img],
+    rules: [pug, scss, img,babel],
   },
   plugins: [
     new miniCss({
