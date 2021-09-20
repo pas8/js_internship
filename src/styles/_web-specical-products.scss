@@ -1,0 +1,123 @@
+@import './global.scss';
+@keyframes f {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+.special-product {
+  &:hover {
+    background-color: $background;
+    box-shadow: 0px 5px 25px rgba(138, 159, 168, 0.42);
+    .special-product-content__utils,
+    .special-product-content__favourite-button {
+      display: flex;
+
+      animation: 0.42s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s alternate f;
+    }
+  }
+  transition: 0.42s ease-in-out all;
+  padding-bottom: 1.42rem;
+
+  @include centered_flex;
+  flex-direction: column;
+
+  &__stars {
+    @include centered_flex;
+    margin: 0.42rem 0;
+    & svg {
+      color: $star-color;
+
+      width: 1.16rem;
+      height: 1.16rem;
+    }
+  }
+  &__caption {
+    font-family: 'Jost';
+    font-weight: 500;
+    @include centered_flex;
+  }
+
+  &__price {
+    @include centered_flex;
+    font-size: 1.16rem;
+    &-old {
+      color: $input-border-color;
+      font-size: 1rem;
+      text-decoration: line-through;
+    }
+    font-family: 'Jost';
+  }
+
+  &-content {
+    &__favourite-button {
+      position: absolute;
+      border: 1px solid $input-border-color;
+      top: 8px;
+      display: none;
+      right: 8px;
+      & svg {
+        width: 1.42rem;
+        height: 1.42rem;
+      }
+    }
+
+    position: relative;
+    & img {
+      object-fit: cover;
+      aspect-ratio: 1;
+      width: 242px;
+    }
+    &__labels {
+      @include centered_flex;
+      // gap:8px;
+      top: -10px;
+      right: 0;
+      left: 0;
+      position: absolute;
+      color: $background;
+      font-family: 'Jost';
+      & > div {
+        width: fit-content;
+        font-weight: 500;
+        padding: 0rem 0.8rem;
+        text-transform: uppercase;
+      }
+      &-sale {
+        background-color: $red;
+      }
+      &-new {
+        background-color: $blue;
+      }
+    }
+
+    &__utils {
+      @include centered_flex;
+
+      position: absolute;
+      display: none;
+      button {
+        border: 1px solid $light-grey;
+      }
+      bottom: 6px;
+      right: 0;
+      left: 0;
+      gap: 4px;
+      &-add-to-card {
+        font-size: 0.96rem;
+        text-transform: capitalize;
+      }
+      &-compare,
+      &-search {
+        & svg {
+          width: 1.42rem;
+          height: 1.42rem;
+        }
+      }
+    }
+  }
+}

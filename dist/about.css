@@ -1,3 +1,19 @@
+/*!******************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/_header.scss ***!
+  \******************************************************************************************************************/
+@import url(https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap);
+/*!**********************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/_header.scss (1) ***!
+  \**********************************************************************************************************************/
+@import url(https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
+/*!******************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/_footer.scss ***!
+  \******************************************************************************************************************/
+@import url(https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap);
+/*!**********************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/_footer.scss (1) ***!
+  \**********************************************************************************************************************/
+@import url(https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
 /*!****************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/about.scss ***!
   \****************************************************************************************************************/
@@ -6,6 +22,168 @@
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/about.scss (1) ***!
   \********************************************************************************************************************/
 @import url(https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
+/*!**********************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/_header.scss (2) ***!
+  \**********************************************************************************************************************/
+header {
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  header .utils {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fceee7; }
+    header .utils-row {
+      padding: 0.42rem 0;
+      display: flex;
+      justify-content: space-between; }
+      header .utils-row__contact-info {
+        display: flex; }
+        header .utils-row__contact-info svg path {
+          fill: #111; }
+        header .utils-row__contact-info__email {
+          padding-left: 2rem;
+          margin-left: 2rem;
+          border-left: 2px solid #111;
+          display: flex;
+          align-items: center;
+          gap: 0.42rem; }
+          header .utils-row__contact-info__email p {
+            font-family: 'Jost'; }
+  header .main {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+    header .main-row {
+      display: flex;
+      justify-content: space-between; }
+      header .main-row__links {
+        display: flex;
+        gap: 1rem; }
+        header .main-row__links__link-wrapper {
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0.42rem;
+          height: 4rem;
+          position: relative; }
+          header .main-row__links__link-wrapper:hover::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background-color: #111; }
+          header .main-row__links__link-wrapper--active {
+            color: #88b13e; }
+            header .main-row__links__link-wrapper--active::before {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              width: 100%;
+              height: 4px;
+              background-color: #88b13e; }
+        header .main-row__links a {
+          font-size: 1.2rem;
+          font-family: 'Jost'; }
+      header .main-row__logo {
+        display: flex;
+        align-items: center;
+        justify-content: center; }
+        header .main-row__logo svg {
+          width: 10rem; }
+          header .main-row__logo svg path {
+            fill: #111; }
+      header .main-row__utils {
+        display: flex;
+        align-items: center;
+        gap: 1rem; }
+        header .main-row__utils-hotline {
+          display: flex;
+          gap: 0.42rem; }
+          header .main-row__utils-hotline p {
+            font-family: 'Jost'; }
+          header .main-row__utils-hotline .phone-number {
+            font-weight: 600; }
+        header .main-row__utils-buttons-container {
+          display: flex;
+          gap: 0.42rem; }
+
+/*!**********************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/_footer.scss (2) ***!
+  \**********************************************************************************************************************/
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; }
+  .footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+  .footer-copyright {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #dddddd; }
+    .footer-copyright__wrapper {
+      padding: 0.8rem;
+      display: flex;
+      justify-content: space-between; }
+      .footer-copyright__wrapper svg {
+        fill: #111; }
+      .footer-copyright__wrapper p {
+        font-family: 'Jost'; }
+  .footer-content {
+    padding: 4rem 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between; }
+    .footer-content-about {
+      width: 33%;
+      border-right: 1px solid #dddddd;
+      display: flex;
+      gap: 0.8rem;
+      flex-direction: column; }
+      .footer-content-about__schedule p {
+        font-family: 'Jost'; }
+      .footer-content-about__title {
+        font-size: 2.8rem;
+        font-family: 'Lobster Two'; }
+    .footer-content-info {
+      width: 66%;
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between; }
+      .footer-content-info__links {
+        font-family: 'Jost'; }
+        .footer-content-info__links-title {
+          color: #111;
+          font-weight: 600;
+          font-size: 1.2rem;
+          margin-bottom: 1rem; }
+        .footer-content-info__links-content {
+          display: flex;
+          flex-direction: column;
+          gap: 0.42rem; }
+          .footer-content-info__links-content a {
+            color: #888888; }
+            .footer-content-info__links-content a:hover {
+              text-decoration: underline; }
+      .footer-content-info .email {
+        margin-top: 1rem; }
+
 /*!********************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/about.scss (2) ***!
   \********************************************************************************************************************/
