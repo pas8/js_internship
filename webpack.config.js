@@ -32,29 +32,51 @@ const img = {
   ],
 };
 
+const pages = ['index'];
+
 module.exports = {
   mode: 'development',
-  entry: '/src/index.js',
-
+  entry: pages.reduce((config, page) => {
+    config[page] = `/src/${page}.js`;
+    return config;
+  }, {}),
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
   devServer: {
     static: {
       directory: path.join(__dirname, 'dist'),
     },
   },
+  resolve: {
+    alias: {
+      '@includes': path.resolve(__dirname, '/src/includes'),
+      '@styles': path.resolve(__dirname, '/src/styles'),
+      '@assets': path.resolve(__dirname, '/src/assets'),
+    },
+  },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
-    rules: [pug, scss, img,babel],
+    rules: [pug, scss, img, babel],
   },
   plugins: [
     new miniCss({
       filename: 'style.css',
     }),
-    new HtmlWebpackPlugin({
-      template: '/src/index.pug',
-      filename: 'index.html',
-    }),
-  ],
+  ].concat(
+    pages.map(
+      (page) =>
+        new HtmlWebpackPlugin({
+          inject: true,
+          template: `/src/pages/${page}.pug`,
+          filename: `${page}.html`,
+          chunks: [page],
+        })
+    )
+  ),
 };

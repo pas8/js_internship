@@ -1,0 +1,9 @@
+section(class='banner')
+      div(class='container banner-row')
+        - const bannerArr = [{caption:'Sale of 30 %',title:'Custard Cake',text:'Legetables and cheese'},{caption:'Special recipe',title:'Fruits Taste',text:'Made with meat, vegetables and cheese'},{caption:'Valentine’s day ',title:'Sale off 30%',text:'All Chocolate Products'}]
+          each item in bannerArr 
+            div(class='banner-row__item') 
+              div(class='banner-row__item__caption') #{item.caption}
+              div(class='banner-row__item__title')  #{item.title}
+              div(class='banner-row__item__text') #{item.text}
+              button(class='banner-row__item__button button--contained ') Order now

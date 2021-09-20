@@ -1,0 +1,7 @@
+section(class='categories')
+      div(class='container categories-row')
+        - const categoriesArr = [{href:'https://via.placeholder.com/150x200/0000FF/808080',caption:'Cup cakes'},{href:'https://via.placeholder.com/150x200/0000FF/808080',caption:'Cokies'},{href:'https://via.placeholder.com/150x200/0000FF/808080',caption:'Donut Cakes'},{href:'https://via.placeholder.com/150x200/0000FF/808080',caption:'Cup Cakes'},{href:'https://via.placeholder.com/150x200/0000FF/808080',caption:'Tower Cakes'},{href:'https://via.placeholder.com/150x200/0000FF/808080',caption:'Custard Cake'}]
+        each item in categoriesArr 
+          div(class='categories-row__item') 
+            img(href=item.href)
+            p #{item.caption}

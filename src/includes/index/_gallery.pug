@@ -1,0 +1,7 @@
+section.gallery
+  div.gallery-row.container
+    masonry-layout(gap='8')
+      - var galleryIdx = 1;
+        while galleryIdx < 11
+          div
+            img(src= require(`@assets/food${galleryIdx++}.jpeg`).default)
