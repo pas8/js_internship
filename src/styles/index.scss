@@ -62,6 +62,20 @@
       }
     }
 
+    @media screen and (max-width: $sm) {
+      &-content {
+        &__title {
+          font-size: 2.8rem;
+        }
+        &__button {
+          width: 100% !important;
+        }
+        text-align: center;
+        &__text {
+          margin-bottom: 1.42rem;
+        }
+      }
+    }
     @media screen and (min-width: $sm) {
       // justify-content: flex-start;
       &-abstraction {
@@ -205,8 +219,13 @@
     gap: 4rem;
     @include space-between_flex;
   }
+
+  time-left {
+    width: min-content;
+  }
+
   &__preview {
-    width: 20%;
+    width: 240px;
     & img {
       width: 100%;
       height: 424px;
@@ -219,7 +238,7 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    width: 80%;
+    width: calc(100% - 240px);
 
     &-header {
       @include space-between_flex;
@@ -236,7 +255,27 @@
     }
   }
 
-  @media screen and (max-width: $sm) {
+  @media screen and (max-width: $md) {
+    &__content-header {
+      flex-direction: column;
+      gap: 0.42rem;
+      @include centered_flex;
+    }
+    &__content {
+      width: 100%;
+    }
+
+    &__content-products {
+      flex-wrap: wrap;
+      special-product {
+        width: 48%;
+
+        & .special-product-content,
+        img {
+          width: 100% !important;
+        }
+      }
+    }
     &-row {
       flex-direction: column;
       @include centered_flex;
@@ -249,19 +288,20 @@
         // height: ;
       }
     }
+  }
+
+  @media screen and (max-width: $sm) {
+    time-left {
+      transform: scale(0.8);
+    }
+
+    special-product {
+      width: 100%;
+    }
 
     &__content {
-      &-header {
-        @include centered_flex;
-        gap: 0.42rem;
-        flex-direction: column;
-      }
       &-products {
         flex-direction: column;
-        img,
-        .special-product-content {
-          width: 100% !important;
-        }
       }
     }
   }

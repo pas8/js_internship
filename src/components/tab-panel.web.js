@@ -1,19 +1,19 @@
 import { get_random_int } from '@utils/get_random_int.util.js';
 import { get_random_img } from '@utils/get_random_img.util.js';
+import { convert_rem_to_pixels } from '@utils/convert_rem_to_pixels.util.js';
 
-const tabpanelArr = 
-['Cup cakes','Cookies','Donut','Custard',].map((el,idx)=> ( {
-  id:idx+"",
+const tabpanelArr = ['Cup cakes', 'Cookies', 'Donut', 'Custard'].map((el, idx) => ({
+  id: idx + '',
   caption: el,
   productsArr: Array.from({ length: get_random_int(6, 10) }, (__, idx) => ({
     img_href: get_random_img(),
-    sale_percent: get_random_int(8,92),
+    sale_percent: get_random_int(8, 92),
     is_new: '1',
-    stars: get_random_int(0,5),
+    stars: get_random_int(0, 5),
     caption: el,
-    current_price: '$'+get_random_int(8,42),
+    current_price: '$' + get_random_int(8, 42),
   })),
-}))
+}));
 const featureProductsTabPanel = document.querySelector('.feature-products-tab-panel');
 featureProductsTabPanel.innerHTML = `
 ${tabpanelArr
@@ -108,20 +108,26 @@ class TabPanel extends HTMLElement {
     this.dom.contents = this.dom.contentSlot.assignedElements();
   }
   attachEvents() {
+    const GAP = convert_rem_to_pixels(2);
+    const PRODUCT_WIDTH = 280 + GAP;
     const tracksArr = [...document.querySelectorAll('.feature-products-glide__track')].sort((a, b) => +a.id - +b.id);
     document.querySelectorAll('.slider-next-button').forEach((el) =>
       el.addEventListener('click', (e) => {
         const id = e.target.id;
-        tracksArr[+id].style.transform = `translateX(${
-          +tracksArr[+id].style.transform.split('(')[1].split('px')[0] - 280
-        }px)`;
+        const MAX_LENGTH = (((tracksArr[+id].children[0].children.length - 2)* PRODUCT_WIDTH) / 2);
+        const CURRENT_TRANSLATE_VALUE = +tracksArr[+id].style.transform.split('(')[1].split('px')[0] - PRODUCT_WIDTH;
+// const is CURRENT_TRANSLATE_VALUE  > MAX_LENGTH ? 
+
+         tracksArr[+id].style.transform = `translateX(${CURRENT_TRANSLATE_VALUE}px)` 
+
+        // console.log(Math.abs( );
       })
     );
     document.querySelectorAll('.slider-prev-button').forEach((el) =>
       el.addEventListener('click', (e) => {
         const id = e.target.id;
         tracksArr[+id].style.transform = `translateX(${
-          +tracksArr[+id].style.transform.split('(')[1].split('px')[0] + 280
+          +tracksArr[+id].style.transform.split('(')[1].split('px')[0] + PRODUCT_WIDTH
         }px)`;
       })
     );

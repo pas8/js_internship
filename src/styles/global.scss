@@ -1,6 +1,6 @@
-@import './colors.scss';
 @import './fonts.scss';
 @import './breakpoints.scss';
+@import './scrollbar.scss';
 
 @mixin centered_flex {
   display: flex;
@@ -129,6 +129,7 @@ a {
   margin: 0;
 }
 body {
+  overflow-x: hidden;
   margin: 0;
   & div img {
     width: 100%;
@@ -137,22 +138,28 @@ body {
 }
 
 .container {
-
   @media screen and (min-width: $xl) {
     width: 60vw;
   }
-  @media screen and (min-width: $lg) {
-    width: 70vw;
+  @media screen and (max-width: $xl) {
+    width: 64vw;
   }
-
-  @media screen and (min-width: $md) {
+  @media screen and (max-width: $lg) {
     width: 80vw;
   }
-  @media screen and (min-width: $sm) {
+
+  @media screen and (max-width: $md) {
+    width: 80vw;
+  }
+  @media screen and (max-width: $sm) {
     width: 92vw;
   }
-  @media screen and (min-width: $xs) {
+  @media screen and (max-width: $xs) {
     width: 88vw;
   }
+  @media screen and (min-width: $xs) {
+    width: 90vw;
+  }
+
 }
 
