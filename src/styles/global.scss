@@ -138,11 +138,17 @@ body {
 }
 
 .container {
+  // @media screen and (min-width: $xl) {
+    // width: 60vw;
+  // }
+
   @media screen and (min-width: $xl) {
-    width: 60vw;
+    width: 66vw;
   }
+
+
   @media screen and (max-width: $xl) {
-    width: 64vw;
+    width: 72vw;
   }
   @media screen and (max-width: $lg) {
     width: 80vw;
@@ -156,9 +162,6 @@ body {
   }
   @media screen and (max-width: $xs) {
     width: 88vw;
-  }
-  @media screen and (min-width: $xs) {
-    width: 90vw;
   }
 
 }

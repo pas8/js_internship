@@ -1,0 +1,143 @@
+@import './global.scss';
+
+.product-details-content {
+  width: 100%;
+  display: flex;
+  gap: 4rem;
+  font-family: 'Jost';
+
+  & > div {
+    width: 50%;
+  }
+  &__product-gallery {
+    &__main-img {
+      width: 100%;
+    }
+  }
+  &__info {
+    display: flex;
+    flex-direction: column;
+    // gap: 2rem;
+    &-acticle {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+
+      &__caption {
+        font-size: 3.2rem;
+        font-weight: 500;
+      }
+
+      &__stars {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        &-denotation {
+          color: $input-border-color;
+        }
+      }
+      &__price {
+        font-size: 2rem;
+        font-weight: 500;
+      }
+      padding-bottom: 1rem;
+      border-bottom: 1px solid $light-grey;
+    }
+    &-denotation {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      &__text {
+
+        color:$text-thirdly;
+
+
+      }
+      padding: 2rem 0;
+    }
+    &-utils {
+      padding-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      border-bottom: 1px solid $light-grey;
+
+      &__quantity {
+        display: flex;
+        gap: 1rem;
+
+        p {
+          @include centered_flex;
+        }
+
+        
+        &-counter {
+          @include centered_flex;
+          color: $text-secondary !important;
+          border: 1px solid $light-grey;
+          padding: 0.42rem;
+          gap: 1.42rem;
+          & svg {
+            width: 1.42rem;
+            path {
+              fill: $input-border-color;
+            }
+            &:hover {
+              path {
+                fill: $text-secondary;
+              }
+
+              cursor: pointer;
+            }
+          }
+
+          &__value {
+            font-weight: 500;
+            font-size: 1.08rem;
+          }
+        }
+      }
+      &__add-to-cart-button {
+        padding: 0.6rem 1.2rem;
+        font-weight: 500;
+
+        letter-spacing: 2px;
+        background-color: $text-secondary;
+        color: $background;
+
+        &:hover {
+          background-color: $primary;
+        }
+      }
+    }
+    &-extended {
+      margin: 2rem 0;
+
+      &__tabs {
+        display: flex;
+        flex-direction: column;
+        gap: 1.42rem;
+        &-title {
+          font-size: 1.42rem;
+          font-weight: 500;
+          &--active {
+            color: $text-secondary;
+          }
+        }
+
+        &-content {
+          &--desciption {
+            display: flex;
+            flex-direction: column;
+            gap: 1.6rem;
+          }
+          p {
+            color:$text-thirdly;
+
+
+          }
+        }
+      }
+    }
+  }
+}

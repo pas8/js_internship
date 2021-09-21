@@ -10,7 +10,7 @@ const pug = {
 const scss = {
   test: /\.(s*)css$/,
   // options: {
-    // reloadAll: true,
+  // reloadAll: true,
   // },
   use: [miniCss.loader, 'css-loader', 'sass-loader'],
 };
@@ -35,14 +35,17 @@ const img = {
   ],
 };
 
-const pages = ['index','about'];
+const pages = ['index', 'about', 'product_details'];
 
 module.exports = {
   mode: 'development',
-  entry: [...pages].reduce((config, page) => {
-    config[page] = `/src/${page}.js`;
-    return config;
-  }, {}),
+  entry: {
+    ...pages.reduce((config, page) => {
+      config[page] = `/src/${page}.js`;
+      return config;
+    }, {}),
+    // components: '/src/components/.js',
+  },
   optimization: {
     splitChunks: {
       chunks: 'all',
@@ -64,6 +67,8 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
+    chunkFilename: '[name].bundle.js',
+
     path: path.resolve(__dirname, 'dist'),
   },
   module: {

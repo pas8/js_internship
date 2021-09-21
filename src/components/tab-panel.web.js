@@ -5,7 +5,7 @@ import { convert_rem_to_pixels } from '@utils/convert_rem_to_pixels.util.js';
 const tabpanelArr = ['Cup cakes', 'Cookies', 'Donut', 'Custard'].map((el, idx) => ({
   id: idx + '',
   caption: el,
-  productsArr: Array.from({ length: get_random_int(6, 10) }, (__, idx) => ({
+  productsArr: Array.from({ length: get_random_int(16, 24) }, (__, idx) => ({
     img_href: get_random_img(),
     sale_percent: get_random_int(8, 92),
     is_new: '1',
@@ -19,31 +19,28 @@ featureProductsTabPanel.innerHTML = `
 ${tabpanelArr
   .map(
     ({ caption, productsArr }, idx) => `
-<p slot='tab'> ${caption}</p>
-<div slot='content'>
-<div class='feature-products-glide container'>
-<svg class='slider-prev-button'  id=${idx} viewBox="0 0 24 24"><path d="M15.41 16.59 10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path></svg>
+    <p slot='tab'> ${caption}</p>
+    <div slot='content'>
+      <div class='feature-products-glide container'>
+        <svg class='slider-prev-button' id=${idx} viewBox='0 0 24 24'>
+          <path d='M15.41 16.59 10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z'></path>
+        </svg>
 
-<div class='feature-products-glide__track' style='transform:translateX(0px)'  id=${idx}>
-
-<div class='feature-products-glide__slides'>
-
-${productsArr
-  .map(
-    ({ img_href, sale_percent, is_new, stars, caption, current_price }) =>
-      `<div class='feature-products-glide__slide' ><special-product  img_href=${img_href}  sale_percent=${sale_percent} is_new=${is_new} stars=${stars} caption=${caption} current_price=${current_price}></current_price></div>`
-  )
-  .join('')}
-</div>
-</div>
-<svg class='slider-next-button' id=${idx} viewBox="0 0 24 24"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path></svg>
-
-
-</div>
-
-</div>
-
-</div>
+        <div class='feature-products-glide__track' style='transform:translateX(0px)' id={idx}>
+          <div class='feature-products-glide__slides'>
+            ${productsArr
+              .map(
+                ({ img_href, sale_percent, is_new, stars, caption, current_price }) =>
+                  ` <div class='feature-products-glide__slide' ><special-product  img_href=${img_href}  sale_percent=${sale_percent} is_new=${is_new} stars=${stars} caption=${caption} current_price=${current_price}></current_price></div>`
+              )
+              .join('')}
+          </div>
+        </div>
+        <svg class='slider-next-button' id=${idx} viewBox='0 0 24 24'>
+          <path d='M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z'></path>
+        </svg>
+      </div>
+    </div>
 `
   )
   .join('')}
@@ -79,25 +76,24 @@ class TabPanel extends HTMLElement {
     this.shadow = this.attachShadow({ mode: 'open' });
 
     this.shadow.innerHTML = `
-              <style>
-                  :host { display: flex; flex-direction: column; }
-                  :host([direction="column"]) { flex-direction: row; }
-                  :host([direction="column"]) .tabs { flex-direction: column; }
-                  .tabs { display: flex; flex-direction: row; flex-wrap: nowrap;  }
+      <style>
+          :host { display: flex; flex-direction: column; }
+          :host([direction="column"]) { flex-direction: row; }
+          :host([direction="column"]) .tabs { flex-direction: column; }
+          .tabs { display: flex; flex-direction: row; flex-wrap: nowrap;  }
 
-                  .tabs ::slotted(*) { padding: 5px; border: 1px solid #ccc; user-select: none; cursor: pointer; }
-                  .tabs ::slotted(.selected) { background: #efefef; }
-                  .tab-contents ::slotted(*) { display: none; }
-                  .tab-contents ::slotted(.selected) { display: block;  }
-              </style>
-              <div class="tabs">
-                  <slot id="tab-slot" name="tab"></slot>
-              </div>
-              <div class="tab-contents"> 
-                  <slot id="content-slot" name="content"></slot>
-              </div>
-          `;
-    // new Glide(this.shadowRoot.querySelector('.feature-products-glide')).mount();
+          .tabs ::slotted(*) { padding: 5px; border: 1px solid #ccc; user-select: none; cursor: pointer; }
+          .tabs ::slotted(.selected) { background: #efefef; }
+          .tab-contents ::slotted(*) { display: none; }
+          .tab-contents ::slotted(.selected) { display: block;  }
+      </style>
+      <div class="tabs">
+          <slot id="tab-slot" name="tab"></slot>
+      </div>
+      <div class="tab-contents"> 
+          <slot id="content-slot" name="content"></slot>
+      </div>
+  `;
   }
   cacheDom() {
     this.dom = {
@@ -110,25 +106,29 @@ class TabPanel extends HTMLElement {
   attachEvents() {
     const GAP = convert_rem_to_pixels(2);
     const PRODUCT_WIDTH = 280 + GAP;
+
     const tracksArr = [...document.querySelectorAll('.feature-products-glide__track')].sort((a, b) => +a.id - +b.id);
+
+    const handleTranslateSlider = (id, direction = 'prev') => {
+
+      const MAX_LENGTH = ((tracksArr[+id].children[0].children.length - 2) * PRODUCT_WIDTH) / 2;
+      const CURRENT_TRANSLATE_VALUE =
+        +tracksArr[+id].style.transform.split('(')[1].split('px')[0] +
+        (direction === 'prev' ? PRODUCT_WIDTH : -PRODUCT_WIDTH);
+      const isSlidergetAway = Math.abs(CURRENT_TRANSLATE_VALUE) > MAX_LENGTH;
+      tracksArr[+id].style.transform = `translateX(${isSlidergetAway ? 0 : CURRENT_TRANSLATE_VALUE}px)`;
+    };
+
     document.querySelectorAll('.slider-next-button').forEach((el) =>
       el.addEventListener('click', (e) => {
-        const id = e.target.id;
-        const MAX_LENGTH = (((tracksArr[+id].children[0].children.length - 2)* PRODUCT_WIDTH) / 2);
-        const CURRENT_TRANSLATE_VALUE = +tracksArr[+id].style.transform.split('(')[1].split('px')[0] - PRODUCT_WIDTH;
-// const is CURRENT_TRANSLATE_VALUE  > MAX_LENGTH ? 
-
-         tracksArr[+id].style.transform = `translateX(${CURRENT_TRANSLATE_VALUE}px)` 
-
-        // console.log(Math.abs( );
+        const { id } = e.target;
+        handleTranslateSlider(id, 'next');
       })
     );
     document.querySelectorAll('.slider-prev-button').forEach((el) =>
       el.addEventListener('click', (e) => {
-        const id = e.target.id;
-        tracksArr[+id].style.transform = `translateX(${
-          +tracksArr[+id].style.transform.split('(')[1].split('px')[0] + PRODUCT_WIDTH
-        }px)`;
+        const { id } = e.target;
+        handleTranslateSlider(id);
       })
     );
 

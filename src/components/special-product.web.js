@@ -1,5 +1,5 @@
 import '@styles/_web-specical-products.scss'
-
+import '@components/stars.web.js'
 
 
 class SpecicalProduct extends HTMLElement {
@@ -45,21 +45,8 @@ class SpecicalProduct extends HTMLElement {
     <img src=${img_href}/>
     </div>
 
-      <div class='special-product__stars'>
-      ${Array(5)
-        .fill(null)
-        .map(
-          (__, idx) =>
-            `<svg viewBox='0 0 24 24'>
-            <path
-              fill=${+stars <= idx ? 'none' : 'currentColor'}
-              stroke='currentColor'
-              d='M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z'
-            ></path>
-          </svg>`
-        )
-        .join('')}
-      </div>
+      <stars-feedback value=${stars}>
+      </stars-feedback>
       <div class='special-product__caption'>
       ${caption}
       </div>

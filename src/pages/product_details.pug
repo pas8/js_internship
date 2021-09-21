@@ -1,0 +1,20 @@
+html
+  head
+    meta(charset="UTF-8")
+    script(src="/product_details.js")
+  body 
+    include ../includes/_header.pug
+    section.breadcrumb
+      div.breadcrumb-row.container
+        div.breadcrumb-content
+          div.breadcrumb-content__title Product details
+          div.breadcrumb-content__href-utils 
+            a.breadcrumb-content__href-utils-home(href='/') Home
+            span.breadcrumb-content__href-utils-arrow-diver >>
+            span.breadcrumb-content__href-utils-current Product details
+    section.product-details
+      div.product-details-row.container
+        product-details
+      
+    include ../includes/_footer.pug
+    

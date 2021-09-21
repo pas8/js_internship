@@ -10,6 +10,10 @@
   @media screen and (max-width: $sm) {
     bottom: 120px;
   }
+
+  @media screen and (min-width: $xl) {
+    bottom: 420px;
+  }
 }
 .introduction {
   position: relative;
@@ -237,7 +241,6 @@
 
     display: flex;
     flex-direction: column;
-    gap: 2rem;
     width: calc(100% - 240px);
 
     &-header {
@@ -250,12 +253,39 @@
       }
     }
     &-products {
+      padding: 2rem 0 ;
+      overflow-x: hidden;
       @include space-between_flex;
       gap: 1rem;
     }
   }
 
-  @media screen and (max-width: $md) {
+
+
+
+  @media screen and (min-width: $md) {
+    special-product:nth-child(4),  special-product:nth-child(1) {
+      display: none;
+    }
+  }
+  @media screen and (min-width: $lg) {
+      special-product:nth-child(1) {
+      display: block;
+    }
+  }
+
+  @media screen and (min-width: $xl) {
+    special-product:nth-child(4),  special-product:nth-child(1) {
+      display: block;
+    }
+  }
+
+  // special-product:nth-child(4) {
+  //   display: block;
+  // }
+
+  @media screen and (max-width: $lg) {
+  
     &__content-header {
       flex-direction: column;
       gap: 0.42rem;
@@ -475,7 +505,7 @@
         &::before,
         &::after {
           position: absolute;
-          bottom: -0.5rem;
+          bottom: -10px;
           left: 0;
           right: 0;
           margin-left: auto;
@@ -487,17 +517,17 @@
         &::before {
           z-index: 3;
 
-          border-right: solid 0.52rem transparent;
-          border-left: solid 0.52rem transparent;
-          border-top: solid 0.52rem $primary;
+          border-right: solid 10px transparent;
+          border-left: solid 10px transparent;
+          border-top: solid 10px $primary;
         }
         &::after {
           z-index: 4;
 
-          bottom: -0.42rem;
-          border-right: solid 0.42rem transparent;
-          border-left: solid 0.42rem transparent;
-          border-top: solid 0.42rem $background;
+          bottom: -8px;
+          border-right: solid 8px transparent;
+          border-left: solid 8px transparent;
+          border-top: solid 8px $background;
         }
       }
 
@@ -513,7 +543,7 @@
 
 .gallery {
   @include centered_flex;
-
+  margin-top: 4rem;
   &-row {
     @include centered_flex;
   }

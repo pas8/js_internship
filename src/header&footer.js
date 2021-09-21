@@ -8,7 +8,6 @@ const findedLink = [...document.querySelector('.main-row__links').childNodes]
   .find((el) => el.classList[1] === window.location.pathname);
 
 findedLink.classList.add('main-row__links__link-wrapper--active');
-console.log();
 
 const favouriteNode = document.querySelector('.button-favourite');
 const basketNode = document.querySelector('.button-basket');
@@ -27,6 +26,7 @@ headerMenuButtonNode.addEventListener('click', () => {
 });
 
 
+console.log(';')
 
 // if (convert_rem_to_pixels(46) > window.innerWidth) {
 // headerNode.childNodes.forEach((el) => (el.style.display = 'none'));
