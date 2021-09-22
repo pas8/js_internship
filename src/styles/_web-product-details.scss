@@ -48,10 +48,7 @@
       flex-direction: column;
       gap: 2rem;
       &__text {
-
-        color:$text-thirdly;
-
-
+        color: $text-thirdly;
       }
       padding: 2rem 0;
     }
@@ -59,9 +56,25 @@
       padding-bottom: 2rem;
       display: flex;
       align-items: center;
-      gap: 2rem;
+      gap: 1rem;
       border-bottom: 1px solid $light-grey;
 
+      button {
+        border: 1px solid $light-grey;
+        padding: 0.6rem !important;
+        &:hover {
+          border-color: $primary;
+          path {
+            fill: $primary;
+          }
+        }
+        & svg {
+          width: 1.42rem;
+          path {
+            fill: $text-secondary;
+          }
+        }
+      }
       &__quantity {
         display: flex;
         gap: 1rem;
@@ -70,7 +83,6 @@
           @include centered_flex;
         }
 
-        
         &-counter {
           @include centered_flex;
           color: $text-secondary !important;
@@ -117,11 +129,23 @@
         display: flex;
         flex-direction: column;
         gap: 1.42rem;
+
+        &-title-row {
+          gap: 1rem;
+          display: flex;
+        }
         &-title {
-          font-size: 1.42rem;
+          transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.16s all;
+          font-size: 1.24rem;
           font-weight: 500;
+          color: $input-border-color;
           &--active {
             color: $text-secondary;
+          }
+          &:hover {
+            color: $primary;
+
+
           }
         }
 
@@ -132,9 +156,7 @@
             gap: 1.6rem;
           }
           p {
-            color:$text-thirdly;
-
-
+            color: $text-thirdly;
           }
         }
       }

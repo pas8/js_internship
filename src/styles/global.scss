@@ -13,21 +13,31 @@
   justify-content: space-between;
 }
 
-@mixin button_normalize {
+@mixin button_nullity {
   background-color: transparent;
   display: grid;
-  font-family: 'Jost';
   width: fit-content;
-  transition: 0.24s ease-in all;
+  border: none;
+  // padding: 0;
 
-  text-transform: uppercase;
   outline: none;
+  font-family: 'Jost';
   place-items: center;
   &:hover {
     cursor: pointer;
   }
 }
 
+@mixin button_normalize {
+  @include button_nullity;
+
+  transition: 0.24s ease-in all;
+  text-transform: uppercase;
+}
+
+button {
+  @include button_nullity;
+}
 
 .button {
   @include button_normalize;
@@ -97,7 +107,6 @@
   }
 }
 
-
 .input {
   font-family: 'Jost';
   outline: none;
@@ -139,13 +148,12 @@ body {
 
 .container {
   // @media screen and (min-width: $xl) {
-    // width: 60vw;
+  // width: 60vw;
   // }
 
   @media screen and (min-width: $xl) {
     width: 66vw;
   }
-
 
   @media screen and (max-width: $xl) {
     width: 72vw;
@@ -163,6 +171,4 @@ body {
   @media screen and (max-width: $xs) {
     width: 88vw;
   }
-
 }
-

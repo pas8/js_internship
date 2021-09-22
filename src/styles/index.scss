@@ -29,6 +29,10 @@
 
   .glide__slide {
     min-height: 100vh;
+    button {
+z-index: 1000;
+
+    }
     .container {
       @include centered_flex;
       gap: 1rem;

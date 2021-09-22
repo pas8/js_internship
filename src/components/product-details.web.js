@@ -1,19 +1,38 @@
 import '@components/stars.web.js';
 import '@styles/_web-product-details.scss';
 class ProductDetails extends HTMLElement {
+  constructor() {
+    super();
+    this.tabContentClassName = 'product-details-content__info-extended__tabs-content';
+    this.imgsArr = ['90249b7fa32e303d2230923fa60540b6.jpeg'];
+    this.activeImgUrl = '90249b7fa32e303d2230923fa60540b6.jpeg';
+    this.starsValue = +'4';
+    this.tabIdx = 0;
+  }
+
   connectedCallback() {
+    const desciptionContent = `Etiam cursus condimentum vulputate. Nulla nisi orci, vulputate at dolor et, malesuada ultrices nisi. Ut
+    varius ex ut purus porttitor, a facilisis orci condimentum. Nullam in elit et sapien ornare pellentesque
+    at ac lorem. Cras suscipit, sapien in pellentesque hendrerit, dolor quam ornare nisl, vitae tempus nibh
+    urna eget sem. Duis non interdum arcu, sit amet pellentesque odio. In sit amet aliquet augue.
+    Etiam cursus condimentum vuputate. Nulla nisi orci, vulputate at dolor et, malesuada ultrices nisi. Ut
+    varius ex ut purus porttitor, a facilisis orci condimentum. Nullam in elit et sapien ornare pellentesque
+    at ac lorem. Cras suscipit, sapien in pellentesque hendrerit, dolor quam ornare nisl, vitae tempus nibh
+    urna eget sem. Duis non interdum arcu, sit amet pellentesque odio. In sit amet aliquet augue.`;
+    const h = [desciptionContent];
+
     this.innerHTML = `
       <div class='product-details-content'>
       <div class='product-details-content__product-gallery'>
         <div class='product-details-content__product-gallery__main-img'>
-          <img src='90249b7fa32e303d2230923fa60540b6.jpeg' />
+          <img src=${this.activeImgUrl} />
         </div>
       </div>
       <div class='product-details-content__info'>
         <div class='product-details-content__info-acticle'>
           <div class='product-details-content__info-acticle__caption'>Placeholder</div>
           <div class='product-details-content__info-acticle__stars'>
-            <stars-feedback value='4'></stars-feedback>
+            <stars-feedback value=${this.starsValue}></stars-feedback>
             <p class='product-details-content__info-acticle__stars-denotation'>( 6 customer reviews )</p>
           </div>
           <div class='product-details-content__info-acticle__price'>$12.0</div>
@@ -60,28 +79,43 @@ class ProductDetails extends HTMLElement {
         </div>
         <div class='product-details-content__info-extended'>
           <div class='product-details-content__info-extended__tabs'>
-            <div class='product-details-content__info-extended__tabs-title product-details-content__info-extended__tabs-title--active'>
+          <div class='product-details-content__info-extended__tabs-title-row'>
+            <button class='product-details-content__info-extended__tabs-title product-details-content__info-extended__tabs-title--active'>
               Desciption
+            </button>
+            <button class='product-details-content__info-extended__tabs-title'>
+              Additional information
+            </button>
+            <button class='product-details-content__info-extended__tabs-title '>
+              Reviews (5)
+            </button>
+          
             </div>
-            <div class='product-details-content__info-extended__tabs-content product-details-content__info-extended__tabs-content--desciption'>
-              <p>
-                Etiam cursus condimentum vulputate. Nulla nisi orci, vulputate at dolor et, malesuada ultrices nisi. Ut
-                varius ex ut purus porttitor, a facilisis orci condimentum. Nullam in elit et sapien ornare pellentesque
-                at ac lorem. Cras suscipit, sapien in pellentesque hendrerit, dolor quam ornare nisl, vitae tempus nibh
-                urna eget sem. Duis non interdum arcu, sit amet pellentesque odio. In sit amet aliquet augue.
-              </p>
-              <p>
-                Etiam cursus condimentum vuputate. Nulla nisi orci, vulputate at dolor et, malesuada ultrices nisi. Ut
-                varius ex ut purus porttitor, a facilisis orci condimentum. Nullam in elit et sapien ornare pellentesque
-                at ac lorem. Cras suscipit, sapien in pellentesque hendrerit, dolor quam ornare nisl, vitae tempus nibh
-                urna eget sem. Duis non interdum arcu, sit amet pellentesque odio. In sit amet aliquet augue.
-              </p>
-            </div>
-          </div>
+            ${h.map(({ caption, content }, idx) => {
+              return `
+                <div class='product-details-content__info-extended__tabs-content product-details-content__info-extended__tabs-content--desciption'>
+                  ${content}
+                </div>
+                `;
+            })}
+
+           
         </div>
       </div>
       </div>
 `;
+
+    const tabNodes = document.querySelectorAll('');
+
+    tabNodes.forEach((__, idx) => {
+      __.addEventListener('click', () => {
+        const isCurrentTabSelected = this.tabIdx === idx;
+        if (isCurrentTabSelected) return;
+        const activeClass = `${this.tabContentClassName}--active`;
+        tabNodes.forEach((el) => el.classList.remove(activeClass));
+        __.classList.add(activeClass);
+      });
+    });
   }
 }
 
