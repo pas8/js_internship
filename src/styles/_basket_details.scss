@@ -1,0 +1,52 @@
+@import './global.scss';
+
+.basket {
+  background-color: #000000cc;
+  position: fixed;
+  z-index: 1000000;
+  inset: 0;
+
+  &--closed {
+    display: none;
+  }
+
+  @include centered_flex;
+  &-content {
+    display: flex;
+    flex-direction: column;
+    background-color: $background;
+    min-width: 42vw;
+    &-header {
+      padding: 0.42rem 0.8rem;
+      @include space-between_flex;
+      align-items: center;
+      border-bottom: 1px solid $light-grey;
+      &__title {
+        font-family: 'Jost';
+        font-size: 1.8rem;
+      }
+      &__close-button {
+        svg {
+          width: 1.8rem;
+          & path {
+            fill: $text-secondary;
+          }
+          &:hover path {
+            fill: $primary;
+          }
+        }
+      }
+    }
+
+    &-main {
+      &__product-item {
+        @include space-between_flex;
+
+        &__preview-img {
+          width: 200px;
+          aspect-ratio: 1;
+        }
+      }
+    }
+  }
+}

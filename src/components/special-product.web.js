@@ -1,12 +1,12 @@
-import '@styles/_web-specical-products.scss'
-import '@components/stars.web.js'
-
+import '@styles/_web-specical-products.scss';
+import '@components/stars.web.js';
 
 class SpecicalProduct extends HTMLElement {
   connectedCallback() {
     const sale_percent = this.getAttribute('sale_percent');
     const img_href = this.getAttribute('img_href');
     const stars = this.getAttribute('stars');
+    const id = this.getAttribute('id') || 'randomId';
     const caption = this.getAttribute('caption');
     const is_new = this.getAttribute('is_new');
     const is_favourite = this.getAttribute('is_favourite');
@@ -65,6 +65,13 @@ class SpecicalProduct extends HTMLElement {
       </div>
       </div>
     </div>`;
+
+    const addToCardButton = this.querySelector('.special-product-content__utils-add-to-card');
+    addToCardButton.addEventListener('click', () => {
+      const storage = window.sessionStorage;
+      const currentCard = storage.getItem('basket');
+      storage.setItem('basket', `${currentCard || ''},${id}`);
+    });
   }
 }
 customElements.define('special-product', SpecicalProduct);
