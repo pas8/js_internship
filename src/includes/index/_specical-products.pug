@@ -8,7 +8,6 @@ section(class='specical-products')
         div(class=' specical-products__content-header__title') Specical Products
         time-left
       div(class='specical-products__content-products')
-        special-product(img_href='https://via.placeholder.com/150x200/0000FF/808080',sale_percent='42',is_new='true',stars='4',caption='Test 1',current_price='$20.0')
-        special-product(img_href='https://via.placeholder.com/150x200',sale_percent='42',stars='3',caption='Test 2',current_price='$40.0')
-        special-product(img_href='https://via.placeholder.com/150x200',sale_percent='42',stars='4',caption='Test 3',current_price='$20.0')
-        special-product(img_href='https://via.placeholder.com/150x200',sale_percent='42',is_new='true',stars='2',caption='Test 4',current_price='$15.0')            
+        - var galleryIdx = 1;
+          while galleryIdx < 11
+            special-product(img_href=require(`@assets/food${galleryIdx++}.jpeg`).default,sale_percent='42',is_new='true',stars='4',caption='Test 1',current_price='$20.0')

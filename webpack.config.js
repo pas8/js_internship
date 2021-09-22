@@ -39,12 +39,13 @@ const pages = ['index', 'about', 'product_details'];
 
 module.exports = {
   mode: 'development',
-  entry: {
+  entry: 
+  {
+    
     ...pages.reduce((config, page) => {
       config[page] = `/src/${page}.js`;
       return config;
     }, {}),
-    // components: '/src/components/.js',
   },
   optimization: {
     splitChunks: {
@@ -57,6 +58,7 @@ module.exports = {
     },
   },
   resolve: {
+        extensions: ['.js', '.jsx'],
     alias: {
       '@includes': path.resolve(__dirname, '/src/includes'),
       '@styles': path.resolve(__dirname, '/src/styles'),
@@ -66,9 +68,9 @@ module.exports = {
     },
   },
   output: {
+
     filename: '[name].js',
     chunkFilename: '[name].bundle.js',
-
     path: path.resolve(__dirname, 'dist'),
   },
   module: {

@@ -1,6 +1,6 @@
-import { get_random_int } from '@utils/get_random_int.util.js';
-import { get_random_img } from '@utils/get_random_img.util.js';
-import { convert_rem_to_pixels } from '@utils/convert_rem_to_pixels.util.js';
+import { get_random_int } from '../utils/get_random_int.util.js';
+import { get_random_img } from '../utils/get_random_img.util.js';
+import { convert_rem_to_pixels } from '../utils/convert_rem_to_pixels.util.js';
 
 const tabpanelArr = ['Cup cakes', 'Cookies', 'Donut', 'Custard'].map((el, idx) => ({
   id: idx + '',

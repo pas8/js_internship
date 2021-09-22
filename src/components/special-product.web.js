@@ -42,7 +42,7 @@ class SpecicalProduct extends HTMLElement {
     ${!!is_new ? `<div class='special-product-content__labels-new'> New </div>` : ''}
     </div>
 
-    <img src=${img_href}/>
+    <img src=${img_href} ></img>
     </div>
 
       <stars-feedback value=${stars}>
