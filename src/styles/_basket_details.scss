@@ -39,12 +39,30 @@
     }
 
     &-main {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1.42rem 1rem;
       &__product-item {
         @include space-between_flex;
-
+        gap: 1rem;
         &__preview-img {
           width: 200px;
           aspect-ratio: 1;
+        }
+        &-content {
+          @include space-between_flex;
+          flex-direction: column;
+          width: 100%;
+          font-family: 'Jost';
+
+          &__title {
+            font-size: 1.42rem;
+          }
+          &__utils {
+            display: flex;
+            justify-content: flex-end;
+          }
         }
       }
     }

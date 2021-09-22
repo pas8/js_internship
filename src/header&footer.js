@@ -52,14 +52,14 @@ basketNode.addEventListener('click', () => {
   ${basketValue.map(
     (__, idx) => `<div class='${BASKET_DIALOG_MAIN_CLASS}__product-item'>
     <img src=${get_random_img()} class='${BASKET_DIALOG_MAIN_CLASS}__product-item__preview-img'> </img>
-    <div class'${BASKET_DIALOG_MAIN_CLASS}__product-item-content'>
+    <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content'>
       <p class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__title'>Total Random ${idx}.... <p/>
       <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__utils'>
-      $12
+      $42
       </div>
     </div>
   </div>`
-  )}
+  ).join('')}
   `;
 });
 

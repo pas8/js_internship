@@ -92,7 +92,7 @@ class TabPanel extends HTMLElement {
       </div>
       <div class="tab-contents"> 
           <slot id="content-slot" name="content"></slot>
-      </div>attributeChangedCallback
+      </div>
   `;
   }
   cacheDom() {
