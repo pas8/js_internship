@@ -66,5 +66,19 @@
         }
       }
     }
+    &-submit {
+      padding: 1rem;
+      &__button-to-checkout {
+        font-size: 1.24rem !important;
+        border-color: $text-secondary !important;
+        &:hover {
+          border-color: $primary !important;
+
+
+        }
+      }
+      display: flex;
+      justify-content: flex-end;
+    }
   }
 }

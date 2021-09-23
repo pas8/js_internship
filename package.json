@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/pas8/js_internship#readme",
   "dependencies": {
-    "@glidejs/glide": "^3.4.1"
+    "@glidejs/glide": "^3.4.1",
+    "imask": "^6.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",

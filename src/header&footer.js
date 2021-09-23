@@ -55,7 +55,7 @@ basketNode.addEventListener('click', () => {
     <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content'>
       <p class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__title'>Total Random ${idx}.... <p/>
       <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__utils'>
-      $42
+        $42
       </div>
     </div>
   </div>`
