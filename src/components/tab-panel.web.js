@@ -47,7 +47,7 @@ ${tabpanelArr
 `;
 
 class TabPanel extends HTMLElement {
-  static observedAttributes = ['selected-index', 'direction'];
+  observedAttributes = ['selected-index', 'direction'];
   #selectedIndex = 0;
   #direction = 'row';
 

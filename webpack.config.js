@@ -1,6 +1,7 @@
 const path = require('path');
 const miniCss = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const pug = {
   test: /\.pug$/,
@@ -39,9 +40,7 @@ const pages = ['index', 'about', 'product_details'];
 
 module.exports = {
   mode: 'development',
-  entry: 
-  {
-    
+  entry: {
     ...pages.reduce((config, page) => {
       config[page] = `/src/${page}.js`;
       return config;
@@ -58,7 +57,7 @@ module.exports = {
     },
   },
   resolve: {
-        extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
     alias: {
       '@includes': path.resolve(__dirname, '/src/includes'),
       '@styles': path.resolve(__dirname, '/src/styles'),
@@ -68,7 +67,6 @@ module.exports = {
     },
   },
   output: {
-
     filename: '[name].js',
     chunkFilename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
@@ -95,5 +93,6 @@ module.exports = {
             filename: `[name].css`,
           })
       )
-    ),
+    )
+    .concat(new ESLintPlugin()),
 };

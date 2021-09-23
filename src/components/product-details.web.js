@@ -11,15 +11,15 @@ class ProductDetails extends HTMLElement {
   }
 
   connectedCallback() {
-    const desciptionContent = `Etiam cursus condimentum vulputate. Nulla nisi orci, vulputate at dolor et, malesuada ultrices nisi. Ut
-    varius ex ut purus porttitor, a facilisis orci condimentum. Nullam in elit et sapien ornare pellentesque
-    at ac lorem. Cras suscipit, sapien in pellentesque hendrerit, dolor quam ornare nisl, vitae tempus nibh
-    urna eget sem. Duis non interdum arcu, sit amet pellentesque odio. In sit amet aliquet augue.
-    Etiam cursus condimentum vuputate. Nulla nisi orci, vulputate at dolor et, malesuada ultrices nisi. Ut
-    varius ex ut purus porttitor, a facilisis orci condimentum. Nullam in elit et sapien ornare pellentesque
-    at ac lorem. Cras suscipit, sapien in pellentesque hendrerit, dolor quam ornare nisl, vitae tempus nibh
-    urna eget sem. Duis non interdum arcu, sit amet pellentesque odio. In sit amet aliquet augue.`;
-    const h = [desciptionContent];
+    // const desciptionContent = `Etiam cursus condimentum vulputate. Nulla nisi orci, vulputate at dolor et, malesuada ultrices nisi. Ut
+    // varius ex ut purus porttitor, a facilisis orci condimentum. Nullam in elit et sapien ornare pellentesque
+    // at ac lorem. Cras suscipit, sapien in pellentesque hendrerit, dolor quam ornare nisl, vitae tempus nibh
+    // urna eget sem. Duis non interdum arcu, sit amet pellentesque odio. In sit amet aliquet augue.
+    // Etiam cursus condimentum vuputate. Nulla nisi orci, vulputate at dolor et, malesuada ultrices nisi. Ut
+    // varius ex ut purus porttitor, a facilisis orci condimentum. Nullam in elit et sapien ornare pellentesque
+    // at ac lorem. Cras suscipit, sapien in pellentesque hendrerit, dolor quam ornare nisl, vitae tempus nibh
+    // urna eget sem. Duis non interdum arcu, sit amet pellentesque odio. In sit amet aliquet augue.`;
+    // const h = [desciptionContent];
 
     this.innerHTML = `
       <div class='product-details-content'>
@@ -91,20 +91,21 @@ class ProductDetails extends HTMLElement {
             </button>
           
             </div>
-            ${h.map(({ caption, content }, idx) => {
-              return `
-                <div class='product-details-content__info-extended__tabs-content product-details-content__info-extended__tabs-content--desciption'>
-                  ${content}
-                </div>
-                `;
-            })}
+           
 
            
         </div>
       </div>
       </div>
 `;
-
+//!to fix
+// ${h.map(({ caption, content }, idx) => {
+//   return `
+//     <div class='product-details-content__info-extended__tabs-content product-details-content__info-extended__tabs-content--desciption'>
+//       ${content}
+//     </div>
+//     `;
+// })}
     const tabNodes = document.querySelectorAll('');
 
     tabNodes.forEach((__, idx) => {

@@ -109,13 +109,14 @@ class MasonryLayout extends HTMLElement {
   get $columns() {
     return Array.from(this.shadowRoot.querySelectorAll(`.column`));
   }
-  debounceId = `layout_${Math.random()}`;
-  $unsetElementsSlot;
-  ro = undefined;
-  currentRequestAnimationFrameCallback = undefined;
+
 
   constructor() {
     super();
+    this.debounceId = `layout_${Math.random()}`;
+    this.$unsetElementsSlot;
+    this.ro = undefined;
+    this.currentRequestAnimationFrameCallback = undefined;
     const shadow = this.attachShadow({ mode: 'open' });
     shadow.appendChild($template.content.cloneNode(true));
 
