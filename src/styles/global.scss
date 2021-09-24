@@ -172,3 +172,11 @@ body {
     width: 88vw;
   }
 }
+
+@mixin dialog {
+  background-color: #000000cc;
+  position: fixed;
+  z-index: 1000000;
+  inset: 0;
+  @include centered_flex;
+}

@@ -64,6 +64,8 @@ module.exports = {
       '@assets': path.resolve(__dirname, '/src/assets'),
       '@utils': path.resolve(__dirname, '/src/utils'),
       '@components': path.resolve(__dirname, '/src/components'),
+      '@svgs': path.resolve(__dirname, '/src/svgs'),
+      
     },
   },
   output: {

@@ -4,6 +4,9 @@ main {
   margin: 4rem auto;
   gap: 6rem;
   @include space-between_flex;
+  @media screen and (max-width: $lg) {
+    flex-direction: column-reverse;
+  }
   * {
     font-family: 'Jost';
   }
@@ -12,9 +15,9 @@ main {
 .form {
   display: flex;
   flex-direction: column;
-  flex-grow: 12;
+  flex-grow: 1;
 
-  gap: 2rem;
+  gap: 2.42rem;
   & input[type='checkbox'] {
     transform: scale(1.42);
     &:hover {
@@ -29,7 +32,7 @@ main {
     display: flex;
     flex-direction: column;
 
-    gap: 1rem;
+    gap: 1.42rem;
     &__utils {
       display: flex;
       flex-direction: column;
@@ -41,6 +44,19 @@ main {
         & input {
           width: 50%;
         }
+
+        @media screen and (min-width: $lg) and (max-width: $xl) {
+          flex-direction: column;
+          & input {
+            width: 100%;
+          }
+        }
+        @media screen and (max-width: $sm) {
+          flex-direction: column;
+          & input {
+            width: 100%;
+          }
+        }
       }
     }
   }
@@ -51,13 +67,31 @@ main {
 
     gap: 1rem;
     &__utils {
+      position: relative;
       display: flex;
       flex-direction: column;
       gap: 0.42rem;
+      &-button-change-contact-variant {
+        position: absolute;
+        top: 0.8rem;
+        right: 4px;
+        & svg {
+          width: 1.42rem;
+          & path {
+            fill: $text-thirdly;
+          }
+        }
+        &:hover {
+          & path {
+            fill: $primary;
+          }
+        }
+      }
     }
   }
 
   & .article {
+    padding-bottom: 0.42rem;
     @include space-between_flex;
     &-subtitle {
       font-size: 1.24rem;
@@ -71,11 +105,8 @@ main {
       }
       &__button-log-in {
         color: $primary;
-        // padding:  0 0.42rem;
-        // border: 1px solid transparent;
         &:hover {
           text-decoration: underline;
-          // border-color: $primary;
         }
       }
     }
@@ -83,7 +114,14 @@ main {
 }
 
 .inference {
-  flex-grow: 10;
+  flex-grow: 1;
+  @media screen and (min-width: $lg) and (max-width: $xl) {
+    width: 50%;
+  }
+  @media screen and (max-width: $lg) {
+    border-left: none;
+    padding-left: 0rem;
+  }
   display: flex;
   padding-left: 6rem;
   border-left: 1px solid $light-grey;
@@ -154,13 +192,12 @@ main {
       }
       &-price {
         display: flex;
-      align-items: center;
-gap: 0.42rem;
+        align-items: center;
+        gap: 0.42rem;
         &__currency {
           color: $input-border-color;
         }
         &__value {
-
           color: $text-secondary;
           font-size: 1.24rem;
           font-weight: 600;
@@ -168,4 +205,8 @@ gap: 0.42rem;
       }
     }
   }
+}
+
+.button-move-to-payment {
+  align-self: flex-end;
 }

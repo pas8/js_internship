@@ -1,16 +1,11 @@
 @import './global.scss';
 
 .basket {
-  background-color: #000000cc;
-  position: fixed;
-  z-index: 1000000;
-  inset: 0;
-
+  @include dialog;
   &--closed {
     display: none;
   }
 
-  @include centered_flex;
   &-content {
     display: flex;
     flex-direction: column;
@@ -73,8 +68,6 @@
         border-color: $text-secondary !important;
         &:hover {
           border-color: $primary !important;
-
-
         }
       }
       display: flex;
