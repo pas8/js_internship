@@ -29,4 +29,4 @@ class SocialUtils extends HTMLElement {
   }
 }
 
-customElements.define('social-utils', SocialUtils);
+if (!customElements.get('social-utils'))  customElements.define('social-utils', SocialUtils);
