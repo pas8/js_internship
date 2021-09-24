@@ -114,6 +114,12 @@ button {
   background: none;
   border: 1px solid $input-border-color;
   padding: 0.92rem;
+  &:hover {
+    border-color: $text-secondary;
+  }
+  &:focus {
+    border-color: $primary;
+  }
 }
 
 .button-outlined {
