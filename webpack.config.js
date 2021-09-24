@@ -42,7 +42,7 @@ module.exports = {
   mode: 'development',
   entry: {
     ...pages.reduce((config, page) => {
-      config[page] = `/src/${page}.js`;
+      config[page] = path.resolve(__dirname, `/src/${page}.js`);
       return config;
     }, {}),
   },
@@ -65,7 +65,6 @@ module.exports = {
       '@utils': path.resolve(__dirname, '/src/utils'),
       '@components': path.resolve(__dirname, '/src/components'),
       '@svgs': path.resolve(__dirname, '/src/svgs'),
-      
     },
   },
   output: {
@@ -82,7 +81,7 @@ module.exports = {
         (page) =>
           new HtmlWebpackPlugin({
             inject: true,
-            template: `/src/pages/${page}.pug`,
+            template: path.resolve(__dirname,`/src/pages/${page}.pug`),
             filename: `${page}.html`,
             chunks: [page],
           })
