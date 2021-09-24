@@ -1,0 +1,45 @@
+@import './global.scss';
+
+.payment_dialog {
+  @include dialog;
+
+  &--closed {
+    display: none;
+  }
+  * {
+    font-family: 'Jost';
+  }
+  &-content {
+    background: $background;
+    min-width: 40vw;
+
+    &__header {
+      @include space-between_flex;
+      align-items: center;
+      padding: 1rem;
+      &-title {
+        font-weight: 500;
+        font-size: 1.2rem;
+      }
+      &-close-button {
+        & svg {
+          width: 1.8rem;
+        }
+      }
+    }
+    &__payment {
+      &-methods {
+        & > div {
+          background: $text-thirdly;
+          color: $background;
+          & svg {
+            width: 1.8rem;
+            path {
+              fill: $background;
+            }
+          }
+        }
+      }
+    }
+  }
+}

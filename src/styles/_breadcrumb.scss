@@ -1,0 +1,31 @@
+@import './global.scss';
+.breadcrumb {
+  @include centered_flex;
+  background-color: $pink-white;
+
+  &-content {
+    padding: 2.42rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.42rem;
+    &__title {
+      font-family: 'Lobster Two';
+      font-size: 2.8rem;
+    }
+    &__href-utils {
+      gap: 0.8rem;
+      &-home {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      display: flex;
+      font-weight: 500;
+      font-size: 1.08rem;
+      font-family: 'Jost';
+      &-current {
+        color: $primary;
+      }
+    }
+  }
+}

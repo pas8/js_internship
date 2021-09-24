@@ -1,0 +1,12 @@
+@import './global.scss';
+
+.stars {
+  @include centered_flex;
+  margin: 0.42rem 0;
+  & svg {
+    color: $star-color;
+
+    width: 1.16rem;
+    height: 1.16rem;
+  }
+}

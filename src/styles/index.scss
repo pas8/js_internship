@@ -1,0 +1,728 @@
+@import 'node_modules/@glidejs/glide/src/assets/sass/glide.core';
+@import 'node_modules/@glidejs/glide/src/assets/sass/glide.theme';
+@import './global.scss';
+
+.glide__bullets {
+  bottom: 320px;
+  @media screen and (max-width: $md) {
+    bottom: 180px;
+  }
+  @media screen and (max-width: $sm) {
+    bottom: 120px;
+  }
+
+  @media screen and (min-width: $xl) {
+    bottom: 420px;
+  }
+}
+.introduction {
+  position: relative;
+  width: 100%;
+
+  .wave {
+    position: absolute;
+    bottom: 0;
+    & path {
+      fill: $background;
+    }
+  }
+
+  .glide__slide {
+    min-height: 100vh;
+    button {
+z-index: 1000;
+
+    }
+    .container {
+      @include centered_flex;
+      gap: 1rem;
+      flex-direction: column-reverse;
+    }
+    @include centered_flex;
+
+    &-abstraction {
+      width: 100%;
+    }
+    &-content {
+      width: 100%;
+
+      color: $background;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.42rem;
+      &__caption {
+        font-family: 'Jost';
+
+        text-transform: uppercase;
+        font-size: 1.24rem;
+        font-weight: 600;
+      }
+
+      &__title {
+        font-family: 'Lobster Two';
+        font-size: 4rem;
+      }
+
+      &__text {
+        font-family: 'Jost';
+        margin-bottom: 4rem;
+      }
+    }
+
+    @media screen and (max-width: $sm) {
+      &-content {
+        &__title {
+          font-size: 2.8rem;
+        }
+        &__button {
+          width: 100% !important;
+        }
+        text-align: center;
+        &__text {
+          margin-bottom: 1.42rem;
+        }
+      }
+    }
+    @media screen and (min-width: $sm) {
+      // justify-content: flex-start;
+      &-abstraction {
+        width: 100%;
+
+        & svg {
+          width: 60%;
+        }
+      }
+    }
+
+    @media screen and (min-width: $md) {
+      .container {
+        @include space-between_flex;
+
+        flex-direction: row;
+      }
+      &-abstraction {
+        & svg {
+          width: 100%;
+        }
+        width: 42%;
+      }
+      &-content {
+        width: 42%;
+      }
+    }
+    &:first-child {
+      background-color: #ef909a;
+    }
+
+    &:nth-child(2) {
+      background-color: #9793de;
+    }
+    &:nth-child(3) {
+      background-color: #fbc77c;
+    }
+  }
+  &-row {
+    @include centered_flex;
+  }
+}
+
+.categories {
+  @include centered_flex;
+  margin-bottom: 4rem;
+  &-row {
+    @include space-between_flex;
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.42rem;
+      img {
+        width: 120px;
+        height: 120px;
+      }
+      p {
+        font-family: 'Lobster Two';
+        font-size: 1.42rem;
+      }
+    }
+    @media screen and (max-width: $md) {
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      gap: 0.42rem;
+      &__item {
+        width: 49%;
+
+        img {
+          width: 100%;
+          height: 240px;
+        }
+      }
+    }
+    @media screen and (max-width: $sm) {
+      img {
+        height: 160px;
+      }
+    }
+  }
+}
+
+.banner {
+  @include centered_flex;
+  margin-bottom: 4rem;
+  &-row {
+    color: $background;
+    @include space-between_flex;
+    gap: 2rem;
+
+    &__item:first-child {
+      background-color: $ping;
+    }
+    &__item:nth-child(2) {
+      background-color: $yellow;
+      width: 50%;
+    }
+    &__item:nth-child(3) {
+      background-color: $blue;
+    }
+    &__item {
+      padding: 6rem 2rem;
+
+      width: 25%;
+      &__caption {
+        font-family: 'Jost';
+
+        text-transform: uppercase;
+        font-size: 1.24rem;
+        font-weight: 600;
+      }
+
+      &__title {
+        font-family: 'Lobster Two';
+        font-size: 2.8rem;
+      }
+
+      &__text {
+        font-family: 'Jost';
+        margin-bottom: 2rem;
+      }
+    }
+
+    @media screen and (max-width: $lg) {
+      flex-direction: column;
+      & > div {
+        padding: 2rem;
+        box-sizing: border-box;
+        width: 100% !important;
+      }
+    }
+  }
+}
+
+.specical-products {
+  @include centered_flex;
+  margin-bottom: 4rem;
+  &-row {
+    gap: 4rem;
+    @include space-between_flex;
+  }
+
+  time-left {
+    width: min-content;
+  }
+
+  &__preview {
+    width: 240px;
+    & img {
+      width: 100%;
+      height: 424px;
+    }
+  }
+
+  &__content {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 240px);
+
+    &-header {
+      @include space-between_flex;
+
+      &__title {
+        font-size: 2.4rem;
+
+        font-family: 'Lobster Two';
+      }
+    }
+    &-products {
+      padding: 2rem 0 ;
+      overflow-x: hidden;
+      @include space-between_flex;
+      gap: 1rem;
+    }
+  }
+
+
+
+
+  @media screen and (min-width: $md) {
+    special-product:nth-child(4),  special-product:nth-child(1) {
+      display: none;
+    }
+  }
+  @media screen and (min-width: $lg) {
+      special-product:nth-child(1) {
+      display: block;
+    }
+  }
+
+  @media screen and (min-width: $xl) {
+    special-product:nth-child(4),  special-product:nth-child(1) {
+      display: block;
+    }
+  }
+
+  // special-product:nth-child(4) {
+  //   display: block;
+  // }
+
+  @media screen and (max-width: $lg) {
+  
+    &__content-header {
+      flex-direction: column;
+      gap: 0.42rem;
+      @include centered_flex;
+    }
+    &__content {
+      width: 100%;
+    }
+
+    &__content-products {
+      flex-wrap: wrap;
+      special-product {
+        width: 48%;
+
+        & .special-product-content,
+        img {
+          width: 100% !important;
+        }
+      }
+    }
+    &-row {
+      flex-direction: column;
+      @include centered_flex;
+    }
+
+    &__preview {
+      width: 100%;
+      & img {
+        width: 100%;
+        // height: ;
+      }
+    }
+  }
+
+  @media screen and (max-width: $sm) {
+    time-left {
+      transform: scale(0.8);
+    }
+
+    special-product {
+      width: 100%;
+    }
+
+    &__content {
+      &-products {
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+.workshop {
+  position: relative;
+  .wave {
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    fill: $pink-white;
+  }
+  @include centered_flex;
+
+  position: relative;
+  z-index: 2;
+  &-row {
+    background-color: $background;
+
+    border: 1px solid $input-border-color;
+    z-index: 2;
+    @include space-between_flex;
+
+    @media screen and (max-width: $lg) {
+      flex-direction: column;
+      // padding: 3rem;
+      & > div {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 2rem;
+      }
+    }
+  }
+  &-abstraction {
+    width: 42%;
+    @include centered_flex;
+    padding-left: 3.2rem;
+  }
+
+  &-content {
+    padding: 3.2rem;
+
+    width: 42%;
+    &__caption {
+      font-family: 'Jost';
+
+      text-transform: uppercase;
+      font-size: 1.24rem;
+      font-weight: 600;
+    }
+
+    &__title {
+      font-family: 'Lobster Two';
+      font-size: 2.8rem;
+    }
+
+    &__text {
+      font-family: 'Jost';
+      margin-bottom: 2rem;
+    }
+    &__utils {
+      @include space-between_flex;
+      width: 100%;
+      gap: 0.8rem;
+
+      flex-wrap: wrap;
+      &-inputs-wrapper {
+        width: 100%;
+        display: flex;
+        gap: 0.8rem;
+        input {
+          width: 50%;
+        }
+      }
+
+      textarea {
+        min-width: 50%;
+        width: 100%;
+      }
+    }
+  }
+}
+
+.feature-products {
+  background-color: $pink-white;
+  padding-top: 4rem;
+  @include centered_flex;
+  padding-bottom: 4rem;
+
+  &-row {
+    flex-direction: column;
+    @include centered_flex;
+  }
+  &-title {
+    margin: 1rem 0;
+    font-family: 'Lobster Two';
+    font-size: 2.4rem;
+  }
+  &-tab-panel {
+    @include centered_flex;
+    flex-direction: column;
+    .feature-products-glide {
+      overflow: hidden;
+      position: relative;
+      .slider-prev-button {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 2px;
+        margin: auto;
+      }
+
+      .slider-next-button {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 2px;
+        margin: auto;
+      }
+
+      @include centered_flex;
+      & > svg {
+        background: $pink-white;
+        @include centered_flex;
+        border-radius: 50%;
+        z-index: 100;
+        color: $input-border-color;
+        fill: currentColor;
+
+        border: 1px solid transparent;
+        &:hover {
+          cursor: pointer;
+          border-color: currentColor;
+        }
+        width: 2.8rem;
+      }
+      gap: 2rem;
+      &__slides {
+        gap: 2rem;
+
+        @include centered_flex;
+      }
+      &__track {
+        padding-top: 1rem;
+        padding-bottom: 2rem;
+        .special-product {
+          padding: 0;
+        }
+        position: relative;
+        // padding: 0 200px;
+        // overflow: hidden;
+        transition: 0.42s ease-in-out all;
+      }
+    }
+
+    p {
+      font-family: 'Jost';
+      padding: 0.2rem 0.8rem;
+      margin-right: 0.6rem;
+      border: 1px solid $light-grey;
+      background-color: $background;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+
+      &.selected {
+        border-color: $primary;
+        position: relative;
+        &::before,
+        &::after {
+          position: absolute;
+          bottom: -10px;
+          left: 0;
+          right: 0;
+          margin-left: auto;
+          margin-right: auto;
+          height: 0px;
+          width: 0px;
+          content: '';
+        }
+        &::before {
+          z-index: 3;
+
+          border-right: solid 10px transparent;
+          border-left: solid 10px transparent;
+          border-top: solid 10px $primary;
+        }
+        &::after {
+          z-index: 4;
+
+          bottom: -8px;
+          border-right: solid 8px transparent;
+          border-left: solid 8px transparent;
+          border-top: solid 8px $background;
+        }
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.gallery {
+  @include centered_flex;
+  margin-top: 4rem;
+  &-row {
+    @include centered_flex;
+  }
+}
+
+.benifit {
+  padding: 4rem;
+  @include centered_flex;
+  &-row {
+    @include centered_flex;
+  }
+
+  &-content {
+    width: 100%;
+
+    @include space-between_flex;
+    &-item {
+      @include centered_flex;
+      padding: 0.42rem;
+      gap: 1rem;
+
+      @media screen and (max-width: $md) {
+        p {
+          text-align: center;
+        }
+      }
+      @media screen and (max-width: $lg) {
+        flex-direction: column;
+        & > div {
+          flex-direction: column;
+
+          @include centered_flex;
+        }
+      }
+
+      p {
+        font-family: 'Jost';
+      }
+      &__denotation {
+        &-text {
+          font-size: 0.92rem;
+        }
+        &-title {
+          font-size: 1.08rem;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+.call-to-action {
+  background-color: pink;
+  @include centered_flex;
+  padding: 4rem 0 8rem 0;
+  &-row {
+    flex-direction: column;
+    gap: 0.42rem;
+    @include centered_flex;
+  }
+
+  &__caption {
+    font-family: 'Jost';
+    text-transform: uppercase;
+    font-size: 1.16rem;
+  }
+
+  &__title {
+    font-family: 'Lobster Two';
+    text-align: center;
+    font-size: 2.8rem;
+  }
+  button {
+    margin-top: 1.42rem;
+  }
+}
+
+.contact {
+  @include centered_flex;
+  margin-top: -4rem;
+  &-row {
+    background-color: $background;
+    border-bottom: 1px solid $input-border-color;
+    @include centered_flex;
+  }
+  .call-us {
+    &__phone-number {
+      margin-top: 0.8rem;
+      font-family: 'Jost';
+      font-weight: 800;
+      font-size: 1.42rem;
+    }
+  }
+
+  .subscribe {
+    &__utils {
+      margin-top: 0.8rem;
+      @include centered_flex;
+      input {
+        width: 100%;
+      }
+      &-button {
+        font-family: 'Jost';
+        border: none;
+        transition: 0.42s ease-out all;
+        padding: 0.82rem 1.6rem;
+        font-size: 1rem;
+        height: 100%;
+        font-weight: 500;
+        // letter-spacing: 1px;
+        text-transform: uppercase;
+        &:hover {
+          cursor: pointer;
+          background-color: $text-secondary;
+          color: $background;
+        }
+        color: $background;
+        background-color: $primary;
+      }
+    }
+  }
+
+  &-content {
+    @media screen and (max-width: $lg) {
+      gap: 2rem;
+      flex-direction: column;
+    }
+    @include space-between_flex;
+    width: 100%;
+    padding: 3.2rem;
+    &__item {
+      @include centered_flex;
+      gap: 2rem;
+      svg {
+        width: 4.2rem;
+        background-color: $pink-white;
+        padding: 1.2rem;
+        box-sizing: content-box;
+        border-radius: 50%;
+      }
+      &-content {
+        &__title {
+          font-family: 'Lobster Two';
+          font-size: 1.42rem;
+          margin-bottom: 0.2rem;
+        }
+
+        &__text {
+          font-family: 'Jost';
+          font-size: 1rem;
+        }
+      }
+    }
+    @media screen and (max-width: $sm) {
+      &__item {
+        flex-direction: column;
+        &-content {
+          gap: 0.42rem;
+
+          p {
+            text-align: center;
+          }
+          @include centered_flex;
+          flex-direction: column;
+        }
+      }
+      .subscribe__utils {
+        gap: 0.42rem;
+        width: 100%;
+
+        flex-direction: column;
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

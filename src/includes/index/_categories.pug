@@ -1,0 +1,7 @@
+section(class='categories')
+      div(class='container categories-row')
+        - const categoriesArr = ['Cup cakes','Cokies','Donut Cakes','Cup Cakes','Tower Cakes',  'Custard Cake']
+        each item,idx in categoriesArr 
+          div(class='categories-row__item') 
+            img(src= require(`@assets/food${idx+1}.jpeg`).default)
+            p #{item}#{idx}

@@ -1,0 +1,13 @@
+section(class='specical-products')
+  div(class='container specical-products-row')
+    div(class='specical-products__preview')
+      img(src= require(`@assets/food6.jpeg`).default)
+
+    div(class='specical-products__content')
+      div(class=' specical-products__content-header')
+        div(class=' specical-products__content-header__title') Specical Products
+        time-left
+      div(class='specical-products__content-products')
+        - var galleryIdx = 1;
+          while galleryIdx < 5
+            special-product(img_href=require(`@assets/food${galleryIdx++}.jpeg`).default,sale_percent='42',is_new='true',stars='4',caption='Test 1',current_price='$20.0')

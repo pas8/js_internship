@@ -1,0 +1,14 @@
+html
+  head
+    meta(charset="UTF-8")
+    script(src="/product_details.js")
+  body 
+    include ../includes/_header.pug
+    include ../mixins/+breadcrumb.pug
+    +breadcrumb('Product details') 
+    section.product-details
+      div.product-details-row.container
+        product-details
+      
+    include ../includes/_footer.pug
+    

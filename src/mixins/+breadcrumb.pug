@@ -1,0 +1,9 @@
+mixin breadcrumb(title)
+  section.breadcrumb
+    div.breadcrumb-row.container
+      div.breadcrumb-content
+        div.breadcrumb-content__title #{title}
+        div.breadcrumb-content__href-utils 
+          a.breadcrumb-content__href-utils-home(href='/') Home
+          span.breadcrumb-content__href-utils-arrow-diver >>
+          span.breadcrumb-content__href-utils-current  #{title}

@@ -1,4 +1,3 @@
-import './index.scss';
 
 const DEFAULT_MAX_COL_WIDTH = 500;
 const DEFAULT_COLS = 'auto';
@@ -43,6 +42,9 @@ $template.innerHTML = `
     </div>
   `;
 
+
+
+
 const getNumberAttribute = ($elem, name, defaultValue) => {
   const value = parseFloat($elem.getAttribute(name) || '');
   return isNaN(value) ? defaultValue : value;
@@ -71,6 +73,7 @@ const findSmallestColIndex = (colHeights) => {
 
   return smallestIndex;
 };
+
 
 class MasonryLayout extends HTMLElement {
   static get observedAttributes() {
@@ -106,13 +109,14 @@ class MasonryLayout extends HTMLElement {
   get $columns() {
     return Array.from(this.shadowRoot.querySelectorAll(`.column`));
   }
-  debounceId = `layout_${Math.random()}`;
-  $unsetElementsSlot;
-  ro = undefined;
-  currentRequestAnimationFrameCallback = undefined;
+
 
   constructor() {
     super();
+    this.debounceId = `layout_${Math.random()}`;
+    this.$unsetElementsSlot;
+    this.ro = undefined;
+    this.currentRequestAnimationFrameCallback = undefined;
     const shadow = this.attachShadow({ mode: 'open' });
     shadow.appendChild($template.content.cloneNode(true));
 
@@ -178,8 +182,7 @@ class MasonryLayout extends HTMLElement {
   renderCols(colCount) {
     const $columns = this.$columns;
 
-    if ($columns.length === colCount)   return;
-    
+    if ($columns.length === colCount) return;
 
     for (const $column of $columns) {
       $column.parentNode && $column.parentNode.removeChild($column);
@@ -198,7 +201,6 @@ class MasonryLayout extends HTMLElement {
     }
 
     this.style.setProperty(COL_COUNT_CSS_VAR_NAME, colCount.toString());
-
   }
 
   scheduleLayout(ms = this.debounce) {

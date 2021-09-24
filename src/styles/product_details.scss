@@ -1,0 +1,6 @@
+@import './breadcrumb';
+
+.product-details {
+  @include centered_flex;
+  margin: 4rem 0 ;
+}
