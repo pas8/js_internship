@@ -1,20 +1,24 @@
 import './header&footer';
 import '@styles/_breadcrumb.scss';
 import '@styles/checkout.scss';
+import './payment_dialog';
 
 import IMask from 'imask';
 
 const contactEmailOrPhoneInputNode = document.querySelector('.form-contact-info__utils-email-or-phone-input');
 const contactPostalCodeInputNode = document.querySelector('.form-contact-info__utils-postal-code-input');
-const contactFirstNameInputNode = document.querySelector('.form-contact-info__utils-first-name-input');
-const contactLastNameInputNode = document.querySelector('.form-contact-info__utils-last-name-input');
+// const contactFirstNameInputNode = document.querySelector('.form-contact-info__utils-first-name-input');
+// const contactLastNameInputNode = document.querySelector('.form-contact-info__utils-last-name-input');
 
-const contactAdressInputNode = document.querySelector('.form-contact-info__utils-adress-input');
-const contactUtilsAdressAdditionInputNode = document.querySelector('.form-contact-info__utils-adress-adittional-input');
-const contactCityInputNode = document.querySelector('.form-contact-info__utils-city-input');
-const contactcountryOrRegionInputNode = document.querySelector('.form-contact-info__utils-country-or-region-input');
+// const contactAdressInputNode = document.querySelector('.form-contact-info__utils-adress-input');
+// const contactUtilsAdressAdditionInputNode = document.querySelector('.form-contact-info__utils-adress-adittional-input');
+// const contactCityInputNode = document.querySelector('.form-contact-info__utils-city-input');
+// const contactcountryOrRegionInputNode = document.querySelector('.form-contact-info__utils-country-or-region-input');
 
-const submitButtonNode = document.querySelector('.submit-order-button');
+const buttonMoveToPaymentNode = document.querySelector('.button-move-to-payment');
+const paymentDialogNode = document.querySelector('.payment_dialog');
+
+// const submitButtonNode = document.querySelector('.submit-order-button');
 
 const buttonChangeContactVariantNode = document.querySelector(
   '.form-contact-info__utils-button-change-contact-variant'
@@ -46,15 +50,15 @@ IMask(contactEmailOrPhoneInputNode, {
     },
   ],
 });
+console.log(buttonMoveToPaymentNode)
 
 const postalCode = IMask(contactPostalCodeInputNode, { mask: /^[1-6]\d{0,5}$/ });
-
-submitButtonNode.addEventListener('click', () => {
-  console.log({ postalCode: postalCode.value });
+buttonMoveToPaymentNode.addEventListener('click', () => {
+  paymentDialogNode.classList.remove('payment_dialog--closed');
+  // console.log({ postalCode: postalCode.value });
 });
 
-const buttonChangeContactVariantNode = document.querySelector('.button-move-to-payment')
-
+// const buttonChangeContactVariantNode = document.querySelector('.button-move-to-payment')
 
 // const handleValidateEmail = (value) => {
 //   if (/^[a-z0-9_\.-]+$/.test(value)) return true;
