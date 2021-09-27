@@ -24,6 +24,7 @@ header {
       &__contact-info {
         display: flex;
         & svg {
+          width: 1rem;
           & path {
             fill: $text-secondary;
           }

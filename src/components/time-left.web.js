@@ -21,5 +21,5 @@ class TimeLeft extends HTMLElement {
       .join('')} </div>`;
   }
 }
+if (!customElements.get('time-left')) customElements.define('time-left', TimeLeft);
 
-customElements.define('time-left', TimeLeft);

@@ -240,4 +240,4 @@ class MasonryLayout extends HTMLElement {
   }
 }
 
-customElements.define('masonry-layout', MasonryLayout);
+if (!customElements.get('masonry-layout')) customElements.define('masonry-layout', MasonryLayout);

@@ -31,7 +31,10 @@ html
               input.form-contact-info__utils-last-name-input.input(placeholder='Last name',name="lastname",type="text")
             input.form-contact-info__utils-adress-input.input.full-width(placeholder='Adress',name="adress",type="text")
             input.form-contact-info__utils-adress-adittional-input.input.full-width(placeholder='Apartmentt, suite, etc',type="text")
-            input.form-contact-info__utils-city-input.input.full-width(placeholder='City',type="text")
+            select.form-contact-info__utils-city-select.input.full-width.select
+              option(value='placeholder') City
+              option(value='Kyiv') Kyiv
+              option(value='Nothing') Nothing
             div.form-shipping-adress__utils__diver
               input.form-contact-info__utils-country-or-region-input.input(placeholder='Coundtry/Region')
               input.form-contact-info__utils-postal-code-input.input(placeholder='Postal code')
@@ -58,18 +61,18 @@ html
           div.inference-price__details
             div.inference-price__details__item
               div.inference-price__details__item-caption Subtotal
-              div.inference-price__details__item-value $36.0
+              div.inference-price__details__item-value.checkout-subtotal-value $36.0
             div.inference-price__details__item
               div.inference-price__details__item-caption Shipping
               div.inference-price__details__item-value Calculated at next step
             div.inference-price__details__item
               div.inference-price__details__item-caption Taxes
-              div.inference-price__details__item-value $3.60  
+              div.inference-price__details__item-value.checkout-taxes-value $3.60  
           div.inference-price__total
             div.inference-price__total-caption Total 
             div.inference-price__total-price
               div.inference-price__total-price__currency USD
-              div.inference-price__total-price__value $42.0
+              div.inference-price__total-price__value.checkout-total-value $42.0
 
     include ../includes/_footer.pug
     include ../includes/_payment_dialog.pug

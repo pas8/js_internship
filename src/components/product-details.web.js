@@ -91,9 +91,6 @@ class ProductDetails extends HTMLElement {
             </button>
           
             </div>
-           
-
-           
         </div>
       </div>
       </div>
