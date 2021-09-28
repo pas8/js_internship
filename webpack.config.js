@@ -13,7 +13,7 @@ const scss = {
   // options: {
   // reloadAll: true,
   // },
-  use: [miniCss.loader, 'css-loader', 'sass-loader'],
+  use: [ miniCss.loader, 'css-loader', 'sass-loader',],
 };
 
 const babel = {
