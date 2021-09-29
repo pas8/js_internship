@@ -1,0 +1,55 @@
+@import './global.scss';
+
+.shop {
+  * {
+    font-family: 'Jost';
+  }
+  @include centered_flex;
+  gap: 0.42rem;
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    &-search {
+      position: relative;
+      display: flex;
+      align-items: center;
+      &__input {
+        padding-left: 2.8rem !important;
+      }
+      & svg {
+        color: $text-thirdly;
+        width: 2rem;
+        position: absolute;
+        left: 0.42rem;
+      }
+    }
+    &-utils {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      &__item {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        // --skeleton-margin-bottom: 0px;
+
+        &-title {
+          font-weight: 700;
+
+          font-size: 1.6rem;
+        }
+        & .sidebar-content-of-product-categories {
+          display: flex;
+          flex-direction: column;
+          gap: 0.42rem;
+
+
+        }
+      }
+    }
+  }
+}
+
+

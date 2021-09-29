@@ -9,7 +9,6 @@ import { get_sum_from_arr } from '@utils/get_sum_from_arr.util.js';
 import './header&footer';
 import '@styles/_breadcrumb.scss';
 import '@styles/checkout.scss';
-import '@styles/checkout.scss';
 import './payment_dialog';
 import 'regenerator-runtime/runtime.js';
 
