@@ -182,4 +182,4 @@ class TabPanel extends HTMLElement {
   }
 }
 
-if (!customElements.get('tab-panel')) customElements.define('tab-panel', TabPanel);
+customElements.define('tab-panel', TabPanel);

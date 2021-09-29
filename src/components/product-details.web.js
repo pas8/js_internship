@@ -1,6 +1,8 @@
 import '@components/stars.web.js';
 import '@styles/_web-product-details.scss';
 // import { get_avg_from_arr } from '@utils/get_avg_from_arr.util.js';
+import { set_product_to_basket } from '@utils/set_product_to_basket.util.js';
+
 import arrowNextSvg from '@svgs/arrow_next.svg';
 import arrowPrevSvg from '@svgs/arrow_prev.svg';
 
@@ -20,6 +22,7 @@ class ProductDetails extends HTMLElement {
     this.activeImgIdx = 0;
     this.price = `${this.getAttribute('price')}$`;
     this.tabIdx = 0;
+    this.id = this.getAttribute('id')
     this.title = this.getAttribute('title');
     this.ratingValue = this.getAttribute('rating-value');
     this.ratingCount = this.getAttribute('rating-count');
@@ -117,6 +120,18 @@ class ProductDetails extends HTMLElement {
       </div>
       </div>
 `;
+
+
+
+const addToCardButtonNode = document.querySelector('.product-details-content__info-utils__add-to-cart-button')
+
+
+addToCardButtonNode.addEventListener('click',()=> {
+
+  set_product_to_basket(this.id)
+
+})
+window.sessionStorage.getItem('basket')
 
     const quantityCounterButtonMoreNode = document.querySelector(
       '.product-details-content__info-utils__quantity-counter__button-more'

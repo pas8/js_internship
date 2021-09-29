@@ -2,8 +2,11 @@ import '@styles/_header.scss';
 import '@styles/_footer.scss';
 import '@styles/_basket_details.scss';
 import '@components/social-utils.web.js';
-import { get_random_img } from '@utils/get_random_img.util.js';
+// import { get_random_img } from '@utils/get_random_img.util.js';
 import { get_basket } from '@utils/get_basket.util.js';
+import { API_URL } from './config/index';
+
+
 
 //!to refactor this shit
 const findedLink = [...document.querySelector('.main-row__links').childNodes]
@@ -39,29 +42,48 @@ headerMenuButtonNode.addEventListener('click', () => {
 favouriteNode.classList.add('with-label');
 favouriteNode.setAttribute('data-label', '42');
 
-const [basketValue, basketLength] = get_basket()
+const [basketValue, basketLength] = get_basket();
 
 let isBasketDialogOpen = false;
+console.log(basketValue);
 
-basketNode.addEventListener('click', () => {
+basketNode.addEventListener('click',async  () => {
   isBasketDialogOpen = !isBasketDialogOpen;
   const basketClassList = basketDialogNode.classList;
   basketClassList.remove('basket--closed');
-  //!hardcode data
-  basketDialogMainNode.innerHTML = !!basketLength ? `
-  ${basketValue.map(
-    (__, idx) => `<div class='${BASKET_DIALOG_MAIN_CLASS}__product-item'>
-    <img src=${get_random_img()} class='${BASKET_DIALOG_MAIN_CLASS}__product-item__preview-img'> </img>
-    <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content'>
-      <p class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__title'>Total Random ${idx}.... <p/>
-      <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__utils'>
-        $42
-      </div>
-    </div>
-  </div>`
-  ).join('')}
-  ` : `<p>No products was added yet.</p>`
-})
+  const k = await fetch(`${API_URL}/products/1}`);
+  console.log(k)
+  basketDialogMainNode.innerHTML = !!basketLength
+    ? `
+  ${basketValue
+    .map(async (ID) => {
+      let g = [];
+      const h = await fetch(`${API_URL}/products/${ID}`);
+
+      // .then((res) => res.json())
+      // .then(({ title, image, price,id }) => {
+      //   console.log(id)
+      //   g.push( `
+      //   <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item'>
+      //     <img src='${image}' class='${BASKET_DIALOG_MAIN_CLASS}__product-item__preview-img'> </img>
+      //     <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content'>
+      //       <p class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__title'>${title} <p/>
+      //       <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__utils'>
+      //         ${price}
+      //       </div>
+      //     </div>
+      //   </div>`);
+      //   return id
+
+      // });
+
+      console.log(g, h);
+      return '';
+    })
+    .join('')}
+  `
+    : `<p>No products was added yet.</p>`;
+});
 
 basketDialogCloseButtonNode.addEventListener('click', () => {
   isBasketDialogOpen = !isBasketDialogOpen;

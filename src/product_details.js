@@ -9,10 +9,11 @@ const product_container = document.querySelector('.product-details-row.container
 
 fetch(`${API_URL}/products/${ID}`)
   .then((res) => res.json())
-  .then(({ title, description, image, price, rating, category }) => {
+  .then(({ title, description, image, price, rating, category, id }) => {
     product_container.innerHTML = `
     <product-details 
       title='${title}'
+      id='${id}' 
       category='${category}'
       image='${image}'
       description='${description}'
