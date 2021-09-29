@@ -1,6 +1,6 @@
 import '@components/stars.web.js';
 import '@styles/_web-product-details.scss';
-import { get_avg_from_arr } from '@utils/get_avg_from_arr.util.js';
+// import { get_avg_from_arr } from '@utils/get_avg_from_arr.util.js';
 import arrowNextSvg from '@svgs/arrow_next.svg';
 import arrowPrevSvg from '@svgs/arrow_prev.svg';
 
@@ -12,30 +12,21 @@ class ProductDetails extends HTMLElement {
     super();
 
     this.imgsArr = [
+      this.getAttribute('image'),
       '90249b7fa32e303d2230923fa60540b6.jpeg',
       'a32cc400a69328c2c36477d9c6accbae.jpeg',
       'a28e70c1594e6c5d70c1ad7437fa070b.jpeg',
     ];
     this.activeImgIdx = 0;
-    this.starsValue = +'4';
-    this.price = `$12.0`;
+    this.price = `${this.getAttribute('price')}$`;
     this.tabIdx = 0;
-    this.title = 'Placeholder';
-    this.reviews = [5, 4, 2, 4];
+    this.title = this.getAttribute('title');
+    this.ratingValue = this.getAttribute('rating-value');
+    this.ratingCount = this.getAttribute('rating-count');
     this.quantityValue = 1;
-    this.denotationText = `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-    dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus
-    vel facilisis. Etiam cursus condimentum vulputate.`;
+    this.description = this.getAttribute('description');
+    this.denotationPreview = [...this.description].filter((__, idx) => idx < 100).join('') + '...';
 
-    this.description = `Etiam cursus condimentum vulputate. Nulla nisi orci, vulputate at dolor et, malesuada ultrices nisi. Ut
-    varius ex ut purus porttitor, a facilisis orci condimentum. Nullam in elit et sapien ornare pellentesque
-    at ac lorem. Cras suscipit, sapien in pellentesque hendrerit, dolor quam ornare nisl, vitae tempus nibh
-    urna eget sem. Duis non interdum arcu, sit amet pellentesque odio. In sit amet aliquet augue.
-    Etiam cursus condimentum vuputate. Nulla nisi orci, vulputate at dolor et, malesuada ultrices nisi. Ut
-    varius ex ut purus porttitor, a facilisis orci condimentum. Nullam in elit et sapien ornare pellentesque
-    at ac lorem. Cras suscipit, sapien in pellentesque hendrerit, dolor quam ornare nisl, vitae tempus nibh
-    urna eget sem. Duis non interdum arcu, sit amet pellentesque odio. In sit amet aliquet augue.`;
     this.additionalInfo = [
       { caption: 'Placeholder1', value: 'some value' },
       { caption: 'Placeholder2', value: 'some value' },
@@ -65,16 +56,16 @@ class ProductDetails extends HTMLElement {
         <div class='product-details-content__info-acticle'>
           <div class='product-details-content__info-acticle__caption'>${this.title}</div>
           <div class='product-details-content__info-acticle__stars'>
-            <stars-feedback value=${get_avg_from_arr(this.reviews)}></stars-feedback>
+            <stars-feedback value=${this.ratingValue}></stars-feedback>
             <p class='product-details-content__info-acticle__stars-denotation'>
-              ( ${this.reviews.length} customer reviews )
+              ( ${this.ratingCount} customer reviews )
             </p>
           </div>
           <div class='product-details-content__info-acticle__price'>${this.price}</div>
         </div>
         <div class='product-details-content__info-denotation'>
           <div class='product-details-content__info-denotation__text'>
-            ${this.denotationText}
+            ${this.denotationPreview}
           </div>
           <div class='product-details-content__info-denotation__propertyies'>
             <p class='item'> SKU: BIA011</p>
@@ -114,7 +105,7 @@ class ProductDetails extends HTMLElement {
                 Additional information
               </button>
               <button class='product-details-content__info-extended__tabs-title '>
-                Reviews  (${this.reviews.length})
+                Reviews  (${this.ratingCount})
               </button>
             
               </div>
@@ -190,9 +181,7 @@ class ProductDetails extends HTMLElement {
         tabContentNode.innerHTML = contentInfoExtendedTabsContentArr[this.tabIdx];
       });
     });
-
   }
-
 }
 
 if (!customElements.get('product-details')) customElements.define('product-details', ProductDetails);
