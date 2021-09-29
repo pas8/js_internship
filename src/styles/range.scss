@@ -2,10 +2,10 @@
 
 
 [slider] {
-  width: 300px;
+  width: 100%;
+  margin-left: -8px;
   position: relative;
   height: 5px;
-  margin: 45px 0 10px 0;
 }
 
 [slider] > div {
@@ -17,18 +17,18 @@
 [slider] > div > [inverse-left] {
   position: absolute;
   left: 0;
-  height: 5px;
+  height: 4px;
   border-radius: 10px;
-  background-color: #CCC;
+  background-color: $light-grey;
   margin: 0 7px;
 }
 
 [slider] > div > [inverse-right] {
   position: absolute;
   right: 0;
-  height: 5px;
+  height: 4px;
   border-radius: 10px;
-  background-color: #CCC;
+  background-color: $light-grey;
   margin: 0 7px;
 }
 
@@ -38,20 +38,20 @@
   left: 0;
   height: 5px;
   border-radius: 14px;
-  background-color: #d02128;
+  background-color: $text-thirdly;
 }
 
 [slider] > div > [thumb] {
   position: absolute;
-  top: -7px;
+  top: -3px;
   z-index: 2;
-  height: 20px;
-  width: 20px;
+  height: 10px;
+  width: 10px;
   text-align: left;
-  margin-left: -11px;
+  margin-left: -4px;
   cursor: pointer;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
-  background-color: #FFF;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  background-color:$text-thirdly;
   border-radius: 50%;
   outline: none;
 }
@@ -106,7 +106,7 @@ div[slider] > input[type=range]::-ms-tooltip {
   margin-left: -11px;
   top: -39px;
   z-index:3;
-  background-color: #d02128;
+  background-color: $text-thirdly;
   color: #fff;
   width: 28px;
   height: 28px;
@@ -128,7 +128,7 @@ div[slider] > input[type=range]::-ms-tooltip {
   border-right: 14px solid transparent;
   border-top-width: 16px;
   border-top-style: solid;
-  border-top-color: #d02128;
+  border-top-color: $text-thirdly;
 }
 
 [slider] > div > [sign] > span {

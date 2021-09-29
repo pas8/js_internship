@@ -1,12 +1,14 @@
 @import './global.scss';
 
 .shop {
+  margin: 4rem auto;
   * {
     font-family: 'Jost';
   }
-  @include centered_flex;
-  gap: 0.42rem;
+  display: flex;
+  gap: 2.8rem;
   &__sidebar {
+    width: 240px;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -32,7 +34,7 @@
       &__item {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        gap: 1.42rem;
         // --skeleton-margin-bottom: 0px;
 
         &-title {
@@ -44,12 +46,77 @@
           display: flex;
           flex-direction: column;
           gap: 0.42rem;
-
-
+        }
+        & .sidebar-content-of-filter-by-price {
+          display: flex;
+          flex-direction: column;
+          gap: 1.42rem;
+          &__caption {
+            color: $input-border-color;
+          }
+          & > div {
+            display: flex;
+            gap: 0.42rem;
+          }
         }
       }
     }
   }
+  &__products {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: calc(100% - 240px);
+    &-utils {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      & > div {
+        width: 360px;
+      }
+      --skeleton-margin-bottom: 0px;
+
+      width: 100%;
+
+      &__content {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 0.42rem;
+        & > button {
+          padding: 0.42rem;
+          @include centered_flex;
+
+          border: 1px solid $input-border-color;
+          & svg {
+            width: 1.42rem;
+            & path {
+              fill: $text-thirdly;
+            }
+          }
+          &:hover {
+            border-color: $text-thirdly;
+          }
+        }
+        & .button--active {
+          background-color: $primary;
+          border-color: $primary !important;
+          & path {
+            fill: $background;
+          }
+        }
+      }
+    }
+    &-row {
+      display: flex;
+      justify-content: center;
+
+      flex-wrap: wrap;
+      gap: 1.42rem;
+    }
+    &-pagination {
+      display: flex;
+      justify-content: center;
+    }
+  }
 }
-
-

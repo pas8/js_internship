@@ -118,6 +118,7 @@ button {
     border-color: $text-secondary;
   }
   &:focus {
+    caret-color: $primary;
     border-color: $primary;
   }
 }
