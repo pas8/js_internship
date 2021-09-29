@@ -47,20 +47,12 @@ html
 
         div.inference-price
           div.inference-price__details
-            div.inference-price__details__item
-              div.inference-price__details__item-caption Subtotal
-              div.inference-price__details__item-value.checkout-subtotal-value 
-                nb-skeleton(width='100px',height='24px')
-
-            div.inference-price__details__item
-              div.inference-price__details__item-caption Shipping
-              div.inference-price__details__item-value 
-                nb-skeleton(width='100px',height='24px')
-
-            div.inference-price__details__item
-              div.inference-price__details__item-caption Taxes
-              div.inference-price__details__item-value.checkout-taxes-value 
-                nb-skeleton(width='100px',height='24px')
+              - const inferencePriceDetailsArr = [{class:'checkout-subtotal-value ',caption:'Subtotal'},{class:'checkout-shipping-value ',caption:'Shipping'},{class:'checkout-taxes-value  ',caption:'Taxes'}]
+                each item in inferencePriceDetailsArr
+                  div.inference-price__details__item
+                    div.inference-price__details__item-caption  #{item.caption}
+                    div(class=`${item.class} inference-price__details__item-value`)
+                      nb-skeleton(width='100px',height='24px')
 
           div.inference-price__total
             div.inference-price__total-caption Total 

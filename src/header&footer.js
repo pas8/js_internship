@@ -6,6 +6,9 @@ import '@components/social-utils.web.js';
 import { get_basket } from '@utils/get_basket.util.js';
 import { use_uniq_count_arr } from '@utils/use_uniq_count_arr.util.js';
 import { use_product_promise } from '@utils/use_product_promise.util.js';
+import { defineCustomElements as initSkeleton } from 'skeleton-webcomponent-loader/loader/index.js';
+
+initSkeleton();
 
 //!to refactor this shit
 const findedLink = [...document.querySelector('.main-row__links').childNodes]
