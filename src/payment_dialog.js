@@ -5,6 +5,10 @@ import { get_basket } from '@utils/get_basket.util.js';
 import { get_user_token } from '@utils/get_user_token.util.js';
 import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
 
+const paymentTitleNode = document.querySelector('.payment_dialog-content__header-title');
+const totalValue = `$42.0`;
+paymentTitleNode.innerHTML = totalValue;
+
 const paymentCardNumberInputNode = document.querySelector('.payment_dialog-content__payment-methods__card-number');
 const paymentCardCVCInputNode = document.querySelector('.payment_dialog-content__payment-methods__card-cvc');
 const paymentCardDateInputNode = document.querySelector('.payment_dialog-content__payment-methods__card-date');
@@ -55,6 +59,7 @@ confirmOrderButton.addEventListener('click', async () => {
   use_toast(res, 'info');
   return window.location.replace('/pages/shop.html');
 });
+
 
 closeButtonNode.addEventListener('click', () => {
   document.querySelector('.payment_dialog').classList.add('payment_dialog--closed');
