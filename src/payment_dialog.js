@@ -13,6 +13,10 @@ const paymentTitleNode = document.querySelector('.payment_dialog-content__header
 const totalValue = `$42.0`;
 paymentTitleNode.innerHTML = totalValue;
 
+const paymentTitleNode = document.querySelector('.payment_dialog-content__header-title');
+const totalValue = `$42.0`;
+paymentTitleNode.innerHTML = totalValue;
+
 const paymentCardNumberInputNode = document.querySelector('.payment_dialog-content__payment-methods__card-number');
 const main_node = document.querySelector('.payment_dialog-content__payment-methods');
 const paymentCardCVCInputNode = document.querySelector('.payment_dialog-content__payment-methods__card-cvc');
@@ -81,6 +85,7 @@ confirmOrderButton.addEventListener('click', async () => {
   basketNode.classList.remove('with-label');
   // return window.location.replace('/pages/shop.html');
 });
+
 
 closeButtonNode.addEventListener('click', () => {
   document.querySelector('.payment_dialog').classList.add('payment_dialog--closed');
