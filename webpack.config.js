@@ -27,6 +27,11 @@ const babel = {
   },
 };
 
+const svg = {
+  test: /\.svg$/,
+  loader: 'svg-inline-loader',
+};
+
 const img = {
   test: /\.(png|jpe?g|gif)$/i,
   use: [
@@ -73,7 +78,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
-    rules: [pug, scss, img, babel],
+    rules: [pug, scss, svg, img, babel],
   },
   plugins: []
     .concat(
@@ -81,7 +86,7 @@ module.exports = {
         (page) =>
           new HtmlWebpackPlugin({
             inject: true,
-            template: path.resolve(__dirname,`src/pages/${page}.pug`),
+            template: path.resolve(__dirname, `src/pages/${page}.pug`),
             filename: `${page}.html`,
             chunks: [page],
           })

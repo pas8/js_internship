@@ -3,6 +3,7 @@ import '@styles/_footer.scss';
 import '@styles/_basket_details.scss';
 import '@components/social-utils.web.js';
 import { get_random_img } from '@utils/get_random_img.util.js';
+import { get_basket } from '@utils/get_basket.util.js';
 
 //!to refactor this shit
 const findedLink = [...document.querySelector('.main-row__links').childNodes]
@@ -38,8 +39,7 @@ headerMenuButtonNode.addEventListener('click', () => {
 favouriteNode.classList.add('with-label');
 favouriteNode.setAttribute('data-label', '42');
 
-const basketValue = window.sessionStorage.getItem('basket')?.split(',');
-const basketLength = basketValue?.length;
+const [basketValue, basketLength] = get_basket()
 
 let isBasketDialogOpen = false;
 
@@ -48,7 +48,7 @@ basketNode.addEventListener('click', () => {
   const basketClassList = basketDialogNode.classList;
   basketClassList.remove('basket--closed');
   //!hardcode data
-  basketDialogMainNode.innerHTML = `
+  basketDialogMainNode.innerHTML = !!basketLength ? `
   ${basketValue.map(
     (__, idx) => `<div class='${BASKET_DIALOG_MAIN_CLASS}__product-item'>
     <img src=${get_random_img()} class='${BASKET_DIALOG_MAIN_CLASS}__product-item__preview-img'> </img>
@@ -60,8 +60,8 @@ basketNode.addEventListener('click', () => {
     </div>
   </div>`
   ).join('')}
-  `;
-});
+  ` : `<p>No products was added yet.</p>`
+})
 
 basketDialogCloseButtonNode.addEventListener('click', () => {
   isBasketDialogOpen = !isBasketDialogOpen;
