@@ -4,9 +4,8 @@ import '@styles/_basket_details.scss';
 import '@components/social-utils.web.js';
 // import { get_random_img } from '@utils/get_random_img.util.js';
 import { get_basket } from '@utils/get_basket.util.js';
-import { API_URL } from './config/index';
-
-
+import { use_uniq_count_arr } from '@utils/use_uniq_count_arr.util.js';
+import { use_product_promise } from '@utils/use_product_promise.util.js';
 
 //!to refactor this shit
 const findedLink = [...document.querySelector('.main-row__links').childNodes]
@@ -45,44 +44,34 @@ favouriteNode.setAttribute('data-label', '42');
 const [basketValue, basketLength] = get_basket();
 
 let isBasketDialogOpen = false;
-console.log(basketValue);
 
-basketNode.addEventListener('click',async  () => {
+basketNode.addEventListener('click', () => {
   isBasketDialogOpen = !isBasketDialogOpen;
   const basketClassList = basketDialogNode.classList;
+
   basketClassList.remove('basket--closed');
-  const k = await fetch(`${API_URL}/products/1}`);
-  console.log(k)
-  basketDialogMainNode.innerHTML = !!basketLength
-    ? `
-  ${basketValue
-    .map(async (ID) => {
-      let g = [];
-      const h = await fetch(`${API_URL}/products/${ID}`);
+  if (!basketLength) return (basketDialogMainNode.innerHTML = `<p>No products was added yet.</p>`);
 
-      // .then((res) => res.json())
-      // .then(({ title, image, price,id }) => {
-      //   console.log(id)
-      //   g.push( `
-      //   <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item'>
-      //     <img src='${image}' class='${BASKET_DIALOG_MAIN_CLASS}__product-item__preview-img'> </img>
-      //     <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content'>
-      //       <p class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__title'>${title} <p/>
-      //       <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__utils'>
-      //         ${price}
-      //       </div>
-      //     </div>
-      //   </div>`);
-      //   return id
+  const uniqCountArr = use_uniq_count_arr(basketValue);
+  const promiseAll = use_product_promise(uniqCountArr.map(({ id }) => id));
 
-      // });
-
-      console.log(g, h);
-      return '';
-    })
-    .join('')}
-  `
-    : `<p>No products was added yet.</p>`;
+  promiseAll.then((res) => {
+    basketDialogMainNode.innerHTML = res
+      .map(
+        ({ title, image, price }) => `
+          <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item'>
+            <img src='${image}' class='${BASKET_DIALOG_MAIN_CLASS}__product-item__preview-img'> </img>
+            <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content'>
+              <p class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__title'>${title} <p/>
+              <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__utils'>
+                ${price}
+              </div>
+            </div>
+          </div>
+        `
+      )
+      .join('');
+  });
 });
 
 basketDialogCloseButtonNode.addEventListener('click', () => {

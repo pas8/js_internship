@@ -1,13 +1,20 @@
+import phoneSvg from '@svgs/phone.svg';
+import IMask from 'imask';
+
+import { use_toast } from '@utils/use_toast.util.js';
+import { get_basket } from '@utils/get_basket.util.js';
+import { use_product_promise } from '@utils/use_product_promise.util.js';
+import { get_sum_from_arr } from '@utils/get_sum_from_arr.util.js';
+import { defineCustomElements as initSkeleton } from 'skeleton-webcomponent-loader/loader/index.js';
+
 import './header&footer';
 import '@styles/_breadcrumb.scss';
 import '@styles/checkout.scss';
 import '@styles/checkout.scss';
 import './payment_dialog';
-import { use_toast } from '@utils/use_toast.util.js';
-import { get_basket } from '@utils/get_basket.util.js';
-import { get_random_int } from '@utils/get_random_int.util.js';
-import phoneSvg from '@svgs/phone.svg';
-import IMask from 'imask';
+import 'regenerator-runtime/runtime.js';
+
+initSkeleton();
 
 window.localStorage.setItem('isGiveInfo', 'false');
 
@@ -16,6 +23,47 @@ const contactPostalCodeInputNode = document.querySelector('.form-contact-info__u
 const contactFirstNameInputNode = document.querySelector('.form-contact-info__utils-first-name-input');
 const contactLastNameInputNode = document.querySelector('.form-contact-info__utils-last-name-input');
 const givemeinfoInputNodeArr = document.querySelectorAll('.givemeinfo-input');
+const checkoutSubtotalNode = document.querySelector('.checkout-subtotal-value');
+const checkoutTaxesNode = document.querySelector('.checkout-taxes-value');
+const checkoutTotalNode = document.querySelector('.checkout-total-value');
+const paymentTitleNode = document.querySelector('.payment_dialog-content__header-title');
+
+const inferenceProductsContainerNode = document.querySelector('.inference-products');
+const [basketValue] = get_basket();
+
+const promiseAll = use_product_promise(basketValue);
+// promiseAll.then((res) => {
+//   let allPricesArr = [];
+//   console.log(res);
+//   inferenceProductsContainerNode.innerHTML = res
+//     .map(({ title, image, price }) => {
+//       allPricesArr.push(price);
+//       return `
+//       <div class='inference-products__item'>
+//         <div class='inference-products__item-content'>
+//           <div class='inference-products__item-content__img-wrapper'>
+//             <img src='${image}' ></img>
+//           </div>
+//           <div class='inference-products__item-content__details'>
+//             <div class='inference-products__item-content__details-title'>${title}</div>
+//             <div class='inference-products__item-content__details-weight'>0.5kg</div>
+//           </div>
+//         </div>
+//         <div class='inference-products__item-price'>$${price}</div>
+//       </div>
+//       `;
+//     })
+//     .join('');
+
+//   const taxeslValue = allPricesArr.length;
+//   const subtotatlValue = get_sum_from_arr(allPricesArr);
+//   checkoutSubtotalNode.innerHTML = `$${subtotatlValue}.0`;
+//   checkoutTaxesNode.innerHTML = `$${taxeslValue}.0`;
+
+//   const totalValue = taxeslValue + subtotatlValue;
+//   checkoutTotalNode.innerHTML = `$${totalValue}.0`;
+//   paymentTitleNode.innerHTML = `$${totalValue}.0`;
+// });
 
 givemeinfoInputNodeArr.forEach((el) => {
   el.addEventListener('change', (e) => {
@@ -99,17 +147,3 @@ buttonMoveToPaymentNode.addEventListener('click', () => {
 
   paymentDialogNode.classList.remove('payment_dialog--closed');
 });
-
-const checkoutSubtotalNode = document.querySelector('.checkout-subtotal-value');
-const checkoutTaxesNode = document.querySelector('.checkout-taxes-value');
-const checkoutTotalNode = document.querySelector('.checkout-total-value');
-
-const [basketValue, basketLength] = get_basket();
-
-//!hard code
-const subtotatlValue = get_random_int(16, 42);
-const taxeslValue = get_random_int(4, 8);
-
-checkoutSubtotalNode.innerHTML = `$${subtotatlValue}.0`;
-checkoutTaxesNode.innerHTML = `$${taxeslValue}.0`;
-checkoutTotalNode.innerHTML = `$${taxeslValue + subtotatlValue}.0`;

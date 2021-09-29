@@ -13,7 +13,7 @@ const scss = {
   // options: {
   // reloadAll: true,
   // },
-  use: [ miniCss.loader, 'css-loader', 'sass-loader',],
+  use: [miniCss.loader, 'css-loader', 'sass-loader'],
 };
 
 const babel = {
@@ -70,6 +70,7 @@ module.exports = {
       '@utils': path.resolve(__dirname, 'src/utils'),
       '@components': path.resolve(__dirname, 'src/components'),
       '@svgs': path.resolve(__dirname, 'src/svgs'),
+      '@config': path.resolve(__dirname, 'src/config'),
     },
   },
   output: {
@@ -100,5 +101,6 @@ module.exports = {
           })
       )
     )
+
     .concat(new ESLintPlugin()),
 };

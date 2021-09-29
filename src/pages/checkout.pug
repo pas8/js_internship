@@ -43,36 +43,31 @@ html
         //- button.submit-order-button.button--contained submit  Order
       div.inference
         div.inference-products
-          - var placeholderIdx = 1;
-            while placeholderIdx < 8
-              div.inference-products__item
-                div.inference-products__item-content
-                  div.inference-products__item-content__img-wrapper
-                    img(src= require(`@assets/food${placeholderIdx++}.jpeg`).default)
-
-                  div.inference-products__item-content__details
-                    div.inference-products__item-content__details-title Title #{placeholderIdx}
-                    div.inference-products__item-content__details-weight #{placeholderIdx / 4}kg
-
-                div.inference-products__item-price $#{placeholderIdx}0.0
-
+            nb-skeleton(height='100px',width='100%',count='4')
 
         div.inference-price
           div.inference-price__details
             div.inference-price__details__item
               div.inference-price__details__item-caption Subtotal
-              div.inference-price__details__item-value.checkout-subtotal-value $36.0
+              div.inference-price__details__item-value.checkout-subtotal-value 
+                nb-skeleton(width='100px',height='24px')
+
             div.inference-price__details__item
               div.inference-price__details__item-caption Shipping
-              div.inference-price__details__item-value Calculated at next step
+              div.inference-price__details__item-value 
+                nb-skeleton(width='100px',height='24px')
+
             div.inference-price__details__item
               div.inference-price__details__item-caption Taxes
-              div.inference-price__details__item-value.checkout-taxes-value $3.60  
+              div.inference-price__details__item-value.checkout-taxes-value 
+                nb-skeleton(width='100px',height='24px')
+
           div.inference-price__total
             div.inference-price__total-caption Total 
             div.inference-price__total-price
               div.inference-price__total-price__currency USD
-              div.inference-price__total-price__value.checkout-total-value $42.0
+              div.inference-price__total-price__value.checkout-total-value   
+                nb-skeleton(width='100px',height='24px')
 
     include ../includes/_footer.pug
     include ../includes/_payment_dialog.pug
