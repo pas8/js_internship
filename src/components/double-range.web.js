@@ -4,7 +4,7 @@ class DoubleRange extends HTMLElement {
   connectedCallback() {
     this.step = +(this.getAttribute('step') || 1);
     this.max = +(this.getAttribute('max') || 100);
-    this.min = +(this.getAttribute('max') || 0);
+    this.min = +(this.getAttribute('min') || 0);
     this.defaultStartValue = +this.getAttribute('default-start-Value') || this.min;
     this.defaultEndValue = +this.getAttribute('default-end-Value') || this.max;
     this.innerHTML = `
@@ -16,10 +16,10 @@ class DoubleRange extends HTMLElement {
         <span thumb style="left:0%;"></span>
         <span thumb style="left:100%;"></span>
         <div sign style="left:0%;">
-          <span id="value">0</span>
+          <span id="value">${this.defaultStartValue}</span>
         </div>
         <div sign style="left:100%;">
-          <span id="value">100</span>
+          <span id="value">${this.defaultEndValue}</span>
         </div>
       </div>
       <input type="range" value='${this.defaultStartValue}' max='${this.max - 1}' min='${this.min}' step='${this.step}' class='firstRangePart' />

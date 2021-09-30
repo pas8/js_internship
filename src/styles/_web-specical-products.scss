@@ -20,6 +20,8 @@
       animation: 0.42s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s alternate f;
     }
   }
+  width: 242px;
+
   transition: 0.42s ease-in-out all;
   padding-bottom: 1.42rem;
 
@@ -30,6 +32,7 @@
     font-family: 'Jost';
     font-weight: 500;
     @include centered_flex;
+    text-align: center;
   }
 
   &__price {
@@ -46,10 +49,16 @@
   &-content {
     &__favourite-button {
       position: absolute;
-      border: 1px solid $input-border-color;
+      border: 1px solid $light-grey !important;
       top: 8px;
       display: none !important;
       right: 8px;
+      &:hover {
+        border-color: $primary !important;
+        & path {
+          fill: $primary;
+        }
+      }
       & svg {
         width: 1.42rem;
         height: 1.42rem;
@@ -92,6 +101,10 @@
       display: none;
       button {
         border: 1px solid $light-grey;
+        &:hover {
+          border-color: $primary;
+          color: $primary;
+        }
       }
       bottom: 6px;
       right: 0;
