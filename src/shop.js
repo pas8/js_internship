@@ -6,56 +6,62 @@ import '@components/special-product.web.js';
 import '@components/horizontal-product.web.js';
 import 'regenerator-runtime/runtime.js';
 
+import closeSvg from '@svgs/close.svg';
+import searchSvg from '@svgs/search.svg';
 import { API_URL } from '@config/index';
 import { set_shop_propertyies } from '@utils/set_shop_propertyies.util.js';
 import { set_shop_sidebar_properties } from '@utils/set_shop_sidebar_properties.util.js';
-// import { get_product_component_variant } from '@utils/get_product_component_variant.util.js';
+import { use_debounce } from '@utils/use_debounce.util.js';
+import { set_shop_pagination_propertyies } from '@utils/set_shop_pagination_propertyies.util.js';
 
-const get_all_products = async (URL ='products')  => {
-  const data = await fetch(`${API_URL}/${URL}`);
+Array.prototype.map_join = function (func) {
+  return this.map(func).join('');
+};
+
+const get_all_products = async () => {
+  const data = await fetch(`${API_URL}/products`);
   const allProductsArr = await data.json();
 
   set_shop_propertyies(allProductsArr);
-  set_shop_sidebar_properties(allProductsArr)
-  const shopProductsPaginationNode = document.querySelector('.shop__products-pagination');
+  set_shop_sidebar_properties(allProductsArr);
+  set_shop_pagination_propertyies(allProductsArr);
 
-  const paginationButtonArr = [...shopProductsPaginationNode.children];
+  const searchResultContainerNode = document.querySelector('.shop__sidebar-search__result');
+  const searchSvgContainerNode = document.querySelector('.shop__sidebar-search__svg-container');
+  const searchInputNode = document.querySelector('.shop__sidebar-search__input');
 
-  paginationButtonArr.forEach((el) => {
-    el.addEventListener('click', () => {
-      let updatedPageNumber;
-      const currentPageNumber = +window.sessionStorage.getItem('pageNumber');
+  searchInputNode.addEventListener(
+    'input',
+    use_debounce(
+      function () {
+        searchSvgContainerNode.innerHTML = searchSvg;
+        if (!this.value) return (searchResultContainerNode.style.display = 'none');
+        const resultsArr = allProductsArr.map_join(({ title, id, image }) => {
+          return title.startsWith(this.value)
+            ? `<a href='product_details.html?${id}'>
+          <img src=${image} ></img>
+          <p> ${title} </p> </a> `
+            : '';
+        });
+        if (!resultsArr.length) return (searchResultContainerNode.style.display = 'none');
+        searchSvgContainerNode.innerHTML = closeSvg;
+        searchResultContainerNode.style.display = 'flex';
 
-      if (currentPageNumber == el.name) return set_shop_propertyies(allProductsArr, currentPageNumber);
+        searchResultContainerNode.innerHTML = resultsArr;
+      },
+      200,
+      true
+    )
+  );
+  searchSvgContainerNode.addEventListener('click', (e) => {
+    if (!![...e.path]?.find((el) => el.classList?.[0] === 'closeSvg')) {
+      searchInputNode.value = '';
+      searchSvgContainerNode.innerHTML = searchSvg;
+      searchResultContainerNode.style.display = 'none';
 
-      const isDefaultBuuton = !isNaN(+el.name);
-
-      paginationButtonArr.forEach((__) => {
-        __.classList.remove('shop__products-pagination__button--active');
-      });
-
-      if (isDefaultBuuton) {
-        updatedPageNumber = el.name;
-        el.classList.add('shop__products-pagination__button--active');
-      }
-
-      if (el.name === 'prev-button') {
-        updatedPageNumber = currentPageNumber - 1 + '';
-        paginationButtonArr
-          .find((_, searchingIdx) => searchingIdx === currentPageNumber - 1)
-          ?.classList.add('shop__products-pagination__button--active');
-      }
-
-      if (el.name === 'next-button') {
-        paginationButtonArr
-          .find((_, searchingIdx) => searchingIdx === currentPageNumber + 1)
-          ?.classList.add('shop__products-pagination__button--active');
-        updatedPageNumber = currentPageNumber + 1 + '';
-      }
-
-      window.sessionStorage.setItem('pageNumber', updatedPageNumber);
-      set_shop_propertyies(allProductsArr, updatedPageNumber);
-    });
+      return;
+    }
+    searchInputNode.focus();
   });
 };
 get_all_products();
@@ -84,3 +90,5 @@ productsViewButttonNodesArr.forEach((__, idx) => {
     __.classList.add('button--active');
   });
 });
+
+// const sidebarProductCategoriesNode = document.querySelector('.sidebar-content-of-product-categories');

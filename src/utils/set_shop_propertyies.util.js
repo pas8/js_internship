@@ -5,13 +5,14 @@ import arrowPrevSvg from '@svgs/arrow_prev.svg';
 const paginationPrevButton = `<button class='shop__products-pagination__button' name='prev-button'>${arrowPrevSvg} </button>`;
 const paginationNextButton = `<button class='shop__products-pagination__button' name='next-button'>${arrowNextSvg} </button>`;
 
-export const set_shop_propertyies = (allProductsArr, updatedPageNumber) => {
+export const set_shop_propertyies = (allProductsArr, updatedPageNumber,isUpdatePagination) => {
   const shopProductsPaginationNode = document.querySelector('.shop__products-pagination');
 
   const shopProductsUtilsResultCounterNode = document.querySelector('.shop__products-utils__result-counter');
   const shopProductsContainerNode = document.querySelector('.shop__products-row');
 
   const pageNumber = updatedPageNumber || +window.sessionStorage.getItem('pageNumber') || 1;
+
   const PRODUCTS_LENGTH_PER_PAGE = 6;
   const END_PRODUCT_IDX = pageNumber * PRODUCTS_LENGTH_PER_PAGE;
   const START_PRODUCT_IDX = END_PRODUCT_IDX - PRODUCTS_LENGTH_PER_PAGE;
@@ -43,7 +44,7 @@ export const set_shop_propertyies = (allProductsArr, updatedPageNumber) => {
     shopProductsPaginationNode.insertAdjacentHTML('beforeend', paginationNextButton);
   }
 
-  if ([...shopProductsPaginationNode.children].length > 3) return;
+  if ([...shopProductsPaginationNode.children].length > 3 && !isUpdatePagination) return;
 
   const pagintaionButtonsArr = Array.from(
     { length: LAST_PAGE_NUMBER },
