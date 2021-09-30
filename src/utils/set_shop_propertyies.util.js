@@ -8,12 +8,6 @@ const paginationNextButton = `<button class='shop__products-pagination__button' 
 export const set_shop_propertyies = (allProductsArr, updatedPageNumber) => {
   const shopProductsPaginationNode = document.querySelector('.shop__products-pagination');
 
-  const sidebarProductCategoriesNode = document.querySelector('.sidebar-content-of-product-categories');
-  const sidebaFilterByPriceSliderNode = document.querySelector('.sidebar-content-of-filter-by-price-double-slider');
-  const sidebaFilterByColorNode = document.querySelector('.sidebar-content-of-filter-by-color');
-  const sidebarContentOfFilterByPriceValueNode = document.querySelector('.sidebar-content-of-filter-by-price__value');
-  const sidebarContentOfFilterBySize = document.querySelector('.sidebar-content-of-filter-by-size');
-  const sidebarContainerOfFilterButtonNode = document.querySelector('.sidebar-container-of-filter-button');
   const shopProductsUtilsResultCounterNode = document.querySelector('.shop__products-utils__result-counter');
   const shopProductsContainerNode = document.querySelector('.shop__products-row');
 
@@ -24,41 +18,9 @@ export const set_shop_propertyies = (allProductsArr, updatedPageNumber) => {
 
   const LAST_PAGE_NUMBER = Math.ceil(allProductsArr.length / PRODUCTS_LENGTH_PER_PAGE);
 
-  const [html, categoriesArr, colorsArr, sizeArr, max, min] = use_validation_of_products(
-    allProductsArr,
-    END_PRODUCT_IDX,
-    START_PRODUCT_IDX
-  );
-  shopProductsContainerNode.innerHTML = html;
-  sidebarProductCategoriesNode.innerHTML = `
-  ${categoriesArr
-    .map(
-      (el) =>
-        `<div class='sidebar-content-of-product-categories__item'>${el
-          .split('')
-          .map((__, idx) => (idx === 0 ? __.toUpperCase() : __))
-          .join('')} </div>`
-    )
-    .join('')}
-  `;
+  const shopProductsHtml = use_validation_of_products(allProductsArr, END_PRODUCT_IDX, START_PRODUCT_IDX);
 
-  sidebaFilterByColorNode.innerHTML = `
-  ${colorsArr
-    .map((el) => `<div class='sidebar-content-of-filter-by-color__item' style='background:${el}'> </div>`)
-    .join('')}
-  `;
-
-  sidebarContentOfFilterBySize.innerHTML = `
-  ${sizeArr.map((el) => `<button class='sidebar-content-of-filter-by-size__item'>${el}kg </button>`).join('')}
-  `;
-
-  sidebarContentOfFilterByPriceValueNode.innerHTML = `<div>$${min} - $${max} </div>`;
-
-  sidebaFilterByPriceSliderNode.innerHTML = `<double-range step='${~~(
-    Math.ceil(max / 100)
-  )}' max='${max}' min='${min}'></double-range>`;
-
-  sidebarContainerOfFilterButtonNode.innerHTML = `<button class='sidebar__filter-button button--contained ' > Filter </button>`;
+  shopProductsContainerNode.innerHTML = shopProductsHtml;
 
   shopProductsUtilsResultCounterNode.innerHTML = `<span>Showing ${START_PRODUCT_IDX + 1} - ${
     END_PRODUCT_IDX > allProductsArr.length ? allProductsArr.length : END_PRODUCT_IDX
