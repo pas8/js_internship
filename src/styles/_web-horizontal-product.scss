@@ -1,0 +1,56 @@
+@import './global.scss';
+
+horizontal-product {
+  width: 100%;
+}
+
+.horizontal-product {
+  width: 100%;
+
+  padding: 2rem;
+  border: 1px solid $light-grey;
+  gap: 2rem;
+  @include space-between_flex;
+  align-items: center;
+  &__preview-img {
+    max-width: 242px;
+    min-width: 242px;
+    & img {
+      width: 100%;
+    }
+  }
+  &__content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    &-title {
+      font-weight: 500;
+      font-size: 1.42rem;
+    }
+  }
+  &__utils {
+    @include centered_flex;
+    gap: 0.8rem;
+    flex-direction: column;
+    button {
+      transition: cubic-bezier(0.215, 0.61, 0.355, 1) 0.16s all;
+      color: $text-thirdly;
+      border-radius: 50%;
+      aspect-ratio: 1;
+      height: 2.8rem;
+      @include centered_flex;
+
+      border: 1px solid transparent;
+      svg {
+        width: 1.8rem;
+        path {
+          fill: currentColor;
+        }
+      }
+      &:hover {
+        border: 1px solid currentColor;
+      }
+    }
+  }
+}

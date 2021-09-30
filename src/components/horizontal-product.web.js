@@ -1,67 +1,54 @@
-import '@styles/_web-specical-products.scss';
-import '@components/stars.web.js';
+import '@styles/_web-horizontal-product.scss';
 import favouriteSvg from '@svgs/favourite.svg';
 import compareSvg from '@svgs/compare.svg';
+import basketSvg from '@svgs/basket.svg';
 import searchSvg from '@svgs/search.svg';
 import { get_default_product_attribute_values } from '@utils/get_default_product_attribute_values.util.js';
+import { set_product_to_basket } from '@utils/set_product_to_basket.util.js';
 
-class SpecicalProduct extends HTMLElement {
+class HorizontalProduct extends HTMLElement {
   connectedCallback() {
-    const [img_href, id, caption, current_price, old_price] = get_default_product_attribute_values(this)
-    const sale_percent = this.getAttribute('sale_percent');
-    const stars = this.getAttribute('stars');
-    const is_new = this.getAttribute('is_new');
-    const is_favourite = this.getAttribute('is_favourite');
+    const [img_href, id, caption, current_price, ] = get_default_product_attribute_values(this);
+    const description = this.getAttribute('description');
 
     this.innerHTML = `
-    <div class='special-product'>
-      <div class='special-product-content'>
-        <button class='special-product-content__favourite-button button-outlined ${
-          is_favourite ? 'button-outlined--active' : ''
-        }'>
-          ${favouriteSvg}
-        </button>
-        <div class='special-product-content__utils'>
-          ${[
-            { content: compareSvg, caption: 'compare' },
-            { content: 'Add to card', caption: 'add-to-card' },
-            { content: searchSvg, caption: 'search' },
-          ]
-            .map(
-              ({ caption, content }) => `
-              <button class='special-product-content__utils-${caption} button-outlined'>
-                ${content}
-              </button>`
-            )
-            .join('')}
-        </div>
-
-        <div class='special-product-content__labels'>
-          ${!!sale_percent ? `<div class='special-product-content__labels-sale'> -${sale_percent}% </div>` : ''}
-          ${!!is_new ? `<div class='special-product-content__labels-new'> New </div>` : ''}
-        </div>
-
+    <div class='horizontal-product'>
+      <div class='horizontal-product__preview-img'>
         <img src=${img_href} ></img>
       </div>
-      <stars-feedback value=${stars}></stars-feedback>
-      <div class='special-product__caption'>
-        ${caption}
-      </div>
-      <div class='special-product__price'>
-        <p class='special-product__price-current'>
-          ${current_price}
+      <div class='horizontal-product__content'>
+        <div class='horizontal-product__content-title'>
+          ${caption}
+        </div>
+        <p class='horizontal-product__content-price'>
+          $${current_price}
         </p>
-        ${!!old_price ? ` <p class='special-product__price-old>${old_price}</p>` : ''}
+        <div class='horizontal-product__content-description'>
+          ${description}
         </div>
       </div>
-    </div>`;
+      <div class='horizontal-product__utils'>
+      ${[
+        { content: favouriteSvg, caption: 'favourite' },
+        { content: compareSvg, caption: 'compare' },
+        { content: basketSvg, caption: 'basket' },
+        { content: searchSvg, caption: 'search' },
+      ]
+        .map(
+          ({ caption, content }) => `
+          <button class='horizontal-product__utils-${caption}'>
+            ${content}
+          </button>`
+        )
+        .join('')}
+      </div>
+    </div>
+    `;
 
-    const addToCardButton = this.querySelector('.special-product-content__utils-add-to-card');
+    const addToCardButton = this.querySelector('.horizontal-product__utils-basket');
     addToCardButton.addEventListener('click', () => {
-      const storage = window.sessionStorage;
-      const currentCard = storage.getItem('basket');
-      storage.setItem('basket', `${currentCard || ''},${id}`);
+      set_product_to_basket(id);
     });
   }
 }
-if (!customElements.get('special-product')) customElements.define('special-product', SpecicalProduct);
+if (!customElements.get('horizontal-product')) customElements.define('horizontal-product', HorizontalProduct);
