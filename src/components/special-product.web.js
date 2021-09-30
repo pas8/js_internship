@@ -3,18 +3,15 @@ import '@components/stars.web.js';
 import favouriteSvg from '@svgs/favourite.svg';
 import compareSvg from '@svgs/compare.svg';
 import searchSvg from '@svgs/search.svg';
+import { get_default_product_attribute_values } from '@utils/get_default_product_attribute_values.util.js';
 
 class SpecicalProduct extends HTMLElement {
   connectedCallback() {
+    const [img_href, id, caption, current_price, old_price] = get_default_product_attribute_values(this)
     const sale_percent = this.getAttribute('sale_percent');
-    const img_href = this.getAttribute('img_href');
     const stars = this.getAttribute('stars');
-    const id = this.getAttribute('id') || 'randomId';
-    const caption = this.getAttribute('caption');
     const is_new = this.getAttribute('is_new');
     const is_favourite = this.getAttribute('is_favourite');
-    const current_price = this.getAttribute('current_price');
-    const old_price = this.getAttribute('old_price');
 
     this.innerHTML = `
     <div class='special-product'>
