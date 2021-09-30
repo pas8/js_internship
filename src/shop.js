@@ -7,8 +7,6 @@ import 'regenerator-runtime/runtime.js';
 import '@components/special-product.web.js';
 import { set_shop_propertyies } from '@utils/set_shop_propertyies.util.js';
 
-// let pageNumber =
-
 const get_all_products = async () => {
   const data = await fetch(`${API_URL}/products`);
   const allProductsArr = await data.json();
@@ -21,8 +19,11 @@ const get_all_products = async () => {
   paginationButtonArr.forEach((el) => {
     el.addEventListener('click', () => {
       let updatedPageNumber;
-      const isDefaultBuuton = !isNaN(+el.name);
       const currentPageNumber = +window.sessionStorage.getItem('pageNumber');
+
+      if (currentPageNumber == el.name) return set_shop_propertyies(allProductsArr, currentPageNumber);
+
+      const isDefaultBuuton = !isNaN(+el.name);
 
       paginationButtonArr.forEach((__) => {
         __.classList.remove('shop__products-pagination__button--active');
@@ -47,8 +48,17 @@ const get_all_products = async () => {
         updatedPageNumber = currentPageNumber + 1 + '';
       }
 
+      set_shop_propertyies(allProductsArr, updatedPageNumber);
+
+      // if (paginationButtonArr.every(({ name }) => name !== 'prev-button')) {
+      // }
+      // if (updatedPageNumber == 1 && paginationButtonArr[0].name === 'prev-button') {
+      //   paginationButtonArr[0].remove();
+      // } else {
+      //   shopProductsPaginationNode.insertAdjacentHTML('afterbegin', paginationPrevButton);
+      // }
+
       window.sessionStorage.setItem('pageNumber', updatedPageNumber);
-      set_shop_propertyies(allProductsArr);
     });
   });
 };
