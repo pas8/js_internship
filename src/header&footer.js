@@ -4,11 +4,15 @@ import '@styles/_basket_details.scss';
 import '@components/social-utils.web.js';
 // import { get_random_img } from '@utils/get_random_img.util.js';
 import { get_basket } from '@utils/get_basket.util.js';
+import { set_up_search } from '@utils/set_up_search.util.js';
+
 import { use_uniq_count_arr } from '@utils/use_uniq_count_arr.util.js';
 import { use_product_promise } from '@utils/use_product_promise.util.js';
 import { defineCustomElements as initSkeleton } from 'skeleton-webcomponent-loader/loader/index.js';
 
 initSkeleton();
+
+window.isSeacrhingDialogOpen = false;
 
 //!to refactor this shit
 const findedLink = [...document.querySelector('.main-row__links').childNodes]
@@ -77,6 +81,22 @@ basketNode.addEventListener('click', () => {
   });
 });
 
+const buttonSearchNode = document.querySelector('.button-search');
+const searchingDialogNode = document.querySelector('.searching-dialog');
+const closeButtonOfSearchingDialogNode = document.querySelector('.searching-content__title-close-button');
+const handleCloseDialog = () => {
+  window.isSeacrhingDialogOpen = false
+  searchingDialogNode.classList.add('searching-dialog--closed');
+};
+
+closeButtonOfSearchingDialogNode.addEventListener('click', handleCloseDialog);
+
+buttonSearchNode.addEventListener('click', () => {
+  if (window.isSeacrhingDialogOpen) return handleCloseDialog();
+  window.isSeacrhingDialogOpen = true
+  searchingDialogNode.classList.remove('searching-dialog--closed');
+});
+
 basketDialogCloseButtonNode.addEventListener('click', () => {
   isBasketDialogOpen = !isBasketDialogOpen;
   const basketClassList = basketDialogNode.classList;
@@ -86,3 +106,12 @@ basketDialogCloseButtonNode.addEventListener('click', () => {
 
 !!basketLength && basketNode.classList.add('with-label');
 basketNode.setAttribute('data-label', basketLength);
+
+set_up_search(
+  [],
+  [
+    document.querySelector('.searching-content-search__result'),
+    document.querySelector('.searching-content-search__svg-container'),
+    document.querySelector('.searching-content-search__input'),
+  ]
+);

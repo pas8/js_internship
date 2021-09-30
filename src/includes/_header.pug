@@ -1,4 +1,17 @@
 header.header.closed
+  div.searching-dialog.searching-dialog--closed
+    div.searching-content
+      div.searching-content__title 
+        p Search something
+        button.searching-content__title-close-button
+          include ../svgs/close.svg
+
+      div.searching-content-search
+        input.searching-content-search__input.input(placeholder='Search...')
+        button.searching-content-search__svg-container
+          include ../svgs/search.svg
+    
+
   div.menu-button
     <svg viewBox="0 0 24 24" ><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
   div.wrapper

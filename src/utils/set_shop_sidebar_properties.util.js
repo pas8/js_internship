@@ -22,10 +22,6 @@ export const set_shop_sidebar_properties = (arr) => {
 
   const [categoriesArr, colorsArr, sizeArr, max, min] = use_validation_of_siderbar_utils(arr);
 
-  window.filteringProps = {
-    color: '',
-    price: [],
-  };
 
   sidebarProductCategoriesNode.innerHTML = `
   ${['All products', ...categoriesArr].map_join(
@@ -74,7 +70,6 @@ export const set_shop_sidebar_properties = (arr) => {
     const filteredArr = arr.filter(
       ({ price }) => price >= window.filteringProps.price[0] && price <= window.filteringProps.price[1]
     );
-console.log(window.filteringProps.price)
     set_shop_propertyies(filteredArr, undefined, true);
     set_shop_pagination_propertyies(filteredArr);
   });
