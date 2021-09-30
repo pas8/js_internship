@@ -8,13 +8,15 @@ import 'regenerator-runtime/runtime.js';
 
 import { API_URL } from '@config/index';
 import { set_shop_propertyies } from '@utils/set_shop_propertyies.util.js';
+import { set_shop_sidebar_properties } from '@utils/set_shop_sidebar_properties.util.js';
 // import { get_product_component_variant } from '@utils/get_product_component_variant.util.js';
 
-const get_all_products = async () => {
-  const data = await fetch(`${API_URL}/products`);
+const get_all_products = async (URL ='products')  => {
+  const data = await fetch(`${API_URL}/${URL}`);
   const allProductsArr = await data.json();
 
   set_shop_propertyies(allProductsArr);
+  set_shop_sidebar_properties(allProductsArr)
   const shopProductsPaginationNode = document.querySelector('.shop__products-pagination');
 
   const paginationButtonArr = [...shopProductsPaginationNode.children];
