@@ -2,10 +2,13 @@ import './header&footer';
 import '@styles/shop.scss';
 import '@styles/_breadcrumb.scss';
 import '@components/double-range.web.js';
-import { API_URL } from '@config/index';
-import 'regenerator-runtime/runtime.js';
 import '@components/special-product.web.js';
+import '@components/horizontal-product.web.js';
+import 'regenerator-runtime/runtime.js';
+
+import { API_URL } from '@config/index';
 import { set_shop_propertyies } from '@utils/set_shop_propertyies.util.js';
+// import { get_product_component_variant } from '@utils/get_product_component_variant.util.js';
 
 const get_all_products = async () => {
   const data = await fetch(`${API_URL}/products`);
@@ -55,8 +58,7 @@ const get_all_products = async () => {
 };
 get_all_products();
 
-
-// const productsContainer 
+// const productsContainer
 const productsViewButttonNodesArr = [
   document.querySelector('.shop__products-utils__content-grid-view-button'),
   document.querySelector('.shop__products-utils__content-list-view-button'),
@@ -67,8 +69,13 @@ productsViewButttonNodesArr.forEach((__, idx) => {
   viewVariant === 'grid' && idx === 0 && __.classList.add('button--active');
   viewVariant === 'list' && idx === 1 && __.classList.add('button--active');
   __.addEventListener('click', () => {
+    const productsContainerNode = document.querySelector('.shop__products-row');
 
-    // shop__products-row
+    productsContainerNode.innerHTML = productsContainerNode.outerHTML.replaceAll(
+      productsContainerNode.outerHTML.includes('special-product') ? 'special-product' : 'horizontal-product',
+      !productsContainerNode.outerHTML.includes('special-product') ? 'special-product' : 'horizontal-product'
+    );
+
     productsViewButttonNodesArr.forEach((el) => el.classList.remove('button--active'));
 
     window.localStorage.setItem('productsViewVariant', idx === 0 ? 'grid' : 'list');

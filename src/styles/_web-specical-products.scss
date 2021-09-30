@@ -70,6 +70,9 @@
       object-fit: cover;
       aspect-ratio: 1;
       width: 242px;
+      &:hover {
+        cursor: pointer;
+      }
     }
     &__labels {
       @include centered_flex;

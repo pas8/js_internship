@@ -13,9 +13,9 @@ class HorizontalProduct extends HTMLElement {
 
     this.innerHTML = `
     <div class='horizontal-product'>
-      <div class='horizontal-product__preview-img'>
+      <a class='horizontal-product__preview-img' href='product_details.html?${id}'>
         <img src=${img_href} ></img>
-      </div>
+      </a>
       <div class='horizontal-product__content'>
         <div class='horizontal-product__content-title'>
           ${caption}

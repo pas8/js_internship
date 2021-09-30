@@ -4,10 +4,11 @@ import favouriteSvg from '@svgs/favourite.svg';
 import compareSvg from '@svgs/compare.svg';
 import searchSvg from '@svgs/search.svg';
 import { get_default_product_attribute_values } from '@utils/get_default_product_attribute_values.util.js';
+import { set_product_to_basket } from '@utils/set_product_to_basket.util.js';
 
 class SpecicalProduct extends HTMLElement {
   connectedCallback() {
-    const [img_href, id, caption, current_price, old_price] = get_default_product_attribute_values(this)
+    const [img_href, id, caption, current_price, old_price] = get_default_product_attribute_values(this);
     const sale_percent = this.getAttribute('sale_percent');
     const stars = this.getAttribute('stars');
     const is_new = this.getAttribute('is_new');
@@ -40,8 +41,9 @@ class SpecicalProduct extends HTMLElement {
           ${!!sale_percent ? `<div class='special-product-content__labels-sale'> -${sale_percent}% </div>` : ''}
           ${!!is_new ? `<div class='special-product-content__labels-new'> New </div>` : ''}
         </div>
-
-        <img src=${img_href} ></img>
+        <a href='product_details.html?${id}'>
+          <img src=${img_href} ></img>
+        </a>
       </div>
       <stars-feedback value=${stars}></stars-feedback>
       <div class='special-product__caption'>
@@ -58,10 +60,10 @@ class SpecicalProduct extends HTMLElement {
 
     const addToCardButton = this.querySelector('.special-product-content__utils-add-to-card');
     addToCardButton.addEventListener('click', () => {
-      const storage = window.sessionStorage;
-      const currentCard = storage.getItem('basket');
-      storage.setItem('basket', `${currentCard || ''},${id}`);
+      set_product_to_basket(id);
     });
+
+
   }
 }
 if (!customElements.get('special-product')) customElements.define('special-product', SpecicalProduct);

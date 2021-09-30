@@ -18,7 +18,7 @@ export const set_shop_propertyies = (allProductsArr, updatedPageNumber) => {
   const shopProductsContainerNode = document.querySelector('.shop__products-row');
 
   const pageNumber = updatedPageNumber || +window.sessionStorage.getItem('pageNumber') || 1;
-  const PRODUCTS_LENGTH_PER_PAGE = 4;
+  const PRODUCTS_LENGTH_PER_PAGE = 6;
   const END_PRODUCT_IDX = pageNumber * PRODUCTS_LENGTH_PER_PAGE;
   const START_PRODUCT_IDX = END_PRODUCT_IDX - PRODUCTS_LENGTH_PER_PAGE;
 
@@ -55,12 +55,12 @@ export const set_shop_propertyies = (allProductsArr, updatedPageNumber) => {
   sidebarContentOfFilterByPriceValueNode.innerHTML = `<div>$${min} - $${max} </div>`;
 
   sidebaFilterByPriceSliderNode.innerHTML = `<double-range step='${~~(
-    max / 100
+    Math.ceil(max / 100)
   )}' max='${max}' min='${min}'></double-range>`;
 
   sidebarContainerOfFilterButtonNode.innerHTML = `<button class='sidebar__filter-button button--contained ' > Filter </button>`;
 
-  shopProductsUtilsResultCounterNode.innerHTML = `<span>Showing ${START_PRODUCT_IDX} - ${
+  shopProductsUtilsResultCounterNode.innerHTML = `<span>Showing ${START_PRODUCT_IDX + 1} - ${
     END_PRODUCT_IDX > allProductsArr.length ? allProductsArr.length : END_PRODUCT_IDX
   } of ${allProductsArr.length} results </span>`;
 
