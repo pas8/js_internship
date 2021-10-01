@@ -4,13 +4,14 @@ import '@styles/_footer.scss';
 import '@styles/_basket_details.scss';
 import { set_up_search } from '@utils/set_up_search.util.js';
 import { set_up_basket_dialog } from '@utils/set_up_basket_dialog.util.js';
+import { use_to_close_seacrhing_dialog } from '@utils/use_to_close_seacrhing_dialog.util.js';
+import { use_to_open_seacrhing_dialog } from '@utils/use_to_open_seacrhing_dialog.util.js';
 import { defineCustomElements as initSkeleton } from 'skeleton-webcomponent-loader/loader/index.js';
 
 initSkeleton();
 
 window.isSeacrhingDialogOpen = false;
-  const buttonSearchNode = document.querySelector('.button-search');
-
+const buttonSearchNode = document.querySelector('.button-search');
 
 //!to refactor this shit
 const findedLink = [...document.querySelector('.main-row__links').childNodes]
@@ -42,17 +43,15 @@ favouriteNode.setAttribute('data-label', '42');
 
 set_up_basket_dialog();
 
-const searchingDialogNode = document.querySelector('.searching-dialog');
 const closeButtonOfSearchingDialogNode = document.querySelector('.searching-content__title-close-button');
-const handleCloseDialog = () => {
-  window.isSeacrhingDialogOpen = false;
-  searchingDialogNode.classList.add('searching-dialog--closed');
-};
+
+const handleCloseDialog = use_to_close_seacrhing_dialog()
+const handleOpenDialog = use_to_open_seacrhing_dialog()
 
 buttonSearchNode.addEventListener('click', () => {
   if (window.isSeacrhingDialogOpen) return handleCloseDialog();
-  window.isSeacrhingDialogOpen = true;
-  searchingDialogNode.classList.remove('searching-dialog--closed');
+  handleOpenDialog()
+
 });
 
 closeButtonOfSearchingDialogNode.addEventListener('click', handleCloseDialog);

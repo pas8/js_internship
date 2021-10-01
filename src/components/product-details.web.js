@@ -113,7 +113,7 @@ class ProductDetails extends HTMLElement {
     addToCardButtonNode.addEventListener('click', () => {
       set_product_to_basket(this.id);
     });
-    window.sessionStorage.getItem('basket');
+    window.localStorage.getItem('basket');
 
 
     const previewGalleryNode = document.querySelector('.product-details-content__product-gallery__main-img');

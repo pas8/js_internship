@@ -9,7 +9,6 @@ class QuantityCounter extends HTMLElement {
   }
 
   connectedCallback() {
-    
     this.innerHTML = ` 
       <button class='quantity-counter__button-less'>
         ${arrowPrevSvg}
@@ -31,6 +30,7 @@ class QuantityCounter extends HTMLElement {
     };
 
     quantityCounterButtonLessNode.addEventListener('click', () => {
+      if (this.quantityValue == 1) return;
       this.quantityValue -= 1;
       handleUpdateCounterValue();
     });
@@ -42,4 +42,3 @@ class QuantityCounter extends HTMLElement {
 }
 
 if (!customElements.get('quantity-counter')) customElements.define('quantity-counter', QuantityCounter);
-

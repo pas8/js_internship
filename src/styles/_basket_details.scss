@@ -34,6 +34,7 @@
     }
 
     &-main {
+
       display: flex;
       flex-direction: column;
       // gap: 2rem;
@@ -90,8 +91,6 @@
             &-total-price {
               border: 1px solid $light-grey;
               padding: 0.6rem 1.2rem;
-              &__caption {
-              }
               &__value {
                 font-weight: 600;
               }
@@ -104,6 +103,20 @@
     }
     &-submit {
       padding: 1rem;
+      &__total {
+        border: 1px solid $light-grey;
+        display: flex;
+        padding: 0.6rem 1.2rem;
+        align-items: center;
+        gap: 0.42rem;
+        font-family: 'Jost';
+        --skeleton-margin-bottom:-8px;
+
+        &-value {
+          font-weight: 600;
+          font-size: 1.42rem;
+        }
+      }
       &__button-to-checkout {
         font-size: 1.24rem !important;
         border-color: $text-secondary !important;
@@ -112,6 +125,8 @@
         }
       }
       display: flex;
+      align-items: center;
+      gap: 1rem;
       justify-content: flex-end;
     }
   }
