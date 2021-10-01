@@ -6,17 +6,14 @@ import '@components/special-product.web.js';
 import '@components/horizontal-product.web.js';
 import 'regenerator-runtime/runtime.js';
 
-import closeSvg from '@svgs/close.svg';
-import searchSvg from '@svgs/search.svg';
 import { API_URL } from '@config/index';
 import { set_shop_propertyies } from '@utils/set_shop_propertyies.util.js';
+import { set_up_search } from '@utils/set_up_search.util.js';
 import { set_shop_sidebar_properties } from '@utils/set_shop_sidebar_properties.util.js';
-import { use_debounce } from '@utils/use_debounce.util.js';
 import { set_shop_pagination_propertyies } from '@utils/set_shop_pagination_propertyies.util.js';
+import '@prototypes/map_join.array.js';
 
-Array.prototype.map_join = function (func) {
-  return this.map(func).join('');
-};
+
 
 const get_all_products = async () => {
   const data = await fetch(`${API_URL}/products`);
@@ -26,43 +23,11 @@ const get_all_products = async () => {
   set_shop_sidebar_properties(allProductsArr);
   set_shop_pagination_propertyies(allProductsArr);
 
-  const searchResultContainerNode = document.querySelector('.shop__sidebar-search__result');
-  const searchSvgContainerNode = document.querySelector('.shop__sidebar-search__svg-container');
-  const searchInputNode = document.querySelector('.shop__sidebar-search__input');
-
-  searchInputNode.addEventListener(
-    'input',
-    use_debounce(
-      function () {
-        searchSvgContainerNode.innerHTML = searchSvg;
-        if (!this.value) return (searchResultContainerNode.style.display = 'none');
-        const resultsArr = allProductsArr.map_join(({ title, id, image }) => {
-          return title.startsWith(this.value)
-            ? `<a href='product_details.html?${id}'>
-          <img src=${image} ></img>
-          <p> ${title} </p> </a> `
-            : '';
-        });
-        if (!resultsArr.length) return (searchResultContainerNode.style.display = 'none');
-        searchSvgContainerNode.innerHTML = closeSvg;
-        searchResultContainerNode.style.display = 'flex';
-
-        searchResultContainerNode.innerHTML = resultsArr;
-      },
-      200,
-      true
-    )
-  );
-  searchSvgContainerNode.addEventListener('click', (e) => {
-    if (!![...e.path]?.find((el) => el.classList?.[0] === 'closeSvg')) {
-      searchInputNode.value = '';
-      searchSvgContainerNode.innerHTML = searchSvg;
-      searchResultContainerNode.style.display = 'none';
-
-      return;
-    }
-    searchInputNode.focus();
-  });
+  set_up_search(allProductsArr,[
+    document.querySelector('.shop__sidebar-search__result'),
+    document.querySelector('.shop__sidebar-search__svg-container'),
+    document.querySelector('.shop__sidebar-search__input'),
+  ]);
 };
 get_all_products();
 

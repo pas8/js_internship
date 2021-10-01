@@ -1,6 +1,8 @@
 import { set_up_on_click_of_all_childrens } from '@utils/set_up_on_click_of_all_childrens.util.js';
 import { use_validation_of_siderbar_utils } from '@utils/use_validation_of_siderbar_utils.util.js';
 import { set_shop_propertyies } from '@utils/set_shop_propertyies.util.js';
+import { to_capitalize } from '@utils/to_capitalize.util.js';
+
 import { set_shop_pagination_propertyies } from '@utils/set_shop_pagination_propertyies.util.js';
 import { API_URL } from '@config/index';
 import filterSvg from '@svgs/filter.svg';
@@ -22,17 +24,12 @@ export const set_shop_sidebar_properties = (arr) => {
 
   const [categoriesArr, colorsArr, sizeArr, max, min] = use_validation_of_siderbar_utils(arr);
 
-  window.filteringProps = {
-    color: '',
-    price: [],
-  };
-
   sidebarProductCategoriesNode.innerHTML = `
   ${['All products', ...categoriesArr].map_join(
     (el, i) =>
       `<div class='sidebar-content-of-product-categories__item ${
         i === 0 ? 'sidebar-content-of-product-categories__item--active' : ''
-      } '>${el.split('').map_join((__, idx) => (idx === 0 ? __.toUpperCase() : __))} </div>`
+      } '>${to_capitalize(el)} </div>`
   )}
   `;
   sidebaFilterByColorNode.innerHTML = `
@@ -74,14 +71,13 @@ export const set_shop_sidebar_properties = (arr) => {
     const filteredArr = arr.filter(
       ({ price }) => price >= window.filteringProps.price[0] && price <= window.filteringProps.price[1]
     );
-console.log(window.filteringProps.price)
     set_shop_propertyies(filteredArr, undefined, true);
     set_shop_pagination_propertyies(filteredArr);
   });
 
   [...sidebarProductCategoriesNode.children].forEach((el) => {
     el.addEventListener('click', async () => {
-      window.sessionStorage.setItem('pageNumber', 1);
+      window.localStorage.setItem('pageNumber', 1);
 
       [...sidebarProductCategoriesNode.children].forEach((__) =>
         __.classList.remove('sidebar-content-of-product-categories__item--active')
