@@ -22,7 +22,7 @@ export const set_up_basket_dialog = () => {
   const TOTAL_PRODUCT_PRICE_VALUE_CLASS = `${BASKET_DIALOG_MAIN_CLASS}__product-item-content__utils-total-price__value`;
   const handleSetUpTotalPrice = () => {
     const get_total_price = use_to_count_total_value(TOTAL_PRODUCT_PRICE_VALUE_CLASS);
-    basketContentSubmitTotalValueNode.innerHTML = get_total_price().toFixed(1) + get_correct_currency()
+    basketContentSubmitTotalValueNode.innerHTML = get_total_price().toFixed(1) + get_correct_currency();
   };
 
   basketNode.addEventListener('click', () => {
@@ -91,7 +91,8 @@ export const set_up_basket_dialog = () => {
 
       allDeleteButtonsNodeArr.forEach((el) => {
         el.addEventListener('click', () => {
-          // const [basketValue] = get_basket();
+          const [basketValue] = get_basket();
+
           const id = el.getAttribute('id-which-should-be-deleted');
           const basketDialogContentNode = document.querySelector('.' + BASKET_DIALOG_MAIN_CLASS);
 
@@ -100,6 +101,8 @@ export const set_up_basket_dialog = () => {
           });
 
           window.localStorage.setItem('basket', basketValue.filter((__) => __ !== id).join(' '));
+          handleSetUpTotalPrice();
+
         });
       });
 
@@ -122,8 +125,7 @@ export const set_up_basket_dialog = () => {
             const price = Number.parseFloat(parentNode.children[0].children[1].textContent);
             const totalPrice = (+__.target.textContent * price).toFixed(1);
             parentNode.children[1].children[1].innerHTML = totalPrice + get_correct_currency();
-          handleSetUpTotalPrice();
-
+            handleSetUpTotalPrice();
           },
           false
         );
