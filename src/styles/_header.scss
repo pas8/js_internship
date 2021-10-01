@@ -3,43 +3,6 @@
 header {
   z-index: 100;
 
-  .searching {
-    &-dialog {
-      @include dialog;
-
-      &--closed {
-        display: none;
-      }
-    }
-    &-content {
-      &__title {
-        font-family: 'Jost';
-        padding: 0.42rem 0;
-        @include space-between_flex;
-        &-close-button {
-          & svg {
-            width: 2rem;
-          }
-          &:hover {
-            & path {
-            fill: $primary;
-            }
-          }
-        }
-        font-size: 1.6rem;
-        font-weight: 500;
-      }
-      padding: 0.42rem 1rem;
-      background-color: $background;
-      &-search {
-        margin-bottom: 0.42rem;
-        & input {
-          font-size: 1.42rem;
-          min-width: 360px;
-        }
-      }
-    }
-  }
 
   .menu-button {
     background-color: $header-utils-bgcolor;
