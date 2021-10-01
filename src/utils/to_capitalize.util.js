@@ -1,0 +1,1 @@
+export const to_capitalize = (str) => str.split('').map_join((__, idx) => (idx === 0 ? __.toUpperCase() : __))

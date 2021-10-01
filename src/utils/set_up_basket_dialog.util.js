@@ -4,7 +4,6 @@ import { use_to_count_total_value } from '@utils/use_to_count_total_value.util.j
 import { get_basket } from '@utils/get_basket.util.js';
 import deleteSvg from '@svgs/delete.svg';
 import { get_correct_currency } from '@utils/get_correct_currency.util.js';
-import '@prototypes/map_join.array.js';
 import '@components/quantity-counter.web.js';
 
 export const set_up_basket_dialog = () => {
@@ -37,7 +36,6 @@ export const set_up_basket_dialog = () => {
     const promiseAll = use_product_promise(uniqCountArr.map(({ id }) => id));
 
     promiseAll.then((res) => {
-      // basketTotalValueNode
       basketDialogMainNode.innerHTML = res.map_join(
         ({ title, image, price, id }, idx) => `
             <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item' basket-product-id='${id}'>
