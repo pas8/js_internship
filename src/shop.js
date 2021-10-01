@@ -11,10 +11,9 @@ import { set_shop_propertyies } from '@utils/set_shop_propertyies.util.js';
 import { set_up_search } from '@utils/set_up_search.util.js';
 import { set_shop_sidebar_properties } from '@utils/set_shop_sidebar_properties.util.js';
 import { set_shop_pagination_propertyies } from '@utils/set_shop_pagination_propertyies.util.js';
+import '@prototypes/map_join.array.js';
 
-Array.prototype.map_join = function (func) {
-  return this.map(func).join('');
-};
+
 
 const get_all_products = async () => {
   const data = await fetch(`${API_URL}/products`);
