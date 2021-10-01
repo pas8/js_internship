@@ -22,7 +22,7 @@ export const set_up_basket_dialog = () => {
   const TOTAL_PRODUCT_PRICE_VALUE_CLASS = `${BASKET_DIALOG_MAIN_CLASS}__product-item-content__utils-total-price__value`;
   const handleSetUpTotalPrice = () => {
     const get_total_price = use_to_count_total_value(TOTAL_PRODUCT_PRICE_VALUE_CLASS);
-    basketContentSubmitTotalValueNode.innerHTML = get_total_price() + get_correct_currency();
+    basketContentSubmitTotalValueNode.innerHTML = get_total_price().toFixed(1) + get_correct_currency()
   };
 
   basketNode.addEventListener('click', () => {

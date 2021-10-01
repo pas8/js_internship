@@ -4,12 +4,14 @@ import favouriteSvg from '@svgs/favourite.svg';
 import compareSvg from '@svgs/compare.svg';
 import searchSvg from '@svgs/search.svg';
 import { get_default_product_attribute_values } from '@utils/get_default_product_attribute_values.util.js';
+import { use_to_open_seacrhing_dialog } from '@utils/use_to_open_seacrhing_dialog.util.js';
+
 import { set_product_to_basket } from '@utils/set_product_to_basket.util.js';
 import { get_basket } from '@utils/get_basket.util.js';
 
 class SpecicalProduct extends HTMLElement {
   connectedCallback() {
-
+    const handleOpenSearchDialog = use_to_open_seacrhing_dialog();
     const [basketValue] = get_basket();
     const [img_href, id, caption, current_price, old_price] = get_default_product_attribute_values(this);
 
@@ -19,7 +21,7 @@ class SpecicalProduct extends HTMLElement {
     let is_favourite = this.getAttribute('is_favourite');
     let is_added_to_compare = this.getAttribute('is_favourite');
 
-    this.is_added_to_basket = basketValue.includes(id)
+    this.is_added_to_basket = basketValue.includes(id);
 
     this.innerHTML = `
     <div class='special-product'>
@@ -67,10 +69,15 @@ class SpecicalProduct extends HTMLElement {
       </div>
     </div>`;
 
-    const addToCardButton = this.querySelector('.special-product-content__utils-add-to-card');
-    addToCardButton.addEventListener('click', () => {
-      addToCardButton.classList.add('special-product-content__utils-item--active')
+    const addToCardButtonNode = this.querySelector('.special-product-content__utils-add-to-card');
+    addToCardButtonNode.addEventListener('click', () => {
+      addToCardButtonNode.classList.add('special-product-content__utils-item--active');
       set_product_to_basket(id);
+    });
+    const seacrhButtonNode = this.querySelector('.special-product-content__utils-search');
+
+    seacrhButtonNode.addEventListener('click', () => {
+      handleOpenSearchDialog();
     });
   }
 }
