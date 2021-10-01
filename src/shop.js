@@ -13,7 +13,7 @@ import { set_shop_sidebar_properties } from '@utils/set_shop_sidebar_properties.
 import { set_shop_pagination_propertyies } from '@utils/set_shop_pagination_propertyies.util.js';
 import '@prototypes/map_join.array.js';
 
-
+window.localStorage.setItem('productsViewVariant', 'grid');
 
 const get_all_products = async () => {
   const data = await fetch(`${API_URL}/products`);
@@ -23,7 +23,7 @@ const get_all_products = async () => {
   set_shop_sidebar_properties(allProductsArr);
   set_shop_pagination_propertyies(allProductsArr);
 
-  set_up_search(allProductsArr,[
+  set_up_search(allProductsArr, [
     document.querySelector('.shop__sidebar-search__result'),
     document.querySelector('.shop__sidebar-search__svg-container'),
     document.querySelector('.shop__sidebar-search__input'),

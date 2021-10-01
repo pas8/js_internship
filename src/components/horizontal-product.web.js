@@ -4,13 +4,19 @@ import compareSvg from '@svgs/compare.svg';
 import basketSvg from '@svgs/basket.svg';
 import searchSvg from '@svgs/search.svg';
 import { get_default_product_attribute_values } from '@utils/get_default_product_attribute_values.util.js';
-import { set_product_to_basket } from '@utils/set_product_to_basket.util.js';
+import { set_up_utils_of_product } from '@utils/set_up_utils_of_product.util.js';
+import { get_basket } from '@utils/get_basket.util.js';
+import { get_compare_ids } from '@utils/get_compare_ids.util.js';
 
 class HorizontalProduct extends HTMLElement {
   connectedCallback() {
-    const [img_href, id, caption, current_price, ] = get_default_product_attribute_values(this);
+    const [basketValue] = get_basket();
+
+    const [img_href, id, caption, current_price] = get_default_product_attribute_values(this);
     const description = this.getAttribute('description');
 
+    this.is_added_to_compare = get_compare_ids()?.includes(id);
+    this.is_added_to_basket = basketValue?.includes(id);
     this.innerHTML = `
     <div class='horizontal-product'>
       <a class='horizontal-product__preview-img' href='product_details.html?${id}'>
@@ -29,26 +35,24 @@ class HorizontalProduct extends HTMLElement {
       </div>
       <div class='horizontal-product__utils'>
       ${[
-        { content: favouriteSvg, caption: 'favourite' },
-        { content: compareSvg, caption: 'compare' },
-        { content: basketSvg, caption: 'basket' },
-        { content: searchSvg, caption: 'search' },
-      ]
-        .map(
-          ({ caption, content }) => `
-          <button class='horizontal-product__utils-${caption}'>
+        { content: favouriteSvg, caption: 'favourite', isActive: false },
+        { content: compareSvg, caption: 'compare', isActive: this.is_added_to_compare },
+        { content: basketSvg, caption: 'add-to-card', isActive: this.is_added_to_basket },
+        { content: searchSvg, caption: 'search', isActive: false },
+      ].map_join(
+        ({ caption, content,isActive }) => `
+          <button class='horizontal-product__utils-${caption}  ${
+          isActive ? 'horizontal-product__utils-item--active' : ''
+        }'>
             ${content}
           </button>`
-        )
-        .join('')}
+      )}
       </div>
     </div>
     `;
 
-    const addToCardButton = this.querySelector('.horizontal-product__utils-basket');
-    addToCardButton.addEventListener('click', () => {
-      set_product_to_basket(id);
-    });
+    const handleSetUp = set_up_utils_of_product(id, 'horizontal-product__utils').bind(this);
+    handleSetUp();
   }
 }
 if (!customElements.get('horizontal-product')) customElements.define('horizontal-product', HorizontalProduct);
