@@ -11,7 +11,7 @@ export const set_shop_propertyies = (allProductsArr, updatedPageNumber,isUpdateP
   const shopProductsUtilsResultCounterNode = document.querySelector('.shop__products-utils__result-counter');
   const shopProductsContainerNode = document.querySelector('.shop__products-row');
 
-  const pageNumber = updatedPageNumber || +window.sessionStorage.getItem('pageNumber') || 1;
+  const pageNumber = updatedPageNumber || +window.localStorage.getItem('pageNumber') || 1;
 
   const PRODUCTS_LENGTH_PER_PAGE = 6;
   const END_PRODUCT_IDX = pageNumber * PRODUCTS_LENGTH_PER_PAGE;
