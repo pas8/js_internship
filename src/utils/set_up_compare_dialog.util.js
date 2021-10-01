@@ -14,6 +14,5 @@ export const set_up_compare_dialog = () => {
     if (window.isSeacrhingDialogOpen) return handleCloseDialog();
     handleOpenDialog();
   });
-
   closeButtonOfCompareingDialogNode.addEventListener('click', handleCloseDialog);
 };

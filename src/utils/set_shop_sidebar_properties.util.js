@@ -1,6 +1,8 @@
 import { set_up_on_click_of_all_childrens } from '@utils/set_up_on_click_of_all_childrens.util.js';
 import { use_validation_of_siderbar_utils } from '@utils/use_validation_of_siderbar_utils.util.js';
 import { set_shop_propertyies } from '@utils/set_shop_propertyies.util.js';
+import { to_capitalize } from '@utils/to_capitalize.util.js';
+
 import { set_shop_pagination_propertyies } from '@utils/set_shop_pagination_propertyies.util.js';
 import { API_URL } from '@config/index';
 import filterSvg from '@svgs/filter.svg';
@@ -22,13 +24,12 @@ export const set_shop_sidebar_properties = (arr) => {
 
   const [categoriesArr, colorsArr, sizeArr, max, min] = use_validation_of_siderbar_utils(arr);
 
-
   sidebarProductCategoriesNode.innerHTML = `
   ${['All products', ...categoriesArr].map_join(
     (el, i) =>
       `<div class='sidebar-content-of-product-categories__item ${
         i === 0 ? 'sidebar-content-of-product-categories__item--active' : ''
-      } '>${el.split('').map_join((__, idx) => (idx === 0 ? __.toUpperCase() : __))} </div>`
+      } '>${to_capitalize(el)} </div>`
   )}
   `;
   sidebaFilterByColorNode.innerHTML = `

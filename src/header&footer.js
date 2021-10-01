@@ -1,4 +1,5 @@
 import '@components/social-utils.web.js';
+import '@prototypes/map_join.array.js';
 import '@styles/_header.scss';
 import '@styles/_footer.scss';
 import '@styles/_compare_dialog.scss';

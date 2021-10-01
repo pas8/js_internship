@@ -7,7 +7,9 @@ import { get_default_product_attribute_values } from '@utils/get_default_product
 import { use_to_open_seacrhing_dialog } from '@utils/use_to_open_seacrhing_dialog.util.js';
 
 import { set_product_to_basket } from '@utils/set_product_to_basket.util.js';
+import { set_product_to_compare } from '@utils/set_product_to_compare.util.js';
 import { get_basket } from '@utils/get_basket.util.js';
+import { get_compare_ids } from '@utils/get_compare_ids.util.js';
 
 class SpecicalProduct extends HTMLElement {
   connectedCallback() {
@@ -19,7 +21,7 @@ class SpecicalProduct extends HTMLElement {
     const stars = this.getAttribute('stars');
     let is_new = this.getAttribute('is_new');
     let is_favourite = this.getAttribute('is_favourite');
-    let is_added_to_compare = this.getAttribute('is_favourite');
+    this.is_added_to_compare =   get_compare_ids().includes(id);
 
     this.is_added_to_basket = basketValue.includes(id);
 
@@ -33,7 +35,7 @@ class SpecicalProduct extends HTMLElement {
         </button>
         <div class='special-product-content__utils'>
           ${[
-            { content: compareSvg, caption: 'compare', isActive: is_added_to_compare },
+            { content: compareSvg, caption: 'compare', isActive: this.is_added_to_compare },
             { content: 'Add to card', caption: 'add-to-card', isActive: this.is_added_to_basket },
             { content: searchSvg, caption: 'search', isActive: false },
           ]
@@ -78,6 +80,13 @@ class SpecicalProduct extends HTMLElement {
 
     seacrhButtonNode.addEventListener('click', () => {
       handleOpenSearchDialog();
+    });
+
+    const compareButtonNode = this.querySelector('.special-product-content__utils-compare');
+
+    compareButtonNode.addEventListener('click', () => {
+      compareButtonNode.classList.add('special-product-content__utils-item--active');
+      set_product_to_compare(id);
     });
   }
 }
