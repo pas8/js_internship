@@ -1,8 +1,8 @@
 import { use_uniq_count_arr } from '@utils/use_uniq_count_arr.util.js';
 import { use_product_promise } from '@utils/use_product_promise.util.js';
+import { use_to_count_total_value } from '@utils/use_to_count_total_value.util.js';
 import { get_basket } from '@utils/get_basket.util.js';
 import deleteSvg from '@svgs/delete.svg';
-
 import { get_correct_currency } from '@utils/get_correct_currency.util.js';
 import '@prototypes/map_join.array.js';
 import '@components/quantity-counter.web.js';
@@ -17,6 +17,14 @@ export const set_up_basket_dialog = () => {
   const basketDialogNode = document.querySelector('.basket');
   const basketDialogMainNode = document.querySelector('.' + BASKET_DIALOG_MAIN_CLASS);
 
+  const basketContentSubmitTotalValueNode = document.querySelector('.basket-content-submit__total-value');
+
+  const TOTAL_PRODUCT_PRICE_VALUE_CLASS = `${BASKET_DIALOG_MAIN_CLASS}__product-item-content__utils-total-price__value`;
+  const handleSetUpTotalPrice = () => {
+    const get_total_price = use_to_count_total_value(TOTAL_PRODUCT_PRICE_VALUE_CLASS);
+    basketContentSubmitTotalValueNode.innerHTML = get_total_price() + get_correct_currency();
+  };
+
   basketNode.addEventListener('click', () => {
     const [basketValue, basketLength] = get_basket();
 
@@ -29,6 +37,7 @@ export const set_up_basket_dialog = () => {
     const promiseAll = use_product_promise(uniqCountArr.map(({ id }) => id));
 
     promiseAll.then((res) => {
+      // basketTotalValueNode
       basketDialogMainNode.innerHTML = res.map_join(
         ({ title, image, price, id }, idx) => `
             <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item' basket-product-id='${id}'>
@@ -59,20 +68,22 @@ export const set_up_basket_dialog = () => {
                     Total:
                     </div>
 
-                    <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__utils-total-price__value'>
+                    <div class='${TOTAL_PRODUCT_PRICE_VALUE_CLASS}'>
                       ${(uniqCountArr[idx].count * price).toFixed(1)}${get_correct_currency()}
                     </div>
                   </div>
                   <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__utils-count'>
                   <quantity-counter value='${
                     uniqCountArr[idx].count
-                  }' id='product-item-content__utils-count|${idx}'></quantity-counter>   
+                  }' id='product-item-content__utils-count|${id}'></quantity-counter>   
                   </div>
                 </div>
               </div>
             </div>
           `
       );
+
+      handleSetUpTotalPrice();
       const allQuantityCountersNode = basketDialogNode.getElementsByTagName('quantity-counter');
       const allDeleteButtonsNodeArr = basketDialogNode.querySelectorAll(
         `.${BASKET_DIALOG_MAIN_CLASS}__product-item-content__header-delete-button`
@@ -88,11 +99,22 @@ export const set_up_basket_dialog = () => {
             if (__.getAttribute('basket-product-id') === id) __.remove();
           });
 
-          window.sessionStorage.setItem('basket', basketValue.filter((__) => __ !== id).join(' '));
+          window.localStorage.setItem('basket', basketValue.filter((__) => __ !== id).join(' '));
         });
       });
 
       [...allQuantityCountersNode].forEach((el) => {
+        el.children[0].addEventListener('click', () => {
+          const id = el.id.split('|')[1];
+          const [basketValue] = get_basket();
+
+          if (basketValue.filter((__) => __ == id).length <= 1) return;
+
+          const idxToRemove = basketValue.findIndex((__) => __ == id);
+
+          window.localStorage.setItem('basket', basketValue.filter((__, idx) => idx !== idxToRemove).join(' '));
+        });
+
         el.children[1].addEventListener(
           'DOMNodeInserted',
           (__) => {
@@ -100,9 +122,18 @@ export const set_up_basket_dialog = () => {
             const price = Number.parseFloat(parentNode.children[0].children[1].textContent);
             const totalPrice = (+__.target.textContent * price).toFixed(1);
             parentNode.children[1].children[1].innerHTML = totalPrice + get_correct_currency();
+          handleSetUpTotalPrice();
+
           },
           false
         );
+
+        el.children[2].addEventListener('click', () => {
+          const id = el.id.split('|')[1];
+
+          const [basketValue] = get_basket();
+          window.localStorage.setItem('basket', basketValue.join(' ') + ' ' + id);
+        });
       });
     });
   });
