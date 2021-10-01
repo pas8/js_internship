@@ -53,7 +53,7 @@ promiseAll.then((res) => {
     .join('');
 
   const taxeslValue = allPricesArr.length;
-  const subtotatlValue = get_sum_from_arr(allPricesArr);
+  const subtotatlValue =  +(get_sum_from_arr(allPricesArr).toFixed())
   checkoutSubtotalNode.innerHTML = `$${subtotatlValue}.0`;
   checkoutTaxesNode.innerHTML = `$${taxeslValue}.0`;
 
