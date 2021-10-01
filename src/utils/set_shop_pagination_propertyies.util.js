@@ -8,7 +8,7 @@ export const set_shop_pagination_propertyies = (allProductsArr) => {
   paginationButtonArr.forEach((el) => {
     el.addEventListener('click', () => {
       let updatedPageNumber;
-      const currentPageNumber = +window.sessionStorage.getItem('pageNumber');
+      const currentPageNumber = +window.localStorage.getItem('pageNumber');
 
       if (currentPageNumber == el.name) return set_shop_propertyies(allProductsArr, currentPageNumber);
 
@@ -37,7 +37,7 @@ export const set_shop_pagination_propertyies = (allProductsArr) => {
         updatedPageNumber = currentPageNumber + 1 + '';
       }
 
-      window.sessionStorage.setItem('pageNumber', updatedPageNumber);
+      window.localStorage.setItem('pageNumber', updatedPageNumber);
       set_shop_propertyies(allProductsArr, updatedPageNumber);
     });
   });

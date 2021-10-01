@@ -76,7 +76,7 @@ export const set_shop_sidebar_properties = (arr) => {
 
   [...sidebarProductCategoriesNode.children].forEach((el) => {
     el.addEventListener('click', async () => {
-      window.sessionStorage.setItem('pageNumber', 1);
+      window.localStorage.setItem('pageNumber', 1);
 
       [...sidebarProductCategoriesNode.children].forEach((__) =>
         __.classList.remove('sidebar-content-of-product-categories__item--active')

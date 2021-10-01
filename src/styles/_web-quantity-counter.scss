@@ -1,0 +1,35 @@
+@import './global.scss';
+
+quantity-counter {
+  display: flex;
+  gap: 1rem;
+  border: 1px solid $light-grey;
+  transition: cubic-bezier(0.455, 0.03, 0.515, 0.955) 0.16s all;
+  &:hover {
+    border-color: $input-border-color;
+  }
+  & button {
+    @include centered_flex;
+    padding: 0;
+    padding: 0.6rem !important;
+    &:hover {
+      path {
+        fill: $text-secondary;
+      }
+    }
+    & svg {
+      width: 1.42rem;
+      path {
+        fill: $input-border-color;
+      }
+    }
+  }
+  p {
+    @include centered_flex;
+  }
+
+  .quantity-counter__value {
+    font-weight: 500;
+    font-size: 1.08rem;
+  }
+}

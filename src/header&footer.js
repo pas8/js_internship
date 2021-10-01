@@ -1,18 +1,17 @@
+import '@components/social-utils.web.js';
 import '@styles/_header.scss';
 import '@styles/_footer.scss';
 import '@styles/_basket_details.scss';
-import '@components/social-utils.web.js';
-// import { get_random_img } from '@utils/get_random_img.util.js';
-import { get_basket } from '@utils/get_basket.util.js';
 import { set_up_search } from '@utils/set_up_search.util.js';
-
-import { use_uniq_count_arr } from '@utils/use_uniq_count_arr.util.js';
-import { use_product_promise } from '@utils/use_product_promise.util.js';
+import { set_up_basket_dialog } from '@utils/set_up_basket_dialog.util.js';
+import { use_to_close_seacrhing_dialog } from '@utils/use_to_close_seacrhing_dialog.util.js';
+import { use_to_open_seacrhing_dialog } from '@utils/use_to_open_seacrhing_dialog.util.js';
 import { defineCustomElements as initSkeleton } from 'skeleton-webcomponent-loader/loader/index.js';
 
 initSkeleton();
 
 window.isSeacrhingDialogOpen = false;
+const buttonSearchNode = document.querySelector('.button-search');
 
 //!to refactor this shit
 const findedLink = [...document.querySelector('.main-row__links').childNodes]
@@ -27,14 +26,8 @@ const findedLink = [...document.querySelector('.main-row__links').childNodes]
 findedLink && findedLink.classList.add('main-row__links__link-wrapper--active');
 
 const favouriteNode = document.querySelector('.button-favourite');
-const basketNode = document.querySelector('.button-basket');
 const headerMenuButtonNode = document.querySelector('.menu-button');
 const headerNode = document.querySelector('header');
-const basketDialogNode = document.querySelector('.basket');
-const basketDialogCloseButtonNode = document.querySelector('.basket-content-header__close-button');
-
-const BASKET_DIALOG_MAIN_CLASS = 'basket-content-main';
-const basketDialogMainNode = document.querySelector('.' + BASKET_DIALOG_MAIN_CLASS);
 
 let isHeaderMenuOpen = false;
 headerMenuButtonNode.addEventListener('click', () => {
@@ -48,64 +41,20 @@ headerMenuButtonNode.addEventListener('click', () => {
 favouriteNode.classList.add('with-label');
 favouriteNode.setAttribute('data-label', '42');
 
-const [basketValue, basketLength] = get_basket();
+set_up_basket_dialog();
 
-let isBasketDialogOpen = false;
-
-basketNode.addEventListener('click', () => {
-  isBasketDialogOpen = !isBasketDialogOpen;
-  const basketClassList = basketDialogNode.classList;
-
-  basketClassList.remove('basket--closed');
-  if (!basketLength) return (basketDialogMainNode.innerHTML = `<p>No products was added yet.</p>`);
-
-  const uniqCountArr = use_uniq_count_arr(basketValue);
-  const promiseAll = use_product_promise(uniqCountArr.map(({ id }) => id));
-
-  promiseAll.then((res) => {
-    basketDialogMainNode.innerHTML = res
-      .map(
-        ({ title, image, price }) => `
-          <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item'>
-            <img src='${image}' class='${BASKET_DIALOG_MAIN_CLASS}__product-item__preview-img'> </img>
-            <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content'>
-              <p class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__title'>${title} <p/>
-              <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__utils'>
-                ${price}
-              </div>
-            </div>
-          </div>
-        `
-      )
-      .join('');
-  });
-});
-
-const buttonSearchNode = document.querySelector('.button-search');
-const searchingDialogNode = document.querySelector('.searching-dialog');
 const closeButtonOfSearchingDialogNode = document.querySelector('.searching-content__title-close-button');
-const handleCloseDialog = () => {
-  window.isSeacrhingDialogOpen = false
-  searchingDialogNode.classList.add('searching-dialog--closed');
-};
 
-closeButtonOfSearchingDialogNode.addEventListener('click', handleCloseDialog);
+const handleCloseDialog = use_to_close_seacrhing_dialog()
+const handleOpenDialog = use_to_open_seacrhing_dialog()
 
 buttonSearchNode.addEventListener('click', () => {
   if (window.isSeacrhingDialogOpen) return handleCloseDialog();
-  window.isSeacrhingDialogOpen = true
-  searchingDialogNode.classList.remove('searching-dialog--closed');
+  handleOpenDialog()
+
 });
 
-basketDialogCloseButtonNode.addEventListener('click', () => {
-  isBasketDialogOpen = !isBasketDialogOpen;
-  const basketClassList = basketDialogNode.classList;
-  basketClassList.add('basket--closed');
-  basketDialogMainNode.innerHTML = ``;
-});
-
-!!basketLength && basketNode.classList.add('with-label');
-basketNode.setAttribute('data-label', basketLength);
+closeButtonOfSearchingDialogNode.addEventListener('click', handleCloseDialog);
 
 set_up_search(
   [],
