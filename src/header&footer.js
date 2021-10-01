@@ -1,8 +1,7 @@
+import '@components/social-utils.web.js';
 import '@styles/_header.scss';
 import '@styles/_footer.scss';
 import '@styles/_basket_details.scss';
-import '@components/social-utils.web.js';
-// import { get_random_img } from '@utils/get_random_img.util.js';
 import { set_up_search } from '@utils/set_up_search.util.js';
 import { set_up_basket_dialog } from '@utils/set_up_basket_dialog.util.js';
 import { defineCustomElements as initSkeleton } from 'skeleton-webcomponent-loader/loader/index.js';
@@ -10,7 +9,7 @@ import { defineCustomElements as initSkeleton } from 'skeleton-webcomponent-load
 initSkeleton();
 
 window.isSeacrhingDialogOpen = false;
-const buttonSearchNode = document.querySelector('.button-search');
+  const buttonSearchNode = document.querySelector('.button-search');
 
 
 //!to refactor this shit

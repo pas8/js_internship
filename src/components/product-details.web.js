@@ -1,10 +1,7 @@
 import '@components/stars.web.js';
+import '@components/quantity-counter.web.js';
 import '@styles/_web-product-details.scss';
-// import { get_avg_from_arr } from '@utils/get_avg_from_arr.util.js';
 import { set_product_to_basket } from '@utils/set_product_to_basket.util.js';
-
-import arrowNextSvg from '@svgs/arrow_next.svg';
-import arrowPrevSvg from '@svgs/arrow_prev.svg';
 
 import compareSvg from '@svgs/compare.svg';
 import favouriteSvg from '@svgs/favourite.svg';
@@ -22,11 +19,10 @@ class ProductDetails extends HTMLElement {
     this.activeImgIdx = 0;
     this.price = `${this.getAttribute('price')}$`;
     this.tabIdx = 0;
-    this.id = this.getAttribute('id')
-    this.title = this.getAttribute('title');
+    this.id = this.getAttribute('id');
+    this.title = this.getAttribute('caption');
     this.ratingValue = this.getAttribute('rating-value');
     this.ratingCount = this.getAttribute('rating-count');
-    this.quantityValue = 1;
     this.description = this.getAttribute('description');
     this.denotationPreview = [...this.description].filter((__, idx) => idx < 100).join('') + '...';
 
@@ -79,16 +75,7 @@ class ProductDetails extends HTMLElement {
         <div class='product-details-content__info-utils'>
           <div class='product-details-content__info-utils__quantity'>
             <p>Quantity:</p>
-            <div class='product-details-content__info-utils__quantity-counter'>
-              <button class='product-details-content__info-utils__quantity-counter__button-less'>
-                ${arrowPrevSvg}
-              </button>
-
-              <p class='product-details-content__info-utils__quantity-counter__value'>${this.quantityValue}</p>
-              <button class='product-details-content__info-utils__quantity-counter__button-more'>
-                ${arrowNextSvg}
-              </button>
-            </div>
+            <quantity-counter></quantity-counter>
           </div>
           <button class='product-details-content__info-utils__add-to-cart-button button-outlined'> Add to cart</button>
           <button class='product-details-content__info__utils-favourite button-outlined button'>
@@ -121,41 +108,13 @@ class ProductDetails extends HTMLElement {
       </div>
 `;
 
+    const addToCardButtonNode = document.querySelector('.product-details-content__info-utils__add-to-cart-button');
 
-
-const addToCardButtonNode = document.querySelector('.product-details-content__info-utils__add-to-cart-button')
-
-
-addToCardButtonNode.addEventListener('click',()=> {
-
-  set_product_to_basket(this.id)
-
-})
-window.sessionStorage.getItem('basket')
-
-    const quantityCounterButtonMoreNode = document.querySelector(
-      '.product-details-content__info-utils__quantity-counter__button-more'
-    );
-    const quantityCounterButtonLessNode = document.querySelector(
-      '.product-details-content__info-utils__quantity-counter__button-less'
-    );
-
-    const quantityCounterValueNode = document.querySelector(
-      '.product-details-content__info-utils__quantity-counter__value'
-    );
-
-    const handleUpdateCounterValue = () => {
-      quantityCounterValueNode.innerHTML = this.quantityValue;
-    };
-
-    quantityCounterButtonLessNode.addEventListener('click', () => {
-      this.quantityValue -= 1;
-      handleUpdateCounterValue();
+    addToCardButtonNode.addEventListener('click', () => {
+      set_product_to_basket(this.id);
     });
-    quantityCounterButtonMoreNode.addEventListener('click', () => {
-      this.quantityValue += 1;
-      handleUpdateCounterValue();
-    });
+    window.sessionStorage.getItem('basket');
+
 
     const previewGalleryNode = document.querySelector('.product-details-content__product-gallery__main-img');
     const galleryTabsNode = document.querySelector('.product-details-content__product-gallery__tabs');

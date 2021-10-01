@@ -98,6 +98,7 @@ module.exports = {
       pages.map(
         (page) =>
           new miniCss({
+            ignoreOrder: true,
             filename: `[name].css`,
           })
       )

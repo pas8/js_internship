@@ -12,7 +12,7 @@ fetch(`${API_URL}/products/${ID}`)
   .then(({ title, description, image, price, rating, category, id }) => {
     product_container.innerHTML = `
     <product-details 
-      title='${title}'
+      caption='${title}'
       id='${id}' 
       category='${category}'
       image='${image}'
