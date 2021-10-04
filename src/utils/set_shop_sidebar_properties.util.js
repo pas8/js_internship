@@ -6,6 +6,8 @@ import { to_capitalize } from '@utils/to_capitalize.util.js';
 import { set_shop_pagination_propertyies } from '@utils/set_shop_pagination_propertyies.util.js';
 import { API_URL } from '@config/index';
 import filterSvg from '@svgs/filter.svg';
+import categorySvg from '@svgs/category.svg';
+import closeSvg from '@svgs/close.svg';
 
 import 'regenerator-runtime/runtime.js';
 
@@ -14,6 +16,8 @@ window.filteringProps = {
   size: '',
 };
 
+window.isShopSidebarDialogOpen = false;
+
 export const set_shop_sidebar_properties = (arr) => {
   const sidebarProductCategoriesNode = document.querySelector('.sidebar-content-of-product-categories');
   const sidebaFilterByPriceSliderNode = document.querySelector('.sidebar-content-of-filter-by-price-double-slider');
@@ -21,6 +25,25 @@ export const set_shop_sidebar_properties = (arr) => {
   const sidebarContentOfFilterByPriceValueNode = document.querySelector('.sidebar-content-of-filter-by-price__value');
   const sidebarContentOfFilterBySize = document.querySelector('.sidebar-content-of-filter-by-size');
   const sidebarContainerOfFilterButtonNode = document.querySelector('.sidebar-container-of-filter-button');
+  const sidebarDialogButtonNode = document.querySelector('.shop__products-utils__content-sidebar-dialog-button');
+  const sidebarNode = document.querySelector('.shop__sidebar');
+
+  sidebarDialogButtonNode.addEventListener('click', () => {
+    if (!window.isShopSidebarDialogOpen) {
+      sidebarDialogButtonNode.innerHTML =  closeSvg;
+      window.isShopSidebarDialogOpen = true;
+
+      sidebarNode.classList.remove('shop__sidebar--closed');
+      sidebarDialogButtonNode.classList.add('shop__products-utils__content-sidebar-dialog-button--active')
+      return;
+    }
+    sidebarDialogButtonNode.classList.remove('shop__products-utils__content-sidebar-dialog-button--active')
+
+    sidebarNode.classList.add('shop__sidebar--closed');
+
+    window.isShopSidebarDialogOpen = false;
+    sidebarDialogButtonNode.innerHTML = categorySvg
+  });
 
   const [categoriesArr, colorsArr, sizeArr, max, min] = use_validation_of_siderbar_utils(arr);
 
