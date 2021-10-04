@@ -4,7 +4,6 @@ import '@styles/_breadcrumb.scss';
 import '@components/double-range.web.js';
 import '@components/special-product.web.js';
 import '@components/horizontal-product.web.js';
-import 'regenerator-runtime/runtime.js';
 
 import { API_URL } from '@config/index';
 import { set_shop_propertyies } from '@utils/set_shop_propertyies.util.js';
