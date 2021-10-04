@@ -20,8 +20,9 @@ export function set_up_utils_of_product(id, className) {
     const compareButtonNode = this.querySelector(`.${className}-compare`);
 
     compareButtonNode.addEventListener('click', () => {
-      compareButtonNode.classList.add(`${className}-item--active`);
-      set_product_to_compare(id);
+      const isIncludes = set_product_to_compare(id);
+
+      compareButtonNode.classList[isIncludes ? 'remove' : 'add'](`${className}-item--active`);
     });
   };
 }
