@@ -34,7 +34,6 @@
     }
 
     &-main {
-
       display: flex;
       flex-direction: column;
       // gap: 2rem;
@@ -44,9 +43,20 @@
         border-bottom: 1px solid $light-grey;
         @include space-between_flex;
         gap: 1rem;
+
+        @media screen and (max-width: $md) {
+          flex-direction: column;
+          &-content {
+            gap: 1rem;
+          }
+        }
+
         &__preview-img {
           width: 200px;
           aspect-ratio: 1;
+          @media screen and (max-width: $sm) {
+            width: 100%;
+          }
         }
         &-content {
           @include space-between_flex;
@@ -84,6 +94,15 @@
             justify-content: flex-end;
             align-items: center;
             gap: 1rem;
+
+            @media screen and (max-width: $xm) {
+              flex-direction: column;
+              & > div,quantity-counter {
+                width: 100%;
+                justify-content: center;
+              }
+            }
+
             &-total-price {
               order: 3;
             }
@@ -110,7 +129,7 @@
         align-items: center;
         gap: 0.42rem;
         font-family: 'Jost';
-        --skeleton-margin-bottom:-8px;
+        --skeleton-margin-bottom: -8px;
 
         &-value {
           font-weight: 600;
