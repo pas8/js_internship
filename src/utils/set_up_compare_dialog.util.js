@@ -1,5 +1,6 @@
 import { use_to_close_compare_dialog } from '@utils/use_to_close_compare_dialog.util.js';
 import { use_to_open_compare_dialog } from '@utils/use_to_open_compare_dialog.util.js';
+import { get_compare_ids } from '@utils/get_compare_ids.util.js';
 
 export const set_up_compare_dialog = () => {
   window.isCompareDialogOpen = false;
@@ -15,4 +16,9 @@ export const set_up_compare_dialog = () => {
     handleOpenDialog();
   });
   closeButtonOfCompareingDialogNode.addEventListener('click', handleCloseDialog);
+
+  const compareList = get_compare_ids();
+
+  !!compareList?.length && buttonCompareNode.classList.add('with-label');
+  buttonCompareNode.setAttribute('data-label', compareList?.length);
 };

@@ -4,16 +4,12 @@ import favouriteSvg from '@svgs/favourite.svg';
 import compareSvg from '@svgs/compare.svg';
 import searchSvg from '@svgs/search.svg';
 import { get_default_product_attribute_values } from '@utils/get_default_product_attribute_values.util.js';
-import { use_to_open_seacrhing_dialog } from '@utils/use_to_open_seacrhing_dialog.util.js';
-
-import { set_product_to_basket } from '@utils/set_product_to_basket.util.js';
-import { set_product_to_compare } from '@utils/set_product_to_compare.util.js';
+import { set_up_utils_of_product } from '@utils/set_up_utils_of_product.util.js';
 import { get_basket } from '@utils/get_basket.util.js';
 import { get_compare_ids } from '@utils/get_compare_ids.util.js';
 
 class SpecicalProduct extends HTMLElement {
   connectedCallback() {
-    const handleOpenSearchDialog = use_to_open_seacrhing_dialog();
     const [basketValue] = get_basket();
     const [img_href, id, caption, current_price, old_price] = get_default_product_attribute_values(this);
 
@@ -21,9 +17,8 @@ class SpecicalProduct extends HTMLElement {
     const stars = this.getAttribute('stars');
     let is_new = this.getAttribute('is_new');
     let is_favourite = this.getAttribute('is_favourite');
-    this.is_added_to_compare =   get_compare_ids().includes(id);
-
-    this.is_added_to_basket = basketValue.includes(id);
+    this.is_added_to_compare = get_compare_ids()?.includes(id);
+    this.is_added_to_basket = basketValue?.includes(id);
 
     this.innerHTML = `
     <div class='special-product'>
@@ -38,16 +33,14 @@ class SpecicalProduct extends HTMLElement {
             { content: compareSvg, caption: 'compare', isActive: this.is_added_to_compare },
             { content: 'Add to card', caption: 'add-to-card', isActive: this.is_added_to_basket },
             { content: searchSvg, caption: 'search', isActive: false },
-          ]
-            .map(
-              ({ caption, content, isActive }) => `
+          ].map_join(
+            ({ caption, content, isActive }) => `
               <button class='special-product-content__utils-${caption} button-outlined ${
-                isActive ? 'special-product-content__utils-item--active' : ''
-              }'>
+              isActive ? 'special-product-content__utils-item--active' : ''
+            }'>
                 ${content}
               </button>`
-            )
-            .join('')}
+          )}
         </div>
 
         <div class='special-product-content__labels'>
@@ -71,23 +64,9 @@ class SpecicalProduct extends HTMLElement {
       </div>
     </div>`;
 
-    const addToCardButtonNode = this.querySelector('.special-product-content__utils-add-to-card');
-    addToCardButtonNode.addEventListener('click', () => {
-      addToCardButtonNode.classList.add('special-product-content__utils-item--active');
-      set_product_to_basket(id);
-    });
-    const seacrhButtonNode = this.querySelector('.special-product-content__utils-search');
+    const handleSetUp = set_up_utils_of_product(id, 'special-product-content__utils').bind(this);
+    handleSetUp();
 
-    seacrhButtonNode.addEventListener('click', () => {
-      handleOpenSearchDialog();
-    });
-
-    const compareButtonNode = this.querySelector('.special-product-content__utils-compare');
-
-    compareButtonNode.addEventListener('click', () => {
-      compareButtonNode.classList.add('special-product-content__utils-item--active');
-      set_product_to_compare(id);
-    });
   }
 }
 if (!customElements.get('special-product')) customElements.define('special-product', SpecicalProduct);

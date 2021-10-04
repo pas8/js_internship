@@ -10,7 +10,10 @@ export const use_to_open_compare_dialog = () => () => {
   window.isCompareDialogOpen = true;
   compareDialogNode.classList.remove('compare-dialog--closed');
 
-  const promiseAll = use_product_promise(get_compare_ids());
+  const compareProductsIdArr = get_compare_ids()
+  if(!compareProductsIdArr[0]) return compareDialogTableNode.innerHTML = '<div class="compare-content__placeholder"> No products was added to compare </div>'
+
+  const promiseAll = use_product_promise(compareProductsIdArr);
 
   promiseAll
     .then((arr) => {
