@@ -6,10 +6,11 @@ import { use_product_promise } from '@utils/use_product_promise.util.js';
 import { use_uniq_count_arr } from '@utils/use_uniq_count_arr.util.js';
 import { get_correct_currency } from '@utils/get_correct_currency.util.js';
 import { get_basket } from '@utils/get_basket.util.js';
+import { get_wishlist_ids } from '@utils/get_wishlist_ids.util.js';
 import { set_product_to_basket } from '@utils/set_product_to_basket.util.js';
 import basketSvg from '@svgs/basket.svg';
 
-const dataArr = ['4', '8', '10', '16', '4', '4', '8'];
+const dataArr = get_wishlist_ids().filter(el=> !!el);
 const uniqProductsCountAndIdArr = use_uniq_count_arr(dataArr);
 
 const promiseAll = use_product_promise(uniqProductsCountAndIdArr.map(({ id }) => id));
@@ -21,7 +22,9 @@ promiseAll
         <div class="wishlist-table-content__item">
           <div class="wishlist-table-content__item-preview">
             <div class="wishlist-table-content__item-preview__img">
-              <img src="${image}"></img>
+              <a href='product_details.html?${id}'>
+                <img src="${image}"></img>
+              </a>
             </div>
             <div class="wishlist-table-content__item-preview__denotation"> 
               <div class="wishlist-table-content__item-preview__denotation-title">${title}</div>
