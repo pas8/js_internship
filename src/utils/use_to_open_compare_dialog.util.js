@@ -10,8 +10,10 @@ export const use_to_open_compare_dialog = () => () => {
   window.isCompareDialogOpen = true;
   compareDialogNode.classList.remove('compare-dialog--closed');
 
-  const compareProductsIdArr = get_compare_ids()
-  if(!compareProductsIdArr[0]) return compareDialogTableNode.innerHTML = '<div class="compare-content__placeholder"> No products was added to compare </div>'
+  const compareProductsIdArr = get_compare_ids();
+  if (!compareProductsIdArr[0] && compareProductsIdArr.length === 1)
+    return (compareDialogTableNode.innerHTML =
+      '<div class="compare-content__placeholder"> No products was added to compare </div>');
 
   const promiseAll = use_product_promise(compareProductsIdArr);
 
@@ -31,7 +33,7 @@ export const use_to_open_compare_dialog = () => () => {
 
       compareDialogTableNode.innerHTML = categoriesHtml;
 
-      set_up_compare_categories(arr,compareDialogTableNode,categoriesHtml)
+      set_up_compare_categories(arr, compareDialogTableNode, categoriesHtml);
     })
     .catch((err) => console.log(err));
 };

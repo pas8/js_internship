@@ -6,22 +6,36 @@
     font-family: 'Jost';
   }
   display: flex;
-  gap: 2.8rem;
-
-  // position: relative;
-  // justify-content: flex-end;
-
   &__sidebar {
-    position: sticky;
-    top: 320px;
-    position: -webkit-sticky;
     width: 240px;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+
+    @media screen and (max-width: $md) {
+      @include dialog;
+      width: 100%;
+    }
+    &--closed {
+      @media screen and (max-width: $md) {
+        display: none;
+      }
+    }
+    &-row {
+      @media screen and (max-width: $md) {
+        background-color: $header-utils-bgcolor;
+        padding: 2rem;
+        width: 420px;
+      }
+      @media screen and (max-width: $xm) {
+        width: 80vw;
+      }
+
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
 
     & .sidebar-container-of-filter-button {
       & button {
+        background-color: transparent;
         @include centered_flex;
         svg {
           width: 1.8rem;
@@ -111,6 +125,7 @@
 
           font-size: 1.42rem;
         }
+
         & .sidebar-content-of-product-categories {
           display: flex;
           flex-direction: column;
@@ -211,7 +226,12 @@
     flex-direction: column;
     gap: 2rem;
     // margin-left: 280px;
+
     width: calc(100% - 240px);
+    @media screen and (max-width: $md) {
+      width: 100%;
+    }
+
     &-utils {
       display: flex;
       justify-content: flex-end;
@@ -245,6 +265,35 @@
             border-color: $text-thirdly;
           }
         }
+
+        &-sidebar-dialog-button {
+          &--active {
+            position: fixed;
+            top: 8px;
+            right: 8px;
+            z-index: 1000001;
+            background-color: $header-utils-bgcolor !important;
+            border-radius: 50%;
+            border: none !important;
+            & svg {
+              padding: 0.2rem !important;
+              width: 2.6rem !important;
+              path {
+                transition: cubic-bezier(0.55, 0.055, 0.675, 0.19) 0.16s all;
+                fill: $text-secondary !important;
+              }
+            }
+            &:hover {
+              path {
+                fill: $primary !important;
+              }
+            }
+          }
+          @media screen and (min-width: $md) {
+            display: none !important;
+          }
+        }
+
         & .button--active {
           background-color: $primary;
           border-color: $primary !important;
