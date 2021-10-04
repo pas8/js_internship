@@ -41,7 +41,7 @@ const img = {
   ],
 };
 
-const pages = ['index', 'about', 'product_details', 'checkout', 'shop'];
+const pages = ['index', 'about', 'product_details', 'checkout', 'shop','wishlist'];
 
 module.exports = {
   mode: 'development',

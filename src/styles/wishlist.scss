@@ -1,0 +1,55 @@
+@import './global.scss';
+
+.wishlist {
+  width: 100%;
+  margin: 4rem 0;
+  display: flex;
+  justify-content: center;
+  * {
+    font-family: 'Jost';
+  }
+  &-table {
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    &__header {
+      display: flex;
+    }
+    &-content {
+      &__item {
+        @include space-between_flex;
+        display: flex;
+        &-preview {
+          display: flex;
+          align-items: center;
+          &__img {
+            img {
+              width: 142px;
+              aspect-ratio: 1;
+            }
+          }
+          &__denotation {
+            display: flex;
+            flex-direction: column;
+            &-title {
+              font-weight: 500;
+              font-size: 1.24rem;
+            }
+            &-category {
+              color: $input-border-color;
+            }
+          }
+        }
+        &-propertyies {
+          @include centered_flex;
+          flex-grow: 1;
+        }
+        &-add-to-basket-button {
+          & svg {
+            width: 1.6rem;
+          }
+        }
+      }
+    }
+  }
+}

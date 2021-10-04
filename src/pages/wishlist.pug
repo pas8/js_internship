@@ -1,0 +1,28 @@
+html
+  head
+    meta(charset="UTF-8")
+  body 
+    include ../includes/_header.pug
+    include ../mixins/+breadcrumb.pug
+    +breadcrumb('Wishlist')
+    main.wishlist
+      div.wishlist-row.container
+        div.wishlist-table
+          div.wishlist-table__header Product name
+          div.wishlist-table-content
+            div.wishlist-table-content__item
+              div.wishlist-table-content__item-preview
+                div.wishlist-table-content__item-preview__img 
+                  img(src='/')
+                div.wishlist-table-content__item-preview__denotation 
+                  div.wishlist-table-content__item-preview__denotation-title Placeholder
+                  div.wishlist-table-content__item-preview__denotation-category Null
+              div.wishlist-table-content__item-propertyies
+                div.wishlist-table-content__item-propertyies__price y
+                div.wishlist-table-content__item-propertyies__quantity y
+                div.wishlist-table-content__item-propertyies__total y
+              button.wishlist-table-content__item-add-to-basket-button
+                include ../svgs/basket.svg
+
+              
+    include ../includes/_footer.pug

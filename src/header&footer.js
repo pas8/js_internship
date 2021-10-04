@@ -16,7 +16,11 @@ import 'regenerator-runtime/runtime.js';
 initSkeleton();
 
 set_up_basket_dialog();
-set_up_search_dialog()
-set_up_compare_dialog()
-set_up_active_header_link()
-set_up_header_burger()
+set_up_search_dialog();
+set_up_compare_dialog();
+set_up_active_header_link();
+set_up_header_burger();
+
+document.querySelector('.button-favourite').addEventListener('click', () => {
+  window.location.replace('/wishlist.html');
+});
