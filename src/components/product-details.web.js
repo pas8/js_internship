@@ -115,7 +115,6 @@ class ProductDetails extends HTMLElement {
     });
     window.localStorage.getItem('basket');
 
-
     const previewGalleryNode = document.querySelector('.product-details-content__product-gallery__main-img');
     const galleryTabsNode = document.querySelector('.product-details-content__product-gallery__tabs');
 
@@ -130,12 +129,10 @@ class ProductDetails extends HTMLElement {
     });
     const contentInfoExtendedTabsContentArr = [
       `<div class='description' > ${this.description}</div>`,
-      `<div class='additional-info'>${this.additionalInfo
-        .map(
-          ({ caption, value }) =>
-            `<div><p class='additional-info__caption'>${caption}:</p><p class='additional-info__value'> ${value}</p></div>`
-        )
-        .join('')}</div>`,
+      `<div class='additional-info'>${this.additionalInfo.map_join(
+        ({ caption, value }) =>
+          `<div><p class='additional-info__caption'>${caption}:</p><p class='additional-info__value'> ${value}</p></div>`
+      )}</div>`,
       `<div class='review'>
         <stars-feedback value='0'></stars-feedback>
         
