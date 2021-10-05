@@ -1,14 +1,13 @@
 import { get_correct_currency } from '@utils/get_correct_currency.util.js';
 import arrowBackSvg from '@svgs/arrow_back.svg';
 
-
-export const get_compare_table_html = (arr,textContent) => {
+export const get_compare_table_html = (arr, categoryId, name) => {
   return `
 <div class='compare-content__table-content'> 
   <div class='compare-content__table-content-properties'> 
     <div class='compare-content__table-content-properties__placeholder'> 
       <button class='arrowBackSvg'> ${arrowBackSvg}    </button>
-      <p> ${textContent} </p>
+      <p> ${name} </p>
     </div> 
 
     ${['Stars &#9733;', `Price ${get_correct_currency()}`].map_join(
@@ -21,9 +20,9 @@ export const get_compare_table_html = (arr,textContent) => {
   </div> 
   <div class='compare-content__table-content-row'> 
     ${arr
-      .filter(({ category }) => category == textContent.toLowerCase() && !!category)
+      .filter(({ categories }) => categories.some(({ id }) => id == categoryId))
       .map_join(
-        ({ title, image, id, price, rating }) =>
+        ({ title, image, id, price, rating = { count: 4   } }) =>
           `<div  class='compare-content__table-content-row__item' compare-id='${id}'>
             <div  class='compare-content__table-content-row__item-preview'> 
               <div  class='compare-content__table-content-row__item-preview__img'>

@@ -55,10 +55,8 @@ productsViewButttonNodesArr.forEach((__, idx) => {
   });
 });
 
-// const sidebarProductCategoriesNode = document.querySelector('.sidebar-content-of-product-categories');
-
-(async () => {
-  const data = await fetch(`${API_URL}/products `);
-  const allProductsArr = await data.json();
-  console.log(allProductsArr);
-})();
+// (async () => {
+//   const data = await fetch(`${API_URL}/products `);
+//   const allProductsArr = await data.json();
+//   console.log(allProductsArr);
+// })();
