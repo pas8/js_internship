@@ -1,5 +1,6 @@
 import { set_product_to_basket } from '@utils/set_product_to_basket.util.js';
 import { set_product_to_compare } from '@utils/set_product_to_compare.util.js';
+import { set_product_to_wishlist } from '@utils/set_product_to_wishlist.util.js';
 import { use_to_open_seacrhing_dialog } from '@utils/use_to_open_seacrhing_dialog.util.js';
 
 export function set_up_utils_of_product(id, className) {
@@ -15,6 +16,14 @@ export function set_up_utils_of_product(id, className) {
 
     seacrhButtonNode.addEventListener('click', () => {
       handleOpenSearchDialog();
+    });
+
+    const favouriteButtonNode = this.querySelector(`.${className}-favourite`);
+
+    favouriteButtonNode.addEventListener('click', () => {
+
+      const isIncludes = set_product_to_wishlist(id);
+      favouriteButtonNode.classList[isIncludes ? 'remove' : 'add'](`${className}-item--active`);
     });
 
     const compareButtonNode = this.querySelector(`.${className}-compare`);

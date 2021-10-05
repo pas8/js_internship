@@ -31,11 +31,9 @@ const [basketValue] = get_basket();
 const promiseAll = use_product_promise(basketValue);
 promiseAll.then((res) => {
   let allPricesArr = [];
-  console.log(res);
-  inferenceProductsContainerNode.innerHTML = res
-    .map(({ title, image, price }) => {
-      allPricesArr.push(price);
-      return `
+  inferenceProductsContainerNode.innerHTML = res.map_join(({ title, image, price }) => {
+    allPricesArr.push(price);
+    return `
       <div class='inference-products__item'>
         <div class='inference-products__item-content'>
           <div class='inference-products__item-content__img-wrapper'>
@@ -49,11 +47,10 @@ promiseAll.then((res) => {
         <div class='inference-products__item-price'>$${price}</div>
       </div>
       `;
-    })
-    .join('');
+  });
 
   const taxeslValue = allPricesArr.length;
-  const subtotatlValue =  +(get_sum_from_arr(allPricesArr).toFixed())
+  const subtotatlValue = +get_sum_from_arr(allPricesArr).toFixed();
   checkoutSubtotalNode.innerHTML = `$${subtotatlValue}.0`;
   checkoutTaxesNode.innerHTML = `$${taxeslValue}.0`;
 

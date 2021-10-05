@@ -5,10 +5,24 @@
   display: flex;
   gap: 4rem;
   font-family: 'Jost';
-
   & > div {
     width: 50%;
   }
+
+  @media screen and (max-width: $md) {
+    flex-direction: column;
+    & > div {
+      width: 100%;
+    }
+  }
+  @media screen and (max-width: $sm) {
+    & div {
+      align-items: center;
+
+      text-align: center;
+    }
+  }
+
   &__product-gallery {
     &__main-img {
       @include centered_flex;
@@ -76,6 +90,7 @@
       padding-bottom: 2rem;
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 1rem;
       border-bottom: 1px solid $light-grey;
       & button {
@@ -105,8 +120,6 @@
         p {
           @include centered_flex;
         }
-
-
       }
       &__add-to-cart-button {
         padding: 0.8rem 1.2rem !important;

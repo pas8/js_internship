@@ -1,4 +1,3 @@
-
 export const use_validation_of_siderbar_utils = (allProductsArr) => {
   let categoriesArr = [];
   let colorsArr = ['red', 'green', 'yellow', 'blue'];
@@ -6,7 +5,10 @@ export const use_validation_of_siderbar_utils = (allProductsArr) => {
   let sizeArr = [1, 2, 3, 4];
 
   allProductsArr.forEach((el) => {
-    !categoriesArr.includes(el.category) && categoriesArr.push(el.category);
+    el.categories.forEach(({ id, name }) => {
+      !categoriesArr.some((__) => __?.id === id) && categoriesArr.push({ id, name });
+    });
+
     pricesArr.push(el.price);
   });
 

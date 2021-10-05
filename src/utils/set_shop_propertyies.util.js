@@ -19,6 +19,7 @@ export const set_shop_propertyies = (allProductsArr, updatedPageNumber,isUpdateP
 
   const LAST_PAGE_NUMBER = Math.ceil(allProductsArr.length / PRODUCTS_LENGTH_PER_PAGE);
 
+// if(!allProductsArr.length) return   shopProductsContainerNode.innerHTML = `no `
   const shopProductsHtml = use_validation_of_products(allProductsArr, END_PRODUCT_IDX, START_PRODUCT_IDX);
 
   shopProductsContainerNode.innerHTML = shopProductsHtml;

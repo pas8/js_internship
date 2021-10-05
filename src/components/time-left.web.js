@@ -9,18 +9,21 @@ class TimeLeft extends HTMLElement {
       { caption: 'Mins', max: 60 },
       { caption: 'Secs', max: 60 },
     ];
+    this.handleGenegateRandomTime = () =>
+      `<div class='time'> ${this.defaultTimerValuesArr
+        .map(
+          ({ caption, max }, idx) =>
+            `<div class='time-item'><p class='time-item__value'>${get_random_int(
+              1,
+              max
+            )} </p><p class='time-item__caption'>${caption}</p>${
+              idx !== 3 ? `<p class='time-item__dispencer'>:</p>` : ''
+            }</div>`
+        )
+        .join('')} </div>`;
+
     this.secondsLeft = 0;
-    this.innerHTML = `<div class='time'> ${this.defaultTimerValuesArr
-      .map(
-        ({ caption, max }, idx) =>
-          `<div class='time-item'><p class='time-item__value'>${get_random_int(
-            1,
-            max
-          )} </p><p class='time-item__caption'>${caption}</p>${
-            idx !== 3 ? `<p class='time-item__dispencer'>:</p>` : ''
-          }</div>`
-      )
-      .join('')} </div>`;
+    this.innerHTML = this.handleGenegateRandomTime();
 
     let timenumbersArr = [];
     const timeContainer = document.querySelector('.time');
@@ -35,16 +38,9 @@ class TimeLeft extends HTMLElement {
       secondsToLeftArr.push(acc);
       return acc * el;
     }, 1);
-    // setInterval(() => {
-    //   timeContainer.innerHTML = [...secondsToLeftArr].reverse().map((value, idx) => {
-    //     console.log(~~(value),this.secondsLeft * [...timenumbersArr].reverse()[idx]);
-    //     return `<div class='time-item'><p class='time-item__value'>${1} </p><p class='time-item__caption'>${
-    //       this.defaultTimerValuesArr[idx].caption
-    //     }</p>${idx !== 3 ? `<p class='time-item__dispencer'>:</p>` : ''}</div>`;
-    //   });
-    //   console.log();
-    //   this.secondsLeft += 1;
-    // }, 1000);
+    setInterval(() => {
+      this.innerHTML = this.handleGenegateRandomTime();
+    }, 1000);
   }
 }
 if (!customElements.get('time-left')) customElements.define('time-left', TimeLeft);

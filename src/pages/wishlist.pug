@@ -1,0 +1,21 @@
+html
+  head
+    meta(charset="UTF-8")
+  body 
+    include ../includes/_header.pug
+    include ../mixins/+breadcrumb.pug
+    +breadcrumb('Wishlist')
+    main.wishlist
+      div.wishlist-row.container
+        div.wishlist-table
+          div.wishlist-table__header
+            div.wishlist-table__header__product-name Product name
+            div.wishlist-table__header__properties 
+              div.wishlist-table__header__properties-price Price
+              div.wishlist-table__header__properties-quantity Quantity
+              div.wishlist-table__header__properties-total Total
+            div.wishlist-table__header__placeholder
+          div.wishlist-table-content
+            nb-skeleton(height='180px',width='100%',count='4')
+              
+    include ../includes/_footer.pug

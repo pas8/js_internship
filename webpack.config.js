@@ -10,9 +10,6 @@ const pug = {
 
 const scss = {
   test: /\.(s*)css$/,
-  // options: {
-  // reloadAll: true,
-  // },
   use: [miniCss.loader, 'css-loader', 'sass-loader'],
 };
 
@@ -35,13 +32,14 @@ const svg = {
 const img = {
   test: /\.(png|jpe?g|gif)$/i,
   use: [
+
     {
       loader: 'file-loader',
     },
   ],
 };
 
-const pages = ['index', 'about', 'product_details', 'checkout', 'shop'];
+const pages = ['index', 'about', 'product_details', 'checkout', 'shop','wishlist'];
 
 module.exports = {
   mode: 'development',
@@ -52,6 +50,7 @@ module.exports = {
     }, {}),
   },
   optimization: {
+
     splitChunks: {
       chunks: 'all',
     },
@@ -75,9 +74,9 @@ module.exports = {
     },
   },
   output: {
-    filename: '[name].js',
-    chunkFilename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: 'scripts/[name].js',
+    chunkFilename: 'chunks/[name].bundle.js',
+    path: path.resolve(__dirname, 'dist/'),
   },
   module: {
     rules: [pug, scss, svg, img, babel],
@@ -89,7 +88,8 @@ module.exports = {
           new HtmlWebpackPlugin({
             inject: true,
             template: path.resolve(__dirname, `src/pages/${page}.pug`),
-            filename: `${page}.html`,
+            filename: `pages/${page}.html`,
+            
             chunks: [page],
           })
       )
@@ -99,7 +99,7 @@ module.exports = {
         (page) =>
           new miniCss({
             ignoreOrder: true,
-            filename: `[name].css`,
+            filename: `styles/[name].css`,
           })
       )
     )
