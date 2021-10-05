@@ -1,0 +1,25 @@
+@import './global.scss';
+
+.toast {
+  display: flex;
+  position: fixed;
+  bottom: 0.8rem;
+  font-family: 'Jost';
+
+  right: 0.8rem;
+  padding: 1rem;
+  font-weight: 500;
+  &--error {
+    background-color: red;
+    color: $background;
+  }
+
+  &--info {
+    background-color: $primary;
+    color: $background;
+  }
+
+  &--closed {
+    display: none;
+  }
+}

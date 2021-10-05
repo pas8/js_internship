@@ -1,46 +1,94 @@
+import phoneSvg from '@svgs/phone.svg';
+import IMask from 'imask';
+
+import { use_toast } from '@utils/use_toast.util.js';
+import { get_basket } from '@utils/get_basket.util.js';
+import { use_product_promise } from '@utils/use_product_promise.util.js';
+import { get_sum_from_arr } from '@utils/get_sum_from_arr.util.js';
+
 import './header&footer';
 import '@styles/_breadcrumb.scss';
 import '@styles/checkout.scss';
 import './payment_dialog';
+import 'regenerator-runtime/runtime.js';
 
-import IMask from 'imask';
+window.localStorage.setItem('isGiveInfo', 'false');
 
 const contactEmailOrPhoneInputNode = document.querySelector('.form-contact-info__utils-email-or-phone-input');
 const contactPostalCodeInputNode = document.querySelector('.form-contact-info__utils-postal-code-input');
-// const contactFirstNameInputNode = document.querySelector('.form-contact-info__utils-first-name-input');
-// const contactLastNameInputNode = document.querySelector('.form-contact-info__utils-last-name-input');
+const contactFirstNameInputNode = document.querySelector('.form-contact-info__utils-first-name-input');
+const contactLastNameInputNode = document.querySelector('.form-contact-info__utils-last-name-input');
+const givemeinfoInputNodeArr = document.querySelectorAll('.givemeinfo-input');
+const checkoutSubtotalNode = document.querySelector('.checkout-subtotal-value');
+const checkoutTaxesNode = document.querySelector('.checkout-taxes-value');
+const checkoutTotalNode = document.querySelector('.checkout-total-value');
+const checkoutShippingNode = document.querySelector('.checkout-shipping-value');
+const paymentTitleNode = document.querySelector('.payment_dialog-content__header-title');
 
-// const contactAdressInputNode = document.querySelector('.form-contact-info__utils-adress-input');
-// const contactUtilsAdressAdditionInputNode = document.querySelector('.form-contact-info__utils-adress-adittional-input');
-// const contactCityInputNode = document.querySelector('.form-contact-info__utils-city-input');
-// const contactcountryOrRegionInputNode = document.querySelector('.form-contact-info__utils-country-or-region-input');
+const inferenceProductsContainerNode = document.querySelector('.inference-products');
+const [basketValue] = get_basket();
+
+const promiseAll = use_product_promise(basketValue);
+promiseAll.then((res) => {
+  let allPricesArr = [];
+  console.log(res);
+  inferenceProductsContainerNode.innerHTML = res
+    .map(({ title, image, price }) => {
+      allPricesArr.push(price);
+      return `
+      <div class='inference-products__item'>
+        <div class='inference-products__item-content'>
+          <div class='inference-products__item-content__img-wrapper'>
+            <img src='${image}' ></img>
+          </div>
+          <div class='inference-products__item-content__details'>
+            <div class='inference-products__item-content__details-title'>${title}</div>
+            <div class='inference-products__item-content__details-weight'>0.5kg</div>
+          </div>
+        </div>
+        <div class='inference-products__item-price'>$${price}</div>
+      </div>
+      `;
+    })
+    .join('');
+
+  const taxeslValue = allPricesArr.length;
+  const subtotatlValue =  +(get_sum_from_arr(allPricesArr).toFixed())
+  checkoutSubtotalNode.innerHTML = `$${subtotatlValue}.0`;
+  checkoutTaxesNode.innerHTML = `$${taxeslValue}.0`;
+
+  const totalValue = taxeslValue + subtotatlValue;
+  checkoutTotalNode.innerHTML = `$${totalValue}.0`;
+  paymentTitleNode.innerHTML = `$${totalValue}.0`;
+  checkoutShippingNode.innerHTML = 'Calculated at next step';
+});
+
+givemeinfoInputNodeArr.forEach((el) => {
+  el.addEventListener('change', (e) => {
+    e.preventDefault();
+    let isGiveInfo = JSON.parse(window.localStorage.getItem('isGiveInfo'));
+    window.localStorage.setItem('isGiveInfo', !isGiveInfo);
+
+    givemeinfoInputNodeArr.forEach((checkBox) => (checkBox.checked = isGiveInfo));
+  });
+});
+const contactAdressInputNode = document.querySelector('.form-contact-info__utils-adress-input');
+const contactUtilsAdressAdditionInputNode = document.querySelector('.form-contact-info__utils-adress-adittional-input');
+const contactCitySelectNode = document.querySelector('.form-contact-info__utils-city-select');
+const contactCountryOrRegionInputNode = document.querySelector('.form-contact-info__utils-country-or-region-input');
 
 const buttonMoveToPaymentNode = document.querySelector('.button-move-to-payment');
 const paymentDialogNode = document.querySelector('.payment_dialog');
-
-// const submitButtonNode = document.querySelector('.submit-order-button');
 
 const buttonChangeContactVariantNode = document.querySelector(
   '.form-contact-info__utils-button-change-contact-variant'
 );
 let emailSvg = null;
-const phoneSvg = `
-<svg viewBox="0 0 24 24" ><path d="M6.54 5c.06.89.21 1.76.45 2.59l-1.2 1.2c-.41-1.2-.67-2.47-.76-3.79h1.51m9.86 12.02c.85.24 1.72.39 2.6.45v1.49c-1.32-.09-2.59-.35-3.8-.75l1.2-1.19M7.5 3H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.49c0-.55-.45-1-1-1-1.24 0-2.45-.2-3.57-.57-.1-.04-.21-.05-.31-.05-.26 0-.51.1-.71.29l-2.2 2.2c-2.83-1.45-5.15-3.76-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1z"></path></svg>
-
-`;
-let isContactVariantEmail = true;
 
 const emailMask = /^\S*@?\S*$/;
 const phoneMask = '+{38}(000)000-00-00';
-
-buttonChangeContactVariantNode.addEventListener('click', () => {
-  if (!emailSvg) emailSvg = buttonChangeContactVariantNode.innerHTML;
-
-  isContactVariantEmail = !isContactVariantEmail;
-  buttonChangeContactVariantNode.innerHTML = isContactVariantEmail ? phoneSvg : emailSvg;
-});
-
-IMask(contactEmailOrPhoneInputNode, {
+const onlyLettersMask = /[a-z]/gi;
+const emailOrPhone = IMask(contactEmailOrPhoneInputNode, {
   mask: [
     {
       mask: phoneMask,
@@ -50,24 +98,50 @@ IMask(contactEmailOrPhoneInputNode, {
     },
   ],
 });
-console.log(buttonMoveToPaymentNode)
 
-const postalCode = IMask(contactPostalCodeInputNode, { mask: /^[1-6]\d{0,5}$/ });
-buttonMoveToPaymentNode.addEventListener('click', () => {
-  paymentDialogNode.classList.remove('payment_dialog--closed');
-  // console.log({ postalCode: postalCode.value });
+const firstName = IMask(contactFirstNameInputNode, { mask: onlyLettersMask });
+const lastName = IMask(contactLastNameInputNode, { mask: onlyLettersMask });
+const adress = IMask(contactAdressInputNode, { mask: onlyLettersMask });
+const contryOrRegion = IMask(contactCountryOrRegionInputNode, { mask: onlyLettersMask });
+
+emailOrPhone.on('accept', () => {
+  if (!emailSvg) emailSvg = buttonChangeContactVariantNode.innerHTML;
+  const isValueLooksLikePhoneNumber = emailOrPhone.value.startsWith('+');
+  buttonChangeContactVariantNode.innerHTML = isValueLooksLikePhoneNumber ? phoneSvg : emailSvg;
 });
 
-// const buttonChangeContactVariantNode = document.querySelector('.button-move-to-payment')
+buttonChangeContactVariantNode.addEventListener('click', () => {
+  navigator.clipboard
+    .writeText(emailOrPhone.value)
+    .then(() => {
+      use_toast('Copying to clipboard was successful!', 'info');
+    })
+    .catch(() => {
+      use_toast('Something went wrong', 'error');
+    });
+});
 
-// const handleValidateEmail = (value) => {
-//   if (/^[a-z0-9_\.-]+$/.test(value)) return true;
-//   if (/^[a-z0-9_\.-]+@$/.test(value)) return true;
-//   if (/^[a-z0-9_\.-]+@[a-z0-9-]+$/.test(value)) return true;
-//   if (/^[a-z0-9_\.-]+@[a-z0-9-]+\.$/.test(value)) return true;
-//   if (/^[a-z0-9_\.-]+@[a-z0-9-]+\.[a-z]{1,4}$/.test(value)) return true;
-//   if (/^[a-z0-9_\.-]+@[a-z0-9-]+\.[a-z]{1,4}\.$/.test(value)) return true;
-//   if (/^[a-z0-9_\.-]+@[a-z0-9-]+\.[a-z]{1,4}\.[a-z]{1,4}$/.test(value)) return true;
-//   return false;
-// };
-// console.log(handleValidateEmail('5342w522332@fmail.comm'))
+const postalCode = IMask(contactPostalCodeInputNode, { mask: /^[1-6]\d{0,5}$/ });
+
+buttonMoveToPaymentNode.addEventListener('click', () => {
+  if (
+    !(
+      (emailOrPhone.value.startsWith('+') && emailOrPhone.value.length === 17) ||
+      !!emailOrPhone.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
+    )
+  )
+    return use_toast('Please fill email or phone   field', 'error');
+  if (contactCitySelectNode.value === 'placeholder') return use_toast('Please fill city field', 'error');
+  if (firstName.value.length < 1) return use_toast('Please fill first name field', 'error');
+  if (lastName.value.length < 1) return use_toast('Please fill last name field', 'error');
+  if (adress.value.length < 1) return use_toast('Please fill adress field', 'error');
+  if (contryOrRegion.value.length < 1) return use_toast('Please fill contryOrRegion field', 'error');
+  if (contactCitySelectNode.value === 'placeholder') return use_toast('Please fill city field', 'error');
+
+  if (contactUtilsAdressAdditionInputNode.value.length < 1)
+    return use_toast('Please fill addition info field', 'error');
+
+  if (postalCode.value.length !== 6) return use_toast('Please fill  postal code  field', 'error');
+
+  paymentDialogNode.classList.remove('payment_dialog--closed');
+});

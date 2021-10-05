@@ -11,7 +11,27 @@
   }
   &__product-gallery {
     &__main-img {
+      @include centered_flex;
       width: 100%;
+      margin-bottom: 2px;
+    }
+    &__tabs {
+      @include space_between_flex;
+
+      flex-wrap: nowrap;
+      & img {
+        filter: saturate(0.4);
+      }
+      & img:hover {
+        filter: saturate(1);
+
+        cursor: pointer;
+      }
+      & .active {
+        filter: saturate(1);
+
+        border: 4px solid $primary;
+      }
     }
   }
   &__info {
@@ -58,10 +78,13 @@
       align-items: center;
       gap: 1rem;
       border-bottom: 1px solid $light-grey;
-
-      button {
+      & button {
+        @include centered_flex;
+        padding: 0;
+      }
+      & > button {
         border: 1px solid $light-grey;
-        padding: 0.6rem !important;
+        padding: 0.6rem;
         &:hover {
           border-color: $primary;
           path {
@@ -83,34 +106,10 @@
           @include centered_flex;
         }
 
-        &-counter {
-          @include centered_flex;
-          color: $text-secondary !important;
-          border: 1px solid $light-grey;
-          padding: 0.42rem;
-          gap: 1.42rem;
-          & svg {
-            width: 1.42rem;
-            path {
-              fill: $input-border-color;
-            }
-            &:hover {
-              path {
-                fill: $text-secondary;
-              }
 
-              cursor: pointer;
-            }
-          }
-
-          &__value {
-            font-weight: 500;
-            font-size: 1.08rem;
-          }
-        }
       }
       &__add-to-cart-button {
-        padding: 0.6rem 1.2rem;
+        padding: 0.8rem 1.2rem !important;
         font-weight: 500;
 
         letter-spacing: 2px;
@@ -144,19 +143,23 @@
           }
           &:hover {
             color: $primary;
-
-
           }
         }
 
         &-content {
-          &--desciption {
+          .desciption {
             display: flex;
             flex-direction: column;
             gap: 1.6rem;
           }
           p {
             color: $text-thirdly;
+          }
+          .additional-info {
+            & > div {
+              display: flex;
+              gap: 10px;
+            }
           }
         }
       }
