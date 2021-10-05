@@ -1,10 +1,7 @@
 import { set_up_on_click_of_all_childrens } from '@utils/set_up_on_click_of_all_childrens.util.js';
 import { use_validation_of_siderbar_utils } from '@utils/use_validation_of_siderbar_utils.util.js';
 import { set_shop_propertyies } from '@utils/set_shop_propertyies.util.js';
-import { to_capitalize } from '@utils/to_capitalize.util.js';
-
 import { set_shop_pagination_propertyies } from '@utils/set_shop_pagination_propertyies.util.js';
-import { API_URL } from '@config/index';
 import filterSvg from '@svgs/filter.svg';
 import categorySvg from '@svgs/category.svg';
 import closeSvg from '@svgs/close.svg';
@@ -30,29 +27,29 @@ export const set_shop_sidebar_properties = (arr) => {
 
   sidebarDialogButtonNode.addEventListener('click', () => {
     if (!window.isShopSidebarDialogOpen) {
-      sidebarDialogButtonNode.innerHTML =  closeSvg;
+      sidebarDialogButtonNode.innerHTML = closeSvg;
       window.isShopSidebarDialogOpen = true;
 
       sidebarNode.classList.remove('shop__sidebar--closed');
-      sidebarDialogButtonNode.classList.add('shop__products-utils__content-sidebar-dialog-button--active')
+      sidebarDialogButtonNode.classList.add('shop__products-utils__content-sidebar-dialog-button--active');
       return;
     }
-    sidebarDialogButtonNode.classList.remove('shop__products-utils__content-sidebar-dialog-button--active')
+    sidebarDialogButtonNode.classList.remove('shop__products-utils__content-sidebar-dialog-button--active');
 
     sidebarNode.classList.add('shop__sidebar--closed');
 
     window.isShopSidebarDialogOpen = false;
-    sidebarDialogButtonNode.innerHTML = categorySvg
+    sidebarDialogButtonNode.innerHTML = categorySvg;
   });
 
   const [categoriesArr, colorsArr, sizeArr, max, min] = use_validation_of_siderbar_utils(arr);
 
   sidebarProductCategoriesNode.innerHTML = `
-  ${['All products', ...categoriesArr].map_join(
-    (el, i) =>
-      `<div class='sidebar-content-of-product-categories__item ${
+  ${[{ id: 'all', name: 'All products' }, ...categoriesArr].map_join(
+    ({ name, id }, i) =>
+      `<div category-id='${id}' class='sidebar-content-of-product-categories__item  ${
         i === 0 ? 'sidebar-content-of-product-categories__item--active' : ''
-      } '>${to_capitalize(el)} </div>`
+      } '>${name} </div>`
   )}
   `;
   sidebaFilterByColorNode.innerHTML = `
@@ -106,12 +103,11 @@ export const set_shop_sidebar_properties = (arr) => {
         __.classList.remove('sidebar-content-of-product-categories__item--active')
       );
       el.classList.add('sidebar-content-of-product-categories__item--active');
-      const data = await fetch(
-        !el.textContent.startsWith('All')
-          ? `${API_URL}/products/category/${el.textContent.toLowerCase()}`
-          : `${API_URL}/products`
-      );
-      const allProductsArr = await data.json();
+
+      const categoryId = el.getAttribute('category-id');
+      const allProductsArr =
+        categoryId == 'all' ? arr : arr.filter(({ categories }) => categories.some(({ id }) => id == categoryId));
+
       set_shop_propertyies(allProductsArr, undefined, true);
       set_shop_pagination_propertyies(allProductsArr);
       // window.location.replace(el.textContent.toLowerCase());
