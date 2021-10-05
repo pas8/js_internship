@@ -16,7 +16,7 @@ window.localStorage.setItem('productsViewVariant', 'grid');
 
 const get_all_products = async () => {
   const data = await fetch(`${API_URL}/products`);
-  const allProductsArr = await data.json();
+  const { data: allProductsArr } = await data.json();
 
   set_shop_propertyies(allProductsArr);
   set_shop_sidebar_properties(allProductsArr);
@@ -56,3 +56,9 @@ productsViewButttonNodesArr.forEach((__, idx) => {
 });
 
 // const sidebarProductCategoriesNode = document.querySelector('.sidebar-content-of-product-categories');
+
+(async () => {
+  const data = await fetch(`${API_URL}/products `);
+  const allProductsArr = await data.json();
+  console.log(allProductsArr);
+})();
