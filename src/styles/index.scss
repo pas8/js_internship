@@ -30,8 +30,7 @@
   .glide__slide {
     min-height: 100vh;
     button {
-z-index: 1000;
-
+      z-index: 1000;
     }
     .container {
       @include centered_flex;
@@ -260,29 +259,28 @@ z-index: 1000;
       }
     }
     &-products {
-      padding: 2rem 0 ;
+      padding: 2rem 0;
       overflow-x: hidden;
       @include space-between_flex;
       gap: 1rem;
     }
   }
 
-
-
-
   @media screen and (min-width: $md) {
-    special-product:nth-child(4),  special-product:nth-child(1) {
+    special-product:nth-child(4),
+    special-product:nth-child(1) {
       display: none;
     }
   }
   @media screen and (min-width: $lg) {
-      special-product:nth-child(1) {
+    special-product:nth-child(1) {
       display: block;
     }
   }
 
   @media screen and (min-width: $xl) {
-    special-product:nth-child(4),  special-product:nth-child(1) {
+    special-product:nth-child(4),
+    special-product:nth-child(1) {
       display: block;
     }
   }
@@ -292,7 +290,6 @@ z-index: 1000;
   // }
 
   @media screen and (max-width: $lg) {
-  
     &__content-header {
       flex-direction: column;
       gap: 0.42rem;
@@ -327,14 +324,28 @@ z-index: 1000;
     }
   }
 
+  @media screen and (max-width: $md) and (min-width: $xs) {
+    special-product,
+    .special-product {
+      width: 100% !important;
+    }
+  }
+
+  @media screen and (max-width: $lg) and (min-width: $md) {
+    .special-product {
+      width: 100% !important;
+    }
+  }
+
   @media screen and (max-width: $sm) {
     time-left {
       transform: scale(0.8);
     }
 
-    special-product {
-      width: 100%;
-    }
+    // special-product,
+    // .special-product {
+    //   width: 100% !important;
+    // }
 
     &__content {
       &-products {
