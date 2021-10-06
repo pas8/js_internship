@@ -30,16 +30,28 @@ const svg = {
 };
 
 const img = {
-  test: /\.(png|jpe?g|gif)$/i,
-  use: [
+  loader:'file-loader',
+  // use: [
+    // 'file-loader',
 
-    {
-      loader: 'file-loader',
-    },
-  ],
+    // {
+      // loader: 'image-webpack-loader',
+    // },
+  // ],
+  test: /\.(png|jpe?g|gif)$/i,
+  // type: 'asset/resource',
+
+  options: {
+    name: 'assets/[name].[ext]',
+  },
+  // generator: {
+  //   filename: 'static/[name][ext][query]',
+  // },
+
+
 };
 
-const pages = ['index', 'about', 'product_details', 'checkout', 'shop','wishlist'];
+const pages = ['index', 'about', 'product_details', 'checkout', 'shop', 'wishlist'];
 
 module.exports = {
   mode: 'development',
@@ -50,7 +62,6 @@ module.exports = {
     }, {}),
   },
   optimization: {
-
     splitChunks: {
       chunks: 'all',
     },
@@ -77,7 +88,9 @@ module.exports = {
     filename: 'scripts/[name].js',
     chunkFilename: 'chunks/[name].bundle.js',
     path: path.resolve(__dirname, 'dist/'),
+    // assetModuleFilename: 'images/[hash][ext][query]',
   },
+
   module: {
     rules: [pug, scss, svg, img, babel],
   },
@@ -88,8 +101,8 @@ module.exports = {
           new HtmlWebpackPlugin({
             inject: true,
             template: path.resolve(__dirname, `src/pages/${page}.pug`),
-            filename: `pages/${page}.html`,
-            
+            filename: page === 'index' ? `${page}.html` : `pages/${page}.html`,
+
             chunks: [page],
           })
       )

@@ -12,9 +12,6 @@ class ProductDetails extends HTMLElement {
 
     this.imgsArr = [
       this.getAttribute('image'),
-      '90249b7fa32e303d2230923fa60540b6.jpeg',
-      'a32cc400a69328c2c36477d9c6accbae.jpeg',
-      'a28e70c1594e6c5d70c1ad7437fa070b.jpeg',
     ];
     this.activeImgIdx = 0;
     this.price = `${this.getAttribute('price')}$`;

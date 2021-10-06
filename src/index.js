@@ -5,15 +5,16 @@ import './styles/index.scss';
 import './header&footer';
 new Glide('.glide').mount();
 
+import '@components/tab-panel.web.js';
+import '@components/time-left.web.js';
+import '@components/masonry-layout.web.js';
 import '@components/special-product.web.js';
+
 import { get_random_int } from '@utils/get_random_int.util.js';
 import { get_correct_currency } from '@utils/get_correct_currency.util.js';
 import { set_up_feature_products_tabs } from '@utils/set_up_feature_products_tabs.util.js';
 import { use_validation_of_siderbar_utils } from '@utils/use_validation_of_siderbar_utils.util.js';
-import '@components/tab-panel.web.js';
 
-import '@components/time-left.web.js';
-import '@components/masonry-layout.web.js';
 
 const categoriesContainer = document.querySelector('.categories-row');
 
@@ -44,7 +45,7 @@ fetch(`${API_URL}/products`)
     categoriesContainer.innerHTML = `
       ${categoriesArr.map_join(
         ({ image, name, id }) =>
-          `<a class="categories-row__item" href='/product_details.html?${id}'> <img src='${image}'><p>${name
+          `<a class="categories-row__item" href='pages/product_details.html?${id}'> <img src='${image}'><p>${name
             .split(' ')
             .filter((__, idx) => idx < 1)
             .join(' ')}</p></a>`

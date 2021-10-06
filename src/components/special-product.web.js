@@ -15,7 +15,7 @@ class SpecicalProduct extends HTMLElement {
     const sale_percent = this.getAttribute('sale_percent');
     const stars = this.getAttribute('stars');
     let is_new = this.getAttribute('is_new');
-
+    const isMainPage = window.location.pathname.split('/')[1] === 'index.html';
     set_up_product_propertyies(this, id);
 
     this.innerHTML = `
@@ -45,8 +45,8 @@ class SpecicalProduct extends HTMLElement {
           ${!!sale_percent ? `<div class='special-product-content__labels-sale'> -${sale_percent}% </div>` : ''}
           ${!!is_new ? `<div class='special-product-content__labels-new'> New </div>` : ''}
         </div>
-        <a href='product_details.html?${id}'>
-          <img src=${img_href} ></img>
+        <a href='${isMainPage ?'pages/' : ''}product_details.html?${id}'>
+          <img src=${ img_href} ></img>
         </a>
       </div>
       <stars-feedback value=${stars}></stars-feedback>

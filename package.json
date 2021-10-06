@@ -4,10 +4,8 @@
   "description": "js_internship",
   "main": "index.js",
   "scripts": {
-    "serve": "webpack serve",
     "dev": "npx webpack serve --config webpack.config.js",
-    "build": "npx webpack --config webpack.config.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +20,7 @@
   "dependencies": {
     "@glidejs/glide": "^3.4.1",
     "eslint": "^7.32.0",
+    "image-webpack-loader": "^8.0.1",
     "imask": "^6.2.2",
     "regenerator-runtime": "^0.13.9",
     "skeleton-webcomponent-loader": "^2.0.0"

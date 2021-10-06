@@ -15,18 +15,22 @@ import '@prototypes/map_join.array.js';
 window.localStorage.setItem('productsViewVariant', 'grid');
 
 const get_all_products = async () => {
-  const data = await fetch(`${API_URL}/products`);
-  const { data: allProductsArr } = await data.json();
+  try {
+    const data = await fetch(`${API_URL}/products`);
+    const { data: allProductsArr } = await data.json();
 
-  set_shop_propertyies(allProductsArr);
-  set_shop_sidebar_properties(allProductsArr);
-  set_shop_pagination_propertyies(allProductsArr);
+    set_shop_propertyies(allProductsArr);
+    set_shop_sidebar_properties(allProductsArr);
+    set_shop_pagination_propertyies(allProductsArr);
 
-  set_up_search(allProductsArr, [
-    document.querySelector('.shop__sidebar-search__result'),
-    document.querySelector('.shop__sidebar-search__svg-container'),
-    document.querySelector('.shop__sidebar-search__input'),
-  ]);
+    set_up_search(allProductsArr, [
+      document.querySelector('.shop__sidebar-search__result'),
+      document.querySelector('.shop__sidebar-search__svg-container'),
+      document.querySelector('.shop__sidebar-search__input'),
+    ]);
+  } catch (error) {
+    console.log(error);
+  }
 };
 get_all_products();
 
@@ -55,8 +59,8 @@ productsViewButttonNodesArr.forEach((__, idx) => {
   });
 });
 
-// (async () => {
-//   const data = await fetch(`${API_URL}/products `);
-//   const allProductsArr = await data.json();
-//   console.log(allProductsArr);
-// })();
+(async () => {
+  const data = await fetch(`${API_URL}/products?model=MN2400B4Z`);
+  const allProductsArr = await data.json();
+  console.log(allProductsArr);
+})();

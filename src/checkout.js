@@ -1,16 +1,17 @@
+import './header&footer';
+import '@styles/_breadcrumb.scss';
+import '@styles/checkout.scss';
+import './payment_dialog';
+
 import phoneSvg from '@svgs/phone.svg';
 import IMask from 'imask';
 
 import { use_toast } from '@utils/use_toast.util.js';
 import { get_basket } from '@utils/get_basket.util.js';
-import { use_product_promise } from '@utils/use_product_promise.util.js';
+import { use_check_for_empty_product_ids_arr } from '@utils/use_check_for_empty_product_ids_arr.util.js';
 import { get_sum_from_arr } from '@utils/get_sum_from_arr.util.js';
 
-import './header&footer';
-import '@styles/_breadcrumb.scss';
-import '@styles/checkout.scss';
-import './payment_dialog';
-import 'regenerator-runtime/runtime.js';
+
 
 window.localStorage.setItem('isGiveInfo', 'false');
 
@@ -26,27 +27,38 @@ const checkoutShippingNode = document.querySelector('.checkout-shipping-value');
 const paymentTitleNode = document.querySelector('.payment_dialog-content__header-title');
 
 const inferenceProductsContainerNode = document.querySelector('.inference-products');
+
 const [basketValue] = get_basket();
 
-const promiseAll = use_product_promise(basketValue);
-promiseAll.then((res) => {
+(async () => {
+  const [arr, error, uniqProductsCountAndIdArr] = await use_check_for_empty_product_ids_arr(basketValue, () => {
+    window.location.replace('/pages/shop.html');
+    return alert('Nothing was added to basket, redirecting to shop page');
+  });
+
+  if (!!error) return console.log(error);
+
   let allPricesArr = [];
-  inferenceProductsContainerNode.innerHTML = res.map_join(({ title, image, price }) => {
+
+  inferenceProductsContainerNode.innerHTML = arr.map_join(({ name, image, price }, idx) => {
     allPricesArr.push(price);
-    return `
+    return Array.from(
+      { length: uniqProductsCountAndIdArr[idx]?.count },
+      () => ` 
       <div class='inference-products__item'>
         <div class='inference-products__item-content'>
           <div class='inference-products__item-content__img-wrapper'>
             <img src='${image}' ></img>
           </div>
           <div class='inference-products__item-content__details'>
-            <div class='inference-products__item-content__details-title'>${title}</div>
+            <div class='inference-products__item-content__details-title'>${name}</div>
             <div class='inference-products__item-content__details-weight'>0.5kg</div>
           </div>
         </div>
         <div class='inference-products__item-price'>$${price}</div>
       </div>
-      `;
+      `
+    ).join('');
   });
 
   const taxeslValue = allPricesArr.length;
@@ -58,7 +70,7 @@ promiseAll.then((res) => {
   checkoutTotalNode.innerHTML = `$${totalValue}.0`;
   paymentTitleNode.innerHTML = `$${totalValue}.0`;
   checkoutShippingNode.innerHTML = 'Calculated at next step';
-});
+})();
 
 givemeinfoInputNodeArr.forEach((el) => {
   el.addEventListener('change', (e) => {

@@ -4,7 +4,7 @@ export const set_up_wishlist = () => {
   const wishlistIds = get_wishlist_ids();
 
   document.querySelector('.button-favourite').addEventListener('click', () => {
-    window.location.replace('/wishlist.html');
+    window.location.replace('/pages/wishlist.html');
   });
 
   const wishlistButtonNode = document.querySelector('.button-favourite');
