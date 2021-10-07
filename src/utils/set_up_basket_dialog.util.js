@@ -106,7 +106,7 @@ export const set_up_basket_dialog = () => {
 
         window.localStorage.setItem('basket', basketValue.filter((__) => __ !== id).join(' '));
         handleSetUpTotalPrice();
-        console.log(basketLength);
+
         if (basketLength <= 1) {
           handleSetPlaceholderAsBasketContent();
         }

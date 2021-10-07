@@ -20,7 +20,7 @@ class ProductDetails extends HTMLElement {
     this.title = this.getAttribute('caption');
     this.ratingValue = this.getAttribute('rating-value');
     this.ratingCount = this.getAttribute('rating-count');
-    this.description = this.getAttribute('description');
+    this.description = this.getAttribute('description') || ''
     this.denotationPreview = [...this.description].filter((__, idx) => idx < 100).join('') + '...';
 
     this.additionalInfo = [
@@ -115,7 +115,6 @@ class ProductDetails extends HTMLElement {
     const previewGalleryNode = document.querySelector('.product-details-content__product-gallery__main-img');
     const galleryTabsNode = document.querySelector('.product-details-content__product-gallery__tabs');
 
-    // console.log(galleryTabsNodeArr);
     galleryTabsNode.childNodes.forEach((el, idx) => {
       el.addEventListener('click', () => {
         galleryTabsNode.childNodes.forEach((item) => (item.classList = ''));
@@ -126,10 +125,10 @@ class ProductDetails extends HTMLElement {
     });
     const contentInfoExtendedTabsContentArr = [
       `<div class='description' > ${this.description}</div>`,
-      `<div class='additional-info'>${this.additionalInfo.map_join(
+      `<div class='additional-info'>${this.additionalInfo?.map(
         ({ caption, value }) =>
           `<div><p class='additional-info__caption'>${caption}:</p><p class='additional-info__value'> ${value}</p></div>`
-      )}</div>`,
+      ).join('')}</div>`,
       `<div class='review'>
         <stars-feedback value='0'></stars-feedback>
         

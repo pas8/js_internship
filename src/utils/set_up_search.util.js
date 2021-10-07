@@ -9,11 +9,11 @@ export const set_up_search = (arr,[searchResultContainerNode, searchSvgContainer
       function () {
         searchSvgContainerNode.innerHTML = searchSvg;
         if (!this.value) return (searchResultContainerNode.style.display = 'none');
-        const resultsArr = arr.map_join(({ title, id, image }) => {
-          return title.startsWith(this.value)
+        const resultsArr = arr.map_join(({ name, id, image }) => {
+          return name.startsWith(this.value)
             ? `<a href='product_details.html?${id}'>
           <img src=${image} ></img>
-          <p> ${title} </p> </a> `
+          <p> ${name} </p> </a> `
             : '';
         });
         if (!resultsArr.length) return (searchResultContainerNode.style.display = 'none');

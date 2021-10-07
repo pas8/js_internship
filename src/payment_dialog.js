@@ -21,7 +21,6 @@ const date = IMask(paymentCardDateInputNode, { mask: '00 / 00' });
 const confirmOrderButton = document.querySelector('.payment_dialog-content__payment-methods__card-confirm');
 
 confirmOrderButton.addEventListener('click', () => {
-  console.log();
 
   if (cardNumber.value.length < 16) {
     return use_toast('Card value  is incorrect', 'error');

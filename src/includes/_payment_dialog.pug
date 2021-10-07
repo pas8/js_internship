@@ -14,10 +14,10 @@ div.payment_dialog.payment_dialog--closed
         | Apple pay  
       div.payment_dialog-content__payment-methods__card
         div.payment_dialog-content__payment-methods__card-caption Card information
-        input.payment_dialog-content__payment-methods__card-number.input(placeholder='Card number')
+        input.payment_dialog-content__payment-methods__card-number.input(placeholder='Card number',name='card_name')
         div
-          input.payment_dialog-content__payment-methods__card-date.input(placeholder='Date')
-          input.payment_dialog-content__payment-methods__card-cvc.input(placeholder='CVC',type='number')
+          input.payment_dialog-content__payment-methods__card-date.input(placeholder='Date',name='date')
+          input.payment_dialog-content__payment-methods__card-cvc.input(placeholder='CVC',type='number',name='cvc')
         button.payment_dialog-content__payment-methods__card-confirm.button--contained Confirm
 
       

@@ -59,8 +59,8 @@ productsViewButttonNodesArr.forEach((__, idx) => {
   });
 });
 
-(async () => {
-  const data = await fetch(`${API_URL}/products?model=MN2400B4Z`);
-  const allProductsArr = await data.json();
-  console.log(allProductsArr);
-})();
+// (async () => {
+//   const data = await fetch(`${API_URL}/products?model=MN2400B4Z`);
+//   const allProductsArr = await data.json();
+//   console.log(allProductsArr);
+// })();

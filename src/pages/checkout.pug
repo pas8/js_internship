@@ -29,14 +29,14 @@ html
               input.form-contact-info__utils-first-name-input.input(placeholder='First name',name="firstname",type="text")
               input.form-contact-info__utils-last-name-input.input(placeholder='Last name',name="lastname",type="text")
             input.form-contact-info__utils-adress-input.input.full-width(placeholder='Adress',name="adress",type="text")
-            input.form-contact-info__utils-adress-adittional-input.input.full-width(placeholder='Apartmentt, suite, etc',type="text")
-            select.form-contact-info__utils-city-select.input.full-width.select
+            input.form-contact-info__utils-adress-adittional-input.input.full-width(placeholder='Apartmentt, suite, etc',type="text",name='addition_info')
+            select.form-contact-info__utils-city-select.input.full-width.select(name='city')
               option(value='placeholder') City
               option(value='Kyiv') Kyiv
               option(value='Nothing') Nothing
             div.form-shipping-adress__utils__diver
-              input.form-contact-info__utils-country-or-region-input.input(placeholder='Coundtry/Region')
-              input.form-contact-info__utils-postal-code-input.input(placeholder='Postal code')
+              input.form-contact-info__utils-country-or-region-input.input(placeholder='Coundtry/Region',name='country')
+              input.form-contact-info__utils-postal-code-input.input(placeholder='Postal code',name='postal_code')
             +givemeinfo()
         button.button-move-to-payment.button--contained To payment
         //- button.submit-order-button.button--contained submit  Order
