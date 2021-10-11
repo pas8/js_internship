@@ -15,7 +15,7 @@ window.filteringProps = {
 
 window.isShopSidebarDialogOpen = false;
 
-export const set_shop_sidebar_properties = (arr) => {
+export const set_shop_sidebar_properties = async (arr) => {
   const sidebarProductCategoriesNode = document.querySelector('.sidebar-content-of-product-categories');
   const sidebaFilterByPriceSliderNode = document.querySelector('.sidebar-content-of-filter-by-price-double-slider');
   const sidebaFilterByColorNode = document.querySelector('.sidebar-content-of-filter-by-color');
@@ -42,7 +42,8 @@ export const set_shop_sidebar_properties = (arr) => {
     sidebarDialogButtonNode.innerHTML = categorySvg;
   });
 
-  const [categoriesArr, colorsArr, sizeArr, max, min] = use_validation_of_siderbar_utils(arr);
+  const propertyies = await use_validation_of_siderbar_utils(arr);
+  const [categoriesArr, colorsArr, sizeArr, max, min] = propertyies;
 
   sidebarProductCategoriesNode.innerHTML = `
   ${[{ id: 'all', name: 'All products' }, ...categoriesArr].map_join(

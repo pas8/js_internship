@@ -9,10 +9,7 @@ import favouriteSvg from '@svgs/favourite.svg';
 class ProductDetails extends HTMLElement {
   constructor() {
     super();
-
-    this.imgsArr = [
-      this.getAttribute('image'),
-    ];
+    this.imgsArr = [this.getAttribute('image'), ...(this.getAttribute('gallery')?.split(',') || [''])];
     this.activeImgIdx = 0;
     this.price = `${this.getAttribute('price')}$`;
     this.tabIdx = 0;
@@ -20,7 +17,7 @@ class ProductDetails extends HTMLElement {
     this.title = this.getAttribute('caption');
     this.ratingValue = this.getAttribute('rating-value');
     this.ratingCount = this.getAttribute('rating-count');
-    this.description = this.getAttribute('description') || ''
+    this.description = this.getAttribute('description') || '';
     this.denotationPreview = [...this.description].filter((__, idx) => idx < 100).join('') + '...';
 
     this.additionalInfo = [
@@ -38,14 +35,12 @@ class ProductDetails extends HTMLElement {
           <img src=${this.imgsArr[0]}  />
         </div>
         <div class='product-details-content__product-gallery__tabs'>
-          ${this.imgsArr
-            .map(
-              (src, idx) =>
-                `<img src='${src}' class='${idx === this.activeImgIdx ? 'active' : ''}' style=width:${
-                  ~~(100 / this.imgsArr.length) + '%'
-                } />`
-            )
-            .join('')}
+          ${this.imgsArr.map(
+            (src, idx) =>
+              `<img src='${src}' class='${idx === this.activeImgIdx ? 'active' : ''}' style=width:${
+                ~~(100 / this.imgsArr.length) + '%'
+              } />`
+          ).join('')}
         </div>
       </div>
       <div class='product-details-content__info'>
@@ -125,10 +120,12 @@ class ProductDetails extends HTMLElement {
     });
     const contentInfoExtendedTabsContentArr = [
       `<div class='description' > ${this.description}</div>`,
-      `<div class='additional-info'>${this.additionalInfo?.map(
-        ({ caption, value }) =>
-          `<div><p class='additional-info__caption'>${caption}:</p><p class='additional-info__value'> ${value}</p></div>`
-      ).join('')}</div>`,
+      `<div class='additional-info'>${this.additionalInfo
+        ?.map(
+          ({ caption, value }) =>
+            `<div><p class='additional-info__caption'>${caption}:</p><p class='additional-info__value'> ${value}</p></div>`
+        )
+        .join('')}</div>`,
       `<div class='review'>
         <stars-feedback value='0'></stars-feedback>
         

@@ -17,7 +17,8 @@ window.localStorage.setItem('productsViewVariant', 'grid');
 const get_all_products = async () => {
   try {
     const data = await fetch(`${API_URL}/products`);
-    const { data: allProductsArr } = await data.json();
+    // const { data: allProductsArr } = await data.json();
+    const allProductsArr = await data.json();
 
     set_shop_propertyies(allProductsArr);
     set_shop_sidebar_properties(allProductsArr);
@@ -34,7 +35,6 @@ const get_all_products = async () => {
 };
 get_all_products();
 
-// const productsContainer
 const productsViewButttonNodesArr = [
   document.querySelector('.shop__products-utils__content-grid-view-button'),
   document.querySelector('.shop__products-utils__content-list-view-button'),

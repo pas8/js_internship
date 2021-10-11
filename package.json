@@ -19,6 +19,7 @@
   "homepage": "https://github.com/pas8/js_internship#readme",
   "dependencies": {
     "@glidejs/glide": "^3.4.1",
+    "dominant-color": "^0.0.1",
     "eslint": "^7.32.0",
     "image-webpack-loader": "^8.0.1",
     "imask": "^6.2.2",

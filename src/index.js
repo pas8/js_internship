@@ -15,17 +15,16 @@ import { get_correct_currency } from '@utils/get_correct_currency.util.js';
 import { set_up_feature_products_tabs } from '@utils/set_up_feature_products_tabs.util.js';
 import { use_validation_of_siderbar_utils } from '@utils/use_validation_of_siderbar_utils.util.js';
 
-
 const categoriesContainer = document.querySelector('.categories-row');
 
 const specialContentProductsNode = document.querySelector('.specical-products__content-products');
 fetch(`${API_URL}/products`)
   .then((res) => res?.json())
-  .then(({ data }) => {
+  .then(async (data) => {
     const categoriesArr = data.filter((__, idx) => idx < 6);
 
     set_up_feature_products_tabs(
-      use_validation_of_siderbar_utils(categoriesArr)[0].map((el) => ({
+      await use_validation_of_siderbar_utils(categoriesArr)[0].map((el) => ({
         ...el,
         productsArr: categoriesArr.filter(({ categories }) => categories.some((__) => __?.id === el.id)),
       }))
@@ -51,4 +50,7 @@ fetch(`${API_URL}/products`)
             .join(' ')}</p></a>`
       )}
     `;
+  })
+  .catch((err) => {
+    console.log(err);
   });

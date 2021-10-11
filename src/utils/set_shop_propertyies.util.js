@@ -30,6 +30,9 @@ export const set_shop_propertyies = (allProductsArr, updatedPageNumber,isUpdateP
 
   const paginationButtonArr = [...shopProductsPaginationNode.children];
 
+
+
+
   if (pageNumber == 1 && paginationButtonArr[0].name === 'prev-button') {
     paginationButtonArr[0].remove();
   }

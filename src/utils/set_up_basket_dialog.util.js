@@ -39,13 +39,11 @@ export const set_up_basket_dialog = () => {
       idsArr,
       handleSetPlaceholderAsBasketContent
     );
-
     if (!!error) return console.log(error);
-
     basketDialogMainNode.innerHTML = arr?.map_join(
       ({ name, image, price, id }, idx) => `
         <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item' basket-product-id='${id}'>
-          <a href='product_details.html?${id}'>
+          <a href='/page/sproduct_details.html?${id}'>
             <img src='${image}' class='${BASKET_DIALOG_MAIN_CLASS}__product-item__preview-img'> </img>
           </a>
           <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content'>
@@ -64,7 +62,7 @@ export const set_up_basket_dialog = () => {
                 Price:
                 </div>
                 <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__utils-price__value'>
-                  ${price?.toFixed(1)}${get_correct_currency()}
+                  ${(+price || 0)?.toFixed(1)}${get_correct_currency()}
                 </div>
               </div>
               <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__utils-total-price'>
@@ -73,7 +71,7 @@ export const set_up_basket_dialog = () => {
                 </div>
 
                 <div class='${TOTAL_PRODUCT_PRICE_VALUE_CLASS}'>
-                  ${(uniqProductsCountAndIdArr?.[idx]?.count * price)?.toFixed(1)}${get_correct_currency()}
+                  ${(uniqProductsCountAndIdArr?.[idx]?.count * +price)?.toFixed(1)}${get_correct_currency()}
                 </div>
               </div>
               <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content__utils-count'>
