@@ -24,7 +24,7 @@ const get_all_products = async () => {
     set_shop_sidebar_properties(allProductsArr);
     set_shop_pagination_propertyies(allProductsArr);
 
-    set_up_search(allProductsArr, [
+    set_up_search( [
       document.querySelector('.shop__sidebar-search__result'),
       document.querySelector('.shop__sidebar-search__svg-container'),
       document.querySelector('.shop__sidebar-search__input'),

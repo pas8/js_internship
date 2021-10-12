@@ -21,7 +21,7 @@ export const use_validation_of_siderbar_utils = async (allProductsArr) => {
 
   categoriesResultArr.forEach(([item, error]) => {
     !error && categoriesArr.push(JSON.parse(item));
-  });
+  }); 
 
   return [categoriesArr, colorsArr, sizeArr, Math.max(...pricesArr), ~~Math.min(...pricesArr)];
 };

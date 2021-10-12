@@ -4,7 +4,7 @@ import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
 import closeSvg from '@svgs/close.svg';
 import searchSvg from '@svgs/search.svg';
 
-export const set_up_search = (arr, [searchResultContainerNode, searchSvgContainerNode, searchInputNode]) => {
+export const set_up_search = ([searchResultContainerNode, searchSvgContainerNode, searchInputNode]) => {
   searchInputNode.addEventListener(
     'input',
     use_debounce(
@@ -12,13 +12,20 @@ export const set_up_search = (arr, [searchResultContainerNode, searchSvgContaine
         searchSvgContainerNode.innerHTML = searchSvg;
         if (!this.value) return (searchResultContainerNode.style.display = 'none');
         const [res] = await use_xml_http_request(`search?${this.value}`);
-
-        const resultsArr = JSON.parse(res).map_join(
-          ({ name, id, image }) =>
-            `<a href='product_details.html?${id}'>
-                <img src=${image} ></img>
-                <p> ${name} </p> 
-              </a> `
+        console.log(JSON.parse(res));
+        const resultsArr = JSON.parse(res).map_join(({ caption, arr }) =>
+          !arr.length
+            ? ''
+            : `<div>
+              <p>${caption}</p>
+              ${arr.map_join(
+                ({ name, id, image }) =>
+                  `<a href='product_details.html?${id}'>
+                      ${image ? `<img src=${image} ></img>` : ''}
+                      <p> ${name} </p> 
+                    </a> `
+              )}
+            </div>`
         );
 
         if (!resultsArr.length) return (searchResultContainerNode.style.display = 'none');

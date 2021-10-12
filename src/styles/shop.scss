@@ -66,29 +66,35 @@
         z-index: 10;
         display: none;
         flex-direction: column;
-
-        & > a {
-          gap: 1rem;
-          align-items: center;
-          & img {
-            width: 20%;
-          }
-          width: 100%;
-          text-align: left;
-          font-size: 0.92rem;
-
-          cursor: pointer;
-          &:not(:last-child) {
-            border-bottom: 1px solid $light-grey;
-          }
-          &:hover {
-            border-bottom-color: transparent;
-            background-color: $primary;
-            color: $background;
-          }
-          padding: 0.8rem 1rem;
-
+        & > div {
           display: flex;
+          flex-direction: column;
+          & > p {
+            padding: 0.6rem  1rem;
+          }
+          & > a {
+            gap: 1rem;
+            align-items: center;
+            & img {
+              width: 20%;
+            }
+            width: 100%;
+            text-align: left;
+            font-size: 0.92rem;
+
+            cursor: pointer;
+            &:not(:last-child) {
+              border-bottom: 1px solid $light-grey;
+            }
+            &:hover {
+              border-bottom-color: transparent;
+              background-color: $primary;
+              color: $background;
+            }
+            padding: 0.8rem 1rem;
+
+            display: flex;
+          }
         }
       }
       &__input {

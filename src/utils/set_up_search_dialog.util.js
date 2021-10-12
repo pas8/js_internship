@@ -20,7 +20,6 @@ export const set_up_search_dialog = () => {
   closeButtonOfSearchingDialogNode.addEventListener('click', handleCloseDialog);
   
   set_up_search(
-    [],
     [
       document.querySelector('.searching-content-search__result'),
       document.querySelector('.searching-content-search__svg-container'),
