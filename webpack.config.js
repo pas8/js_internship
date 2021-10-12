@@ -30,13 +30,13 @@ const svg = {
 };
 
 const img = {
-  loader:'file-loader',
+  loader: 'file-loader',
   // use: [
-    // 'file-loader',
+  // 'file-loader',
 
-    // {
-      // loader: 'image-webpack-loader',
-    // },
+  // {
+  // loader: 'image-webpack-loader',
+  // },
   // ],
   test: /\.(png|jpe?g|gif)$/i,
   // type: 'asset/resource',
@@ -47,11 +47,9 @@ const img = {
   // generator: {
   //   filename: 'static/[name][ext][query]',
   // },
-
-
 };
 
-const pages = ['index', 'about', 'product_details', 'checkout', 'shop', 'wishlist'];
+const pages = ['index', 'about', 'product_details', 'checkout', 'shop', 'wishlist', 'auth', 'admin'];
 
 module.exports = {
   mode: 'development',
