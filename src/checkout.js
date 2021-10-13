@@ -11,8 +11,6 @@ import { get_basket } from '@utils/get_basket.util.js';
 import { use_check_for_empty_product_ids_arr } from '@utils/use_check_for_empty_product_ids_arr.util.js';
 import { get_sum_from_arr } from '@utils/get_sum_from_arr.util.js';
 
-
-
 window.localStorage.setItem('isGiveInfo', 'false');
 
 const contactEmailOrPhoneInputNode = document.querySelector('.form-contact-info__utils-email-or-phone-input');
@@ -62,6 +60,7 @@ const [basketValue] = get_basket();
   });
 
   const taxeslValue = allPricesArr.length;
+  console.log(taxeslValue,allPricesArr)
   const subtotatlValue = +get_sum_from_arr(allPricesArr).toFixed();
   checkoutSubtotalNode.innerHTML = `$${subtotatlValue}.0`;
   checkoutTaxesNode.innerHTML = `$${taxeslValue}.0`;
@@ -132,7 +131,8 @@ buttonChangeContactVariantNode.addEventListener('click', () => {
 
 const postalCode = IMask(contactPostalCodeInputNode, { mask: /^[1-6]\d{0,5}$/ });
 
-buttonMoveToPaymentNode.addEventListener('click', () => {
+buttonMoveToPaymentNode.addEventListener('click', (e) => {
+  e.preventDefault();
   if (
     !(
       (emailOrPhone.value.startsWith('+') && emailOrPhone.value.length === 17) ||
@@ -151,6 +151,14 @@ buttonMoveToPaymentNode.addEventListener('click', () => {
     return use_toast('Please fill addition info field', 'error');
 
   if (postalCode.value.length !== 6) return use_toast('Please fill  postal code  field', 'error');
+
+  window.localStorage.setItem(
+    'contactData',
+    JSON.stringify({
+      email_or_phone: emailOrPhone.value,
+      ...Object.fromEntries([...new FormData(document.querySelector('form'))]),
+    })
+  );
 
   paymentDialogNode.classList.remove('payment_dialog--closed');
 });
