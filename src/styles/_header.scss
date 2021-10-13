@@ -70,7 +70,6 @@ header {
 
   & .main {
     width: 100%;
-    // padding: 1rem;
     @include centered_flex;
     &-row {
       @include space-between_flex;

@@ -39,10 +39,10 @@ const [basketValue] = get_basket();
   let allPricesArr = [];
 
   inferenceProductsContainerNode.innerHTML = arr.map_join(({ name, image, price }, idx) => {
-    allPricesArr.push(price);
-    return Array.from(
-      { length: uniqProductsCountAndIdArr[idx]?.count },
-      () => ` 
+    return Array.from({ length: uniqProductsCountAndIdArr[idx]?.count }, () => {
+      allPricesArr.push(price);
+
+      return ` 
       <div class='inference-products__item'>
         <div class='inference-products__item-content'>
           <div class='inference-products__item-content__img-wrapper'>
@@ -55,12 +55,12 @@ const [basketValue] = get_basket();
         </div>
         <div class='inference-products__item-price'>$${price}</div>
       </div>
-      `
-    ).join('');
+      `;
+    }).join('');
   });
 
-  const taxeslValue = allPricesArr.length;
-  console.log(taxeslValue,allPricesArr)
+  const taxeslValue = arr.length;
+
   const subtotatlValue = +get_sum_from_arr(allPricesArr).toFixed();
   checkoutSubtotalNode.innerHTML = `$${subtotatlValue}.0`;
   checkoutTaxesNode.innerHTML = `$${taxeslValue}.0`;

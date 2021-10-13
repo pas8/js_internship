@@ -22,5 +22,3 @@ fetch(`${API_URL}/products?id=${ID}`)
       price='${price}'
     ></product-details>  `;
   });
-// rating-value='${rating.rate}'
-// rating-count='${rating.count}'

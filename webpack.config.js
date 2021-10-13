@@ -31,22 +31,10 @@ const svg = {
 
 const img = {
   loader: 'file-loader',
-  // use: [
-  // 'file-loader',
-
-  // {
-  // loader: 'image-webpack-loader',
-  // },
-  // ],
   test: /\.(png|jpe?g|gif)$/i,
-  // type: 'asset/resource',
-
   options: {
     name: 'assets/[name].[ext]',
   },
-  // generator: {
-  //   filename: 'static/[name][ext][query]',
-  // },
 };
 
 const pages = ['index', 'about', 'product_details', 'checkout', 'shop', 'wishlist', 'auth', 'admin'];
@@ -86,7 +74,6 @@ module.exports = {
     filename: 'scripts/[name].js',
     chunkFilename: 'chunks/[name].bundle.js',
     path: path.resolve(__dirname, 'dist/'),
-    // assetModuleFilename: 'images/[hash][ext][query]',
   },
 
   module: {

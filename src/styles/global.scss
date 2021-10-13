@@ -18,7 +18,6 @@
   display: grid;
   width: fit-content;
   border: none;
-  // padding: 0;
 
   outline: none;
   font-family: 'Jost';
@@ -79,7 +78,6 @@ button {
   height: 2.8em;
   transition: 0.42s ease all;
   &:hover {
-    // color: $primary;
     border-color: $text-secondary;
   }
   & svg {
@@ -161,9 +159,6 @@ body {
 }
 
 .container {
-  // @media screen and (min-width: $xl) {
-  // width: 60vw;
-  // }
 
   @media screen and (min-width: $xl) {
     width: 66vw;
