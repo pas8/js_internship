@@ -10,9 +10,6 @@ const pug = {
 
 const scss = {
   test: /\.(s*)css$/,
-  // options: {
-  // reloadAll: true,
-  // },
   use: [miniCss.loader, 'css-loader', 'sass-loader'],
 };
 
@@ -33,15 +30,26 @@ const svg = {
 };
 
 const img = {
+  loader: 'file-loader',
+  // use: [
+  // 'file-loader',
+
+  // {
+  // loader: 'image-webpack-loader',
+  // },
+  // ],
   test: /\.(png|jpe?g|gif)$/i,
-  use: [
-    {
-      loader: 'file-loader',
-    },
-  ],
+  // type: 'asset/resource',
+
+  options: {
+    name: 'assets/[name].[ext]',
+  },
+  // generator: {
+  //   filename: 'static/[name][ext][query]',
+  // },
 };
 
-const pages = ['index', 'about', 'product_details', 'checkout'];
+const pages = ['index', 'about', 'product_details', 'checkout', 'shop', 'wishlist', 'auth', 'admin'];
 
 module.exports = {
   mode: 'development',
@@ -66,17 +74,21 @@ module.exports = {
     alias: {
       '@includes': path.resolve(__dirname, 'src/includes'),
       '@styles': path.resolve(__dirname, 'src/styles'),
+      '@prototypes': path.resolve(__dirname, 'src/prototypes'),
       '@assets': path.resolve(__dirname, 'src/assets'),
       '@utils': path.resolve(__dirname, 'src/utils'),
       '@components': path.resolve(__dirname, 'src/components'),
       '@svgs': path.resolve(__dirname, 'src/svgs'),
+      '@config': path.resolve(__dirname, 'src/config'),
     },
   },
   output: {
-    filename: '[name].js',
-    chunkFilename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: 'scripts/[name].js',
+    chunkFilename: 'chunks/[name].bundle.js',
+    path: path.resolve(__dirname, 'dist/'),
+    // assetModuleFilename: 'images/[hash][ext][query]',
   },
+
   module: {
     rules: [pug, scss, svg, img, babel],
   },
@@ -87,7 +99,8 @@ module.exports = {
           new HtmlWebpackPlugin({
             inject: true,
             template: path.resolve(__dirname, `src/pages/${page}.pug`),
-            filename: `${page}.html`,
+            filename: page === 'index' ? `${page}.html` : `pages/${page}.html`,
+
             chunks: [page],
           })
       )
@@ -96,9 +109,11 @@ module.exports = {
       pages.map(
         (page) =>
           new miniCss({
-            filename: `[name].css`,
+            ignoreOrder: true,
+            filename: `styles/[name].css`,
           })
       )
     )
+
     .concat(new ESLintPlugin()),
 };

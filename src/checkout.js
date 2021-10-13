@@ -1,13 +1,17 @@
 import './header&footer';
 import '@styles/_breadcrumb.scss';
 import '@styles/checkout.scss';
-import '@styles/checkout.scss';
 import './payment_dialog';
-import { use_toast } from '@utils/use_toast.util.js';
-import { get_basket } from '@utils/get_basket.util.js';
-import { get_random_int } from '@utils/get_random_int.util.js';
+
 import phoneSvg from '@svgs/phone.svg';
 import IMask from 'imask';
+
+import { use_toast } from '@utils/use_toast.util.js';
+import { get_basket } from '@utils/get_basket.util.js';
+import { use_check_for_empty_product_ids_arr } from '@utils/use_check_for_empty_product_ids_arr.util.js';
+import { get_sum_from_arr } from '@utils/get_sum_from_arr.util.js';
+
+
 
 window.localStorage.setItem('isGiveInfo', 'false');
 
@@ -16,6 +20,57 @@ const contactPostalCodeInputNode = document.querySelector('.form-contact-info__u
 const contactFirstNameInputNode = document.querySelector('.form-contact-info__utils-first-name-input');
 const contactLastNameInputNode = document.querySelector('.form-contact-info__utils-last-name-input');
 const givemeinfoInputNodeArr = document.querySelectorAll('.givemeinfo-input');
+const checkoutSubtotalNode = document.querySelector('.checkout-subtotal-value');
+const checkoutTaxesNode = document.querySelector('.checkout-taxes-value');
+const checkoutTotalNode = document.querySelector('.checkout-total-value');
+const checkoutShippingNode = document.querySelector('.checkout-shipping-value');
+const paymentTitleNode = document.querySelector('.payment_dialog-content__header-title');
+
+const inferenceProductsContainerNode = document.querySelector('.inference-products');
+
+const [basketValue] = get_basket();
+
+(async () => {
+  const [arr, error, uniqProductsCountAndIdArr] = await use_check_for_empty_product_ids_arr(basketValue, () => {
+    window.location.replace('/pages/shop.html');
+    return alert('Nothing was added to basket, redirecting to shop page');
+  });
+
+  if (!!error) return console.log(error);
+
+  let allPricesArr = [];
+
+  inferenceProductsContainerNode.innerHTML = arr.map_join(({ name, image, price }, idx) => {
+    allPricesArr.push(price);
+    return Array.from(
+      { length: uniqProductsCountAndIdArr[idx]?.count },
+      () => ` 
+      <div class='inference-products__item'>
+        <div class='inference-products__item-content'>
+          <div class='inference-products__item-content__img-wrapper'>
+            <img src='${image}' ></img>
+          </div>
+          <div class='inference-products__item-content__details'>
+            <div class='inference-products__item-content__details-title'>${name}</div>
+            <div class='inference-products__item-content__details-weight'>0.5kg</div>
+          </div>
+        </div>
+        <div class='inference-products__item-price'>$${price}</div>
+      </div>
+      `
+    ).join('');
+  });
+
+  const taxeslValue = allPricesArr.length;
+  const subtotatlValue = +get_sum_from_arr(allPricesArr).toFixed();
+  checkoutSubtotalNode.innerHTML = `$${subtotatlValue}.0`;
+  checkoutTaxesNode.innerHTML = `$${taxeslValue}.0`;
+
+  const totalValue = taxeslValue + subtotatlValue;
+  checkoutTotalNode.innerHTML = `$${totalValue}.0`;
+  paymentTitleNode.innerHTML = `$${totalValue}.0`;
+  checkoutShippingNode.innerHTML = 'Calculated at next step';
+})();
 
 givemeinfoInputNodeArr.forEach((el) => {
   el.addEventListener('change', (e) => {
@@ -99,17 +154,3 @@ buttonMoveToPaymentNode.addEventListener('click', () => {
 
   paymentDialogNode.classList.remove('payment_dialog--closed');
 });
-
-const checkoutSubtotalNode = document.querySelector('.checkout-subtotal-value');
-const checkoutTaxesNode = document.querySelector('.checkout-taxes-value');
-const checkoutTotalNode = document.querySelector('.checkout-total-value');
-
-const [basketValue, basketLength] = get_basket();
-
-//!hard code
-const subtotatlValue = get_random_int(16, 42);
-const taxeslValue = get_random_int(4, 8);
-
-checkoutSubtotalNode.innerHTML = `$${subtotatlValue}.0`;
-checkoutTaxesNode.innerHTML = `$${taxeslValue}.0`;
-checkoutTotalNode.innerHTML = `$${taxeslValue + subtotatlValue}.0`;

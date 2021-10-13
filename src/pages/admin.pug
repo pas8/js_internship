@@ -1,0 +1,20 @@
+html
+  head
+    meta(charset="UTF-8")
+  body 
+    main
+      div.toast
+      div.editing_dialog
+      div.categories_menu
+
+
+      div.utils
+        div.utils__title Admin  Utils
+        div.utils__search
+          input.utils__search-input.input(placeholder='Search...')
+          button.utils__search-svg-container
+            include ../svgs/search.svg
+          div.utils__search-result
+
+        button.utils__add-category-button.button--contained  Add new category
+        button.utils__add-product-button.button--contained  Add new product

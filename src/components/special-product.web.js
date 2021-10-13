@@ -3,48 +3,51 @@ import '@components/stars.web.js';
 import favouriteSvg from '@svgs/favourite.svg';
 import compareSvg from '@svgs/compare.svg';
 import searchSvg from '@svgs/search.svg';
+import { get_default_product_attribute_values } from '@utils/get_default_product_attribute_values.util.js';
+import { set_up_utils_of_product } from '@utils/set_up_utils_of_product.util.js';
+
+import { set_up_product_propertyies } from '@utils/set_up_product_propertyies.util.js';
 
 class SpecicalProduct extends HTMLElement {
   connectedCallback() {
+    const [img_href, id, caption, current_price, old_price] = get_default_product_attribute_values(this);
+
     const sale_percent = this.getAttribute('sale_percent');
-    const img_href = this.getAttribute('img_href');
     const stars = this.getAttribute('stars');
-    const id = this.getAttribute('id') || 'randomId';
-    const caption = this.getAttribute('caption');
-    const is_new = this.getAttribute('is_new');
-    const is_favourite = this.getAttribute('is_favourite');
-    const current_price = this.getAttribute('current_price');
-    const old_price = this.getAttribute('old_price');
+    let is_new = this.getAttribute('is_new');
+    const isMainPage = window.location.pathname.split('/')[1] === 'index.html';
+    set_up_product_propertyies(this, id);
 
     this.innerHTML = `
     <div class='special-product'>
       <div class='special-product-content'>
-        <button class='special-product-content__favourite-button button-outlined ${
-          is_favourite ? 'button-outlined--active' : ''
+        <button class='special-product-content__favourite-button button-outlined special-product-content__utils-favourite ${
+          this.is_favourite ? 'special-product-content__utils-item--active' : ''
         }'>
           ${favouriteSvg}
         </button>
         <div class='special-product-content__utils'>
           ${[
-            { content: compareSvg, caption: 'compare' },
-            { content: 'Add to card', caption: 'add-to-card' },
-            { content: searchSvg, caption: 'search' },
-          ]
-            .map(
-              ({ caption, content }) => `
-              <button class='special-product-content__utils-${caption} button-outlined'>
+            { content: compareSvg, caption: 'compare', isActive: this.is_added_to_compare },
+            { content: 'Add to card', caption: 'add-to-card', isActive: this.is_added_to_basket },
+            { content: searchSvg, caption: 'search', isActive: false },
+          ].map_join(
+            ({ caption, content, isActive }) => `
+              <button class='special-product-content__utils-${caption} button-outlined ${
+              isActive ? 'special-product-content__utils-item--active' : ''
+            }'>
                 ${content}
               </button>`
-            )
-            .join('')}
+          )}
         </div>
 
         <div class='special-product-content__labels'>
           ${!!sale_percent ? `<div class='special-product-content__labels-sale'> -${sale_percent}% </div>` : ''}
           ${!!is_new ? `<div class='special-product-content__labels-new'> New </div>` : ''}
         </div>
-
-        <img src=${img_href} ></img>
+        <a href='${isMainPage ?'pages/' : ''}product_details.html?${id}'>
+          <img src=${ img_href} ></img>
+        </a>
       </div>
       <stars-feedback value=${stars}></stars-feedback>
       <div class='special-product__caption'>
@@ -59,12 +62,8 @@ class SpecicalProduct extends HTMLElement {
       </div>
     </div>`;
 
-    const addToCardButton = this.querySelector('.special-product-content__utils-add-to-card');
-    addToCardButton.addEventListener('click', () => {
-      const storage = window.sessionStorage;
-      const currentCard = storage.getItem('basket');
-      storage.setItem('basket', `${currentCard || ''},${id}`);
-    });
+    const handleSetUp = set_up_utils_of_product(id, 'special-product-content__utils').bind(this);
+    handleSetUp();
   }
 }
 if (!customElements.get('special-product')) customElements.define('special-product', SpecicalProduct);
