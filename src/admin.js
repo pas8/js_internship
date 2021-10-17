@@ -9,7 +9,6 @@ import deleteSvg from '@svgs/delete.svg';
 import closeSvg from '@svgs/close.svg';
 import editSvg from '@svgs/edit.svg';
 import arrow_backSvg from '@svgs/arrow_back.svg';
-
 import { defineCustomElements as initSkeleton } from 'skeleton-webcomponent-loader/loader/index.js';
 
 initSkeleton();
@@ -23,6 +22,50 @@ initSkeleton();
     use_toast(error, 'error');
     return window.location.replace('/pages/auth.html');
   }
+
+  const buttonOpenOrdersListMode = document.querySelector('.utils__open-orders-list');
+  const list_of_open_orders_node = document.querySelector('.list_of_open_orders');
+
+  buttonOpenOrdersListMode.addEventListener('click', async () => {
+    const [arr, error] = await use_xml_http_request('open_orders');
+    if (!!error) return use_toast(error, 'error');
+    list_of_open_orders_node.style.display = 'grid';
+
+    list_of_open_orders_node.innerHTML = `
+      <div class='list_of_open_orders-content'>
+        <div class='list_of_open_orders-content__title'>
+          <p>${status} orders</p> <button class='close-button'>${closeSvg} </button>
+        </div>
+      <div class='list_of_open_orders-content__list'>
+        ${JSON.parse(arr).map_join(
+          ({ _id, status, ...props }) =>
+            `<div>id:${_id}</div>
+            <p>Status:${status}</p>
+            ${Object.entries(props).map_join(
+              ([caption, value]) => `
+              <div>
+                <p>${caption}</p>
+                <div>
+                  ${
+                    caption === 'products'
+                      ? value
+                      : Object.entries(value).map_join(([key, val]) => `<div><p>${key}</p><p>${val}</p>  </div>`)
+                  }
+                </div>
+              </div>
+            `
+            )}
+            
+            `
+        )}
+      </div>
+      </div> 
+    `;
+    list_of_open_orders_node.querySelector('.close-button').addEventListener('click', () => {
+      list_of_open_orders_node.style.display = 'none';
+    });
+  });
+
   set_up_search(
     [
       document.querySelector('.utils__search-result'),
@@ -189,7 +232,7 @@ initSkeleton();
 
       categoryMenuNode.innerHTML = `
         <div class='categories_menu-utils'>
-          <button class='categories_menu-utils__close-button'>
+          <button class='categories_menu-utils__close-button close-button'>
             ${arrow_backSvg}
           </button>
           <button class='categories_menu-utils__save-button button--contained'>
