@@ -42,7 +42,7 @@ export const set_up_search = (
         searchResultContainerNode.style.display = 'flex';
 
         searchResultContainerNode.innerHTML = resultsArr;
-        addition_func();
+        addition_func &&   addition_func();
 
       },
       200,
