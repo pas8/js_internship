@@ -105,12 +105,12 @@ use_check_for_auth();
       list_of_open_orders_node.style.display = 'none';
     });
   });
-
+  const input_node = document.querySelector('.utils__search-input');
   set_up_search(
     [
       document.querySelector('.utils__search-result'),
       document.querySelector('.utils__search-svg-container'),
-      document.querySelector('.utils__search-input'),
+      input_node,
     ],
     (arr, caption) =>
       arr.map_join(
@@ -133,12 +133,13 @@ use_check_for_auth();
       [...allDeleteButtonNodeArr]?.forEach((el) => {
         el?.addEventListener('click', async () => {
           const [href, queryId] = el.id.split('||||');
-
-          const [res, err] = await use_xml_http_request(`${href.toLowerCase()}?id=${queryId}`, 'DELETE');
+          const [res, err] = await use_xml_http_request(`delete_${href.toLowerCase()}?id=${queryId}`);
 
           if (!!err) {
             return use_toast(err, 'error');
           }
+          el.parentElement.remove();
+
           return use_toast(res, 'info');
         });
       });
