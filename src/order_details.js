@@ -17,7 +17,9 @@ use_check_for_auth();
   const { id, _id, status, ...props } = JSON.parse(json);
   _id;
 
-  main_node.innerHTML = `<div class='id'>id:${id}</div>
+  main_node.insertAdjacentHTML(
+    'beforeend',
+    `<div class='id'>id:${id}</div>
       ${Object.entries(props).map_join(
         ([caption, value]) => `
         <div class='row_of_props'>
@@ -43,11 +45,13 @@ use_check_for_auth();
       </select>
       </div>
       <button class='delete_button button--contained'>Delete</button>
-      `;
+      `
+  );
 
   const status_select_node = document.querySelector('select');
   const status_current_node = document.querySelector('.row_of_props-status_current');
   const delete_button_node = document.querySelector('.delete_button');
+  const to_home_button_node = document.querySelector('.to_home_button');
 
   delete_button_node.addEventListener('click', async () => {
     const [res, error] = await use_xml_http_request(`delete_order?id=${ID}`);
@@ -76,5 +80,9 @@ use_check_for_auth();
     e.target.value = 'change_status';
 
     return use_toast(res, 'info');
+  });
+
+  to_home_button_node.addEventListener('click', () => {
+    window.location.replace('/pages/admin.html');
   });
 })();

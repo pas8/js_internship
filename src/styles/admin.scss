@@ -32,7 +32,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 0.42rem;
 
     &__title {
       font-size: 2.8rem;
@@ -107,7 +107,8 @@ main {
   }
 }
 
-.editing_dialog {
+.editing_dialog,
+.new_product_dialog {
   @include dialog;
   display: none;
   &__content {
@@ -253,7 +254,7 @@ main {
   display: none;
   &-content {
     padding: 0.42rem;
-    background-color: rgb(245, 197, 197);
+    background-color: rgb(245, 239, 197);
     gap: 0.42rem;
     display: flex;
     flex-direction: column;
@@ -299,5 +300,11 @@ main {
         }
       }
     }
+  }
+}
+
+.new_product_dialog {
+  &__content-gallery {
+    gap: 0.42rem;
   }
 }
