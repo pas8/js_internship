@@ -8,10 +8,12 @@ export const use_check_for_empty_product_ids_arr = async (dataArr, funcIfProduct
 
   const uniqProductsCountAndIdArr = use_uniq_count_arr(idsArr);
 
-  try {
-    const promiseAll = use_product_promise(uniqProductsCountAndIdArr.map(({ id }) => id));
+  const promiseAll = use_product_promise(uniqProductsCountAndIdArr.map(({ id }) => id));
 
-    const arr = await promiseAll;
+  const arr = await promiseAll;
+
+  try {
+
 
     return [arr, null, uniqProductsCountAndIdArr];
   } catch (error) {
