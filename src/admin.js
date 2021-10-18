@@ -3,6 +3,7 @@ import '@prototypes/map_join.array.js';
 import '@styles/admin.scss';
 import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
 import { set_up_search } from '@utils/set_up_search.util.js';
+import { use_check_for_auth } from '@utils/use_check_for_auth.util.js';
 import { use_toast } from '@utils/use_toast.util.js';
 import { to_capitalize } from '@utils/to_capitalize.util.js';
 import deleteSvg from '@svgs/delete.svg';
@@ -12,17 +13,9 @@ import arrow_backSvg from '@svgs/arrow_back.svg';
 import { defineCustomElements as initSkeleton } from 'skeleton-webcomponent-loader/loader/index.js';
 
 initSkeleton();
+use_check_for_auth();
 
 (async () => {
-  const token = window.localStorage.getItem('token');
-
-  const [, error] = await use_xml_http_request('admin', 'POST', JSON.stringify({ token }));
-
-  if (!!error) {
-    use_toast(error, 'error');
-    return window.location.replace('/pages/auth.html');
-  }
-
   const buttonOpenOrdersListMode = document.querySelector('.utils__open-orders-list');
   const list_of_open_orders_node = document.querySelector('.list_of_open_orders');
 
@@ -39,23 +32,32 @@ initSkeleton();
       <div class='list_of_open_orders-content__list'>
         ${JSON.parse(arr).map_join(
           ({ _id, status, ...props }) =>
-            `<div>id:${_id}</div>
-            <p>Status:${status}</p>
+            `<div class='id'>id:${_id}</div>
             ${Object.entries(props).map_join(
               ([caption, value]) => `
-              <div>
-                <p>${caption}</p>
-                <div>
+              <div class='row_of_props'>
+                <p class='row_of_props-caption'>${caption}</p>
+                <div class='row_of_props-container'>
                   ${
                     caption === 'products'
                       ? value
-                      : Object.entries(value).map_join(([key, val]) => `<div><p>${key}</p><p>${val}</p>  </div>`)
+                      : Object.entries(value).map_join(
+                          ([key, val]) =>
+                            `<div class='item'><p class='item-key'>${key}:</p><p class='item-value'>${val}</p>  </div>`
+                        )
                   }
                 </div>
               </div>
             `
             )}
-            
+            <div class='current_status'>Status:${status}</div>
+            <select id='${_id + 'status'}'>
+              <option value='change_status'>Change status</option>
+              <option value='open'>Open</option>
+              <option value='shipping'>Shipping</option>
+              <option value='arrived'>Arrived</option>
+              <option value='closed'>Closed</option>
+            </select>
             `
         )}
       </div>
@@ -97,7 +99,7 @@ initSkeleton();
           const [res, err] = await use_xml_http_request(`${href.toLowerCase()}?id=${queryId}`, 'DELETE');
 
           if (!!err) {
-            return use_toast(error, 'error');
+            return use_toast(err, 'error');
           }
           return use_toast(res, 'info');
         });
@@ -123,7 +125,7 @@ initSkeleton();
     const [res, err] = await use_xml_http_request(`${href.toLowerCase()}?id=${queryId}`);
 
     if (!!err) {
-      return use_toast(error, 'error');
+      return use_toast(err, 'error');
     }
     let { id, imgGallery, image, categories, _id, ...props } = JSON.parse(res);
     _id;
@@ -295,7 +297,7 @@ initSkeleton();
       );
 
       if (!!err) {
-        return use_toast(error, 'error');
+        return use_toast(err, 'error');
       }
       editingDialogNode.style.display = 'none';
 

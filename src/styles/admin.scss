@@ -248,7 +248,6 @@ main {
   }
 }
 
-
 .list_of_open_orders {
   @include dialog;
   display: none;
@@ -266,6 +265,41 @@ main {
     &__list {
       display: flex;
       flex-direction: column;
+      gap: 0.42rem;
+      .id {
+        font-size: 1.2rem;
+        font-weight: 500;
+        border: 1px solid $input-border-color;
+        padding: 0.42rem;
+      }
+      & .row_of_props {
+        display: flex;
+        border: 1px solid $input-border-color;
+        padding: 0.42rem;
+        flex-direction: column;
+        &-caption {
+          font-size: 1.2rem;
+          font-weight: 500;
+          text-transform: capitalize;
+        }
+        &-container {
+          display: flex;
+          flex-direction: column;
+          & .item {
+            gap: 0.42rem;
+
+            display: flex;
+            &-key {
+              font-weight: 500;
+              color: rgb(80, 80, 80);
+              text-transform: capitalize;
+            }
+            &-value {
+              color: $text-thirdly;
+            }
+          }
+        }
+      }
     }
   }
 }
