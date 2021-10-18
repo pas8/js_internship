@@ -254,6 +254,9 @@ main {
   &-content {
     padding: 0.42rem;
     background-color: rgb(245, 197, 197);
+    gap: 0.42rem;
+    display: flex;
+    flex-direction: column;
     &__title {
       @include space-between_flex;
 
@@ -265,39 +268,33 @@ main {
     }
     &__list {
       display: flex;
-      flex-direction: column;
-      gap: 0.42rem;
-      .id {
-        font-size: 1.2rem;
-        font-weight: 500;
-        border: 1px solid $input-border-color;
-        padding: 0.42rem;
-      }
-      & .row_of_props {
+      border: 1px solid $input-border-color;
+      padding: 1rem;
+      gap: 1.42rem;
+      & .column {
         display: flex;
-        border: 1px solid $input-border-color;
-        padding: 0.42rem;
+        padding-right: 1.42rem;
+        &:not(:last-of-type) {
+          border-right: 1px solid $input-border-color;
+        }
         flex-direction: column;
-        &-caption {
+        gap: 0.42rem;
+        &_status {
           font-size: 1.2rem;
           font-weight: 500;
           text-transform: capitalize;
         }
-        &-container {
+        & > div {
           display: flex;
           flex-direction: column;
-          & .item {
-            gap: 0.42rem;
-
-            display: flex;
-            &-key {
-              font-weight: 500;
-              color: rgb(80, 80, 80);
-              text-transform: capitalize;
-            }
-            &-value {
-              color: $text-thirdly;
-            }
+          gap: 0.42rem;
+        }
+        &_item {
+          background-color: rgb(229, 243, 255);
+          border-radius: 8px;
+          padding: 0.42rem;
+          &:hover {
+            cursor: grab;
           }
         }
       }

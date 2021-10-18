@@ -42,13 +42,58 @@ use_check_for_auth();
           (status) =>
             ` <div class='column' id='column_${status}'>
                 <div  class='column_status' > ${status} </div>
-                ${validatedOrdersIdWithSatusessObj[status].map_join(
-                  (id) => `<div  draggable="true" id='item_${id}'>${id}</div>`
-                )}`
+                <div>
+                  ${validatedOrdersIdWithSatusessObj?.[status]?.map_join(
+                    (id) =>
+                      `<a class='column_item'  draggable="true" id='item_${id}' href='order_details.html?${id}'>${id}</a>`
+                  ) || ''} 
+                </div>
+                </div>
+                `
         )} 
       </div>
       </div> 
     `;
+
+    const columnItemsNodeArr = document.querySelectorAll('.column_item');
+    const columnsNodeArr = document.querySelectorAll('.column');
+
+    columnsNodeArr.forEach((el) => {
+      el.addEventListener('dragover', (e) => {
+        e.preventDefault();
+      });
+
+      el.addEventListener('drop', async (e) => {
+        const id = e.dataTransfer.getData('text');
+
+        const ID = id.split('_')[1];
+
+        const status = el.id.split('_')[1];
+        const [res, error] = await use_xml_http_request(`orders?id=${ID}`, 'POST', JSON.stringify({ status }));
+
+        if (!!error) {
+          return use_toast(error, 'error');
+        }
+
+        const draggable_element = document.getElementById(id);
+
+        draggable_element.style.background = 'rgb(229, 243, 255)';
+        el.children[1].insertAdjacentElement('afterbegin', draggable_element);
+
+        use_toast(res, 'info');
+        e.dataTransfer.clearData();
+      });
+    });
+
+    columnItemsNodeArr.forEach((el) => {
+      const on_drag_start = (e) => {
+        e.dataTransfer.setData('text/plain', e.target.id);
+        e.currentTarget.style.backgroundColor = 'yellow';
+      };
+
+      el.addEventListener('dragstart', on_drag_start);
+    });
+
     list_of_open_orders_node.querySelector('.close-button').addEventListener('click', () => {
       list_of_open_orders_node.style.display = 'none';
     });
