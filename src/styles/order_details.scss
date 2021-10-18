@@ -13,6 +13,29 @@ body {
 }
 
 main {
+  .to_home_button {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: 1px solid;
+    color: $text-thirdly;
+    padding: 0;
+    & svg {
+      width: 2rem;
+      height: 2rem;
+      & path {
+        fill: currentColor;
+      }
+    }
+
+    &:hover {
+      color: $primary;
+    }
+  }
+
   display: flex;
   flex-direction: column;
   gap: 0.42rem;
@@ -72,7 +95,6 @@ main {
     background-color: transparent;
     border-color: currentColor;
     &:hover {
-
       color: red;
     }
   }
