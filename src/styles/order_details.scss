@@ -1,7 +1,5 @@
 @import './global.scss';
 
-
-
 body {
   * {
     font-family: 'Jost';
@@ -12,11 +10,10 @@ body {
   align-items: center;
   justify-content: center !important;
   height: 100vh;
-
 }
 
 main {
-
+  display: flex;
   flex-direction: column;
   gap: 0.42rem;
   .id {
@@ -52,6 +49,31 @@ main {
         }
       }
     }
-  }
+    &-status {
+      padding: 0.42rem;
 
+      border: 1px solid $input-border-color;
+      &_current {
+        font-size: 1.2rem;
+
+        font-weight: 500;
+        text-transform: capitalize;
+      }
+      select {
+        margin-top: 0.42rem;
+        padding: 0.42rem;
+        width: 100%;
+        text-transform: capitalize;
+      }
+    }
+  }
+  .delete_button {
+    align-self: flex-end;
+    background-color: transparent;
+    border-color: currentColor;
+    &:hover {
+
+      color: red;
+    }
+  }
 }

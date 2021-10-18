@@ -14,7 +14,8 @@ use_check_for_auth();
   const [json, error] = await use_xml_http_request(`orders?id=${ID}`);
   if (!!error) return use_toast(error, 'error');
 
-  const { id, status, ...props } = JSON.parse(json);
+  const { id, _id, status, ...props } = JSON.parse(json);
+  _id;
 
   main_node.innerHTML = `<div class='id'>id:${id}</div>
       ${Object.entries(props).map_join(
@@ -34,10 +35,46 @@ use_check_for_auth();
         </div>
       `
       )}
-      <div class='current_status'>Status:${status}</div>
-      <select id='${id + 'status'}'>
+      <div class='row_of_props-status'>
+      <div class='row_of_props-status_current'>Status: ${status}</div>
+      <select >
         <option value='change_status'>Change status</option>
         ${get_order_statuses_arr().map_join((name) => ` <option value='${name}'>${name}</option>`)}     
       </select>
+      </div>
+      <button class='delete_button button--contained'>Delete</button>
       `;
+
+  const status_select_node = document.querySelector('select');
+  const status_current_node = document.querySelector('.row_of_props-status_current');
+  const delete_button_node = document.querySelector('.delete_button');
+
+  delete_button_node.addEventListener('click', async () => {
+    const [res, error] = await use_xml_http_request(`delete_order?id=${ID}`);
+
+    if (!!error) {
+      return use_toast(error, 'error');
+    }
+
+    use_toast(res, 'info');
+    return window.location.replace('/pages/admin.html');
+  });
+
+  status_select_node.addEventListener('change', async (e) => {
+    e.preventDefault();
+
+    let status = e.target.value;
+    const [res, error] = await use_xml_http_request(`orders?id=${ID}`, 'POST', JSON.stringify({ status }));
+
+    if (!!error) {
+      e.target.value = 'change_status';
+
+      return use_toast(error, 'error');
+    }
+    status_current_node.innerHTML = `Status: ${status}`;
+
+    e.target.value = 'change_status';
+
+    return use_toast(res, 'info');
+  });
 })();
