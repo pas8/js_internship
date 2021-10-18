@@ -14,6 +14,7 @@ import { use_to_generate_categories_content_html } from '@utils/use_to_generate_
 import deleteSvg from '@svgs/delete.svg';
 import closeSvg from '@svgs/close.svg';
 import editSvg from '@svgs/edit.svg';
+import saveSvg from '@svgs/save.svg';
 
 import { defineCustomElements as initSkeleton } from 'skeleton-webcomponent-loader/loader/index.js';
 
@@ -106,53 +107,100 @@ use_check_for_auth();
     });
   });
   const input_node = document.querySelector('.utils__search-input');
+
+  const use_to_genegate_search_item_html = ({ name, id, image, caption }) => {
+    return `
+      <div class='item' id='${id}'>
+        ${image ? `<img src=${image} ></img>` : ''}
+        <p> ${name} </p> 
+        <button class='item__edit-button' id='${caption + '||||' + id}'>
+          ${editSvg}
+        </button>
+        ${
+          caption.startsWith('C')
+            ? ''
+            : `<button class='item__delete-button'  id='${caption + '||||' + id}'>
+            ${deleteSvg}`
+        }
+        </button>
+      </div>`;
+  };
+
+  const set_up_search_items_util = () => {
+    const allDeleteButtonNodeArr = document.querySelectorAll('.item__delete-button');
+    const allEditButtonNodeArr = document.querySelectorAll('.item__edit-button');
+
+    [...allDeleteButtonNodeArr]?.forEach((el) => {
+      el?.addEventListener('click', async () => {
+        const [href, queryId] = el.id.split('||||');
+        const [res, err] = await use_xml_http_request(`delete_${href.toLowerCase()}?id=${queryId}`);
+
+        if (!!err) {
+          return use_toast(err, 'error');
+        }
+        el.parentElement.remove();
+
+        return use_toast(res, 'info');
+      });
+    });
+
+    allEditButtonNodeArr?.forEach((el) => {
+      el?.addEventListener('click', () => {
+        (el.id.startsWith('C') ? set_up_changing_category : handle_open_product_edit_dialog)(el?.id);
+      });
+    });
+  };
+
   set_up_search(
     [
       document.querySelector('.utils__search-result'),
       document.querySelector('.utils__search-svg-container'),
       input_node,
     ],
-    (arr, caption) =>
-      arr.map_join(
-        ({ name, id, image }) => `
-          <div class='item'>
-            ${image ? `<img src=${image} ></img>` : ''}
-            <p> ${name} </p> 
-            <button class='item__edit-button' id='${caption + '||||' + id}'>
-              ${editSvg}
-            </button>
-            <button class='item__delete-button'  id='${caption + '||||' + id}'>
-              ${deleteSvg}
-            </button>
-          </div>`
-      ),
-    () => {
-      const allDeleteButtonNodeArr = document.querySelectorAll('.item__delete-button');
-      const allEditButtonNodeArr = document.querySelectorAll('.item__edit-button');
+    (arr, caption) => arr.map_join((props) => use_to_genegate_search_item_html({ ...props, caption })),
+    set_up_search_items_util
+  );
 
-      [...allDeleteButtonNodeArr]?.forEach((el) => {
-        el?.addEventListener('click', async () => {
-          const [href, queryId] = el.id.split('||||');
-          const [res, err] = await use_xml_http_request(`delete_${href.toLowerCase()}?id=${queryId}`);
+  const set_up_changing_category = (str) => {
+    const [caption, id] = str.split('||||');
+    const node = document.getElementById(id);
+    const category_name = [...node.children][0].textContent;
+
+    node.innerHTML = `<input id='input_${id}' value='${category_name.trim()}'></input> <button id='save_button_${id}'>${saveSvg}</button> <button id='close_button_${id}'>${closeSvg}</button>`;
+
+    const handle_return_search_html = (name) => {
+      node.innerHTML = `
+      <p> ${name} </p> 
+        <button class='item__edit-button' id='${caption + '||||' + id}'>
+          ${editSvg}
+        </button>      
+      `;
+      set_up_search_items_util();
+    };
+
+    [...node.children].forEach((el) => {
+      el.id.startsWith('save') &&
+        el.addEventListener('click', async () => {
+          const name = node.children[0].value;
+
+          if (!name) {
+            return use_toast('Name is empty', 'error');
+          }
+
+          const [res, err] = await use_xml_http_request(`categories?id=${id}`, 'POST', JSON.stringify({ name }));
 
           if (!!err) {
             return use_toast(err, 'error');
           }
-          el.parentElement.remove();
 
-          return use_toast(res, 'info');
+          use_toast(res, 'info');
+          return handle_return_search_html(name);
         });
-      });
+      el.id.startsWith('close') && el.addEventListener('click', () => handle_return_search_html(category_name));
+    });
+  };
 
-      allEditButtonNodeArr?.forEach((el) => {
-        el?.addEventListener('click', () => {
-          handle_open_edit_dialog(el?.id);
-        });
-      });
-    }
-  );
-
-  const handle_open_edit_dialog = async (str) => {
+  const handle_open_product_edit_dialog = async (str) => {
     const CLASS = 'editing_dialog';
 
     const editingDialogNode = document.querySelector('.' + CLASS);
