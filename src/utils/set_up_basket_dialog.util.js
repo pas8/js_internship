@@ -43,7 +43,7 @@ export const set_up_basket_dialog = () => {
     basketDialogMainNode.innerHTML = arr?.map_join(
       ({ name, image, price, id }, idx) => `
         <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item' basket-product-id='${id}'>
-          <a href='/page/sproduct_details.html?${id}'>
+          <a href='/pages/product_details.html?${id}'>
             <img src='${image}' class='${BASKET_DIALOG_MAIN_CLASS}__product-item__preview-img'> </img>
           </a>
           <div class='${BASKET_DIALOG_MAIN_CLASS}__product-item-content'>

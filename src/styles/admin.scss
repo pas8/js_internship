@@ -255,11 +255,12 @@ main {
     padding: 0.42rem;
     background-color: rgb(245, 197, 197);
     &__title {
+      @include space-between_flex;
+
       p {
         font-size: 1.42rem;
       }
       gap: 1rem;
-      display: flex;
       align-items: center;
     }
     &__list {

@@ -5,10 +5,12 @@ import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
 import { set_up_search } from '@utils/set_up_search.util.js';
 import { use_check_for_auth } from '@utils/use_check_for_auth.util.js';
 import { use_toast } from '@utils/use_toast.util.js';
+import { get_order_statuses_arr } from '@utils/get_order_statuses_arr.util.js';
 import { to_capitalize } from '@utils/to_capitalize.util.js';
 import deleteSvg from '@svgs/delete.svg';
 import closeSvg from '@svgs/close.svg';
 import editSvg from '@svgs/edit.svg';
+
 import arrow_backSvg from '@svgs/arrow_back.svg';
 import { defineCustomElements as initSkeleton } from 'skeleton-webcomponent-loader/loader/index.js';
 
@@ -20,46 +22,30 @@ use_check_for_auth();
   const list_of_open_orders_node = document.querySelector('.list_of_open_orders');
 
   buttonOpenOrdersListMode.addEventListener('click', async () => {
-    const [arr, error] = await use_xml_http_request('open_orders');
+    const [json, error] = await use_xml_http_request('orders');
     if (!!error) return use_toast(error, 'error');
     list_of_open_orders_node.style.display = 'grid';
+
+    const statusesArr = get_order_statuses_arr();
+
+    const validatedOrdersIdWithSatusessObj = JSON.parse(json).reduce((acc, { status, id }) => {
+      return { ...acc, [status]: [...(acc[status] || []), id] };
+    }, {});
 
     list_of_open_orders_node.innerHTML = `
       <div class='list_of_open_orders-content'>
         <div class='list_of_open_orders-content__title'>
-          <p>${status} orders</p> <button class='close-button'>${closeSvg} </button>
+          <p>${status} Orders list </p> <button class='close-button'>${closeSvg} </button>
         </div>
       <div class='list_of_open_orders-content__list'>
-        ${JSON.parse(arr).map_join(
-          ({ _id, status, ...props }) =>
-            `<div class='id'>id:${_id}</div>
-            ${Object.entries(props).map_join(
-              ([caption, value]) => `
-              <div class='row_of_props'>
-                <p class='row_of_props-caption'>${caption}</p>
-                <div class='row_of_props-container'>
-                  ${
-                    caption === 'products'
-                      ? value
-                      : Object.entries(value).map_join(
-                          ([key, val]) =>
-                            `<div class='item'><p class='item-key'>${key}:</p><p class='item-value'>${val}</p>  </div>`
-                        )
-                  }
-                </div>
-              </div>
-            `
-            )}
-            <div class='current_status'>Status:${status}</div>
-            <select id='${_id + 'status'}'>
-              <option value='change_status'>Change status</option>
-              <option value='open'>Open</option>
-              <option value='shipping'>Shipping</option>
-              <option value='arrived'>Arrived</option>
-              <option value='closed'>Closed</option>
-            </select>
-            `
-        )}
+        ${statusesArr.map_join(
+          (status) =>
+            ` <div class='column' id='column_${status}'>
+                <div  class='column_status' > ${status} </div>
+                ${validatedOrdersIdWithSatusessObj[status].map_join(
+                  (id) => `<div  draggable="true" id='item_${id}'>${id}</div>`
+                )}`
+        )} 
       </div>
       </div> 
     `;

@@ -37,7 +37,7 @@ const img = {
   },
 };
 
-const pages = ['index', 'about', 'product_details', 'checkout', 'shop', 'wishlist', 'auth', 'admin'];
+const pages = ['index', 'about', 'product_details', 'checkout', 'shop', 'wishlist', 'auth', 'admin','order_details'];
 
 module.exports = {
   mode: 'development',
