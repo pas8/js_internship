@@ -1,6 +1,7 @@
 import 'regenerator-runtime/runtime.js';
 import '@prototypes/map_join.array.js';
 import '@styles/admin.scss';
+
 import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
 import { set_up_search } from '@utils/set_up_search.util.js';
 import { use_check_for_auth } from '@utils/use_check_for_auth.util.js';
@@ -411,4 +412,49 @@ use_check_for_auth();
   };
 
   utils_add_product_button_node.addEventListener('click', handle_open_new_product_dialog);
+
+  const utils_add_category_button_node = document.querySelector('.utils__add-category-button');
+  const new_category_dialog_node = document.querySelector('.new_category_dialog');
+
+  utils_add_category_button_node.addEventListener('click', () => {
+    new_category_dialog_node.style.display = 'grid';
+
+    new_category_dialog_node.innerHTML = `
+        <div class="new_category_dialog__content">
+          <div class="new_category_dialog__content-title">
+            <p>Creating new category</p>       <button class='close-button'>${closeSvg}</button>
+          </div>
+        <div class="new_category_dialog__content-utils">
+
+          <input class='input input_name' placeholder='Name' > 
+          <button class="button--contained new_category_dialog__content-utils__save-button">
+            Save changes
+          </button>
+
+        </div>
+        </div>
+        `;
+
+    new_category_dialog_node
+      .querySelector('.new_category_dialog__content-utils__save-button')
+      .addEventListener('click', async () => {
+        const name = new_category_dialog_node.querySelector('.input_name').value;
+        if (!name) {
+          return use_toast('Name is empty', 'error');
+        }
+        const [res, err] = await use_xml_http_request(`new_category`, 'POST', JSON.stringify({ name }));
+
+        if (!!err) {
+          return use_toast(err, 'error');
+        }
+
+        new_category_dialog_node.style.display = 'none';
+
+        return use_toast(res, 'info');
+      });
+
+    new_category_dialog_node.querySelector('.close-button').addEventListener('click', () => {
+      new_category_dialog_node.style.display = 'none';
+    });
+  });
 })();

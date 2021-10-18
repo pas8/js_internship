@@ -116,6 +116,7 @@ main {
 }
 
 .editing_dialog,
+.new_category_dialog,
 .new_product_dialog {
   @include dialog;
   display: none;
