@@ -116,6 +116,7 @@ main {
 }
 
 .editing_dialog,
+.list_of_parent_categories,
 .new_category_dialog,
 .new_product_dialog {
   @include dialog;
@@ -397,6 +398,47 @@ main {
 
     &-gallery {
       gap: 0.42rem;
+    }
+  }
+}
+
+.list_of_parent_categories__content-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+  & > div {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    border: 1px solid;
+    border-radius: 4px;
+    padding: 0.42rem;
+    & > svg {
+      cursor: pointer;
+
+      width: 2rem;
+      &:hover path {
+        fill: $primary;
+      }
+    }
+    & > div {
+      flex-grow: 1;
+      display: flex;
+      & input {
+        background-color: transparent;
+        padding: 0.42rem;
+        border: none;
+      }
+      flex-direction: column;
+    }
+
+    & > button {
+      & svg {
+        width: 1.42rem;
+      }
+      &:hover path {
+        fill: $primary;
+      }
     }
   }
 }
