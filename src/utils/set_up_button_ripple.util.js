@@ -8,7 +8,8 @@ export const set_up_button_ripple = (button_node, fn) => {
   button_node.style.overflow = 'hidden';
   button_node.style.position = 'relative';
 
-  button_node.addEventListener('click', ({ clientX, currentTarget, clientY }) => {
+  button_node.addEventListener('click', (e) => {
+    const { clientX, currentTarget, clientY } = e;
     const x = clientX - currentTarget.getBoundingClientRect().left;
     const y = clientY - currentTarget.getBoundingClientRect().top;
 
@@ -20,6 +21,6 @@ export const set_up_button_ripple = (button_node, fn) => {
       ripple_node.style.display = 'none';
     }, 800);
 
-    fn && fn();
+    fn && fn({ ...e, clientX, currentTarget, clientY });
   });
 };

@@ -262,47 +262,64 @@ header {
         color: $primary;
       }
     }
-    &__main,
     nb-skeleton {
       display: flex;
       flex-direction: column;
     }
     &__main {
-      border: 1px solid $text-thirdly;
       border-radius: 8px;
+      display: flex;
       overflow: hidden;
-      &__parent_button {
-        width: 100%;
-        padding: 0.6rem 2.8rem 0.6rem 1rem;
-        align-items: center;
-        display: flex;
 
-        &:not(:last-child) {
-          border-bottom: 1px solid $light-grey;
-        }
-        gap: 0.42rem;
-        & svg {
-          width: 2rem;
-          path {
-            fill: currentColor;
+      &__children {
+        flex-direction: column;
+        display: flex;
+        justify-content: center;
+        &_button {
+          padding: 0.42rem 0 0.42rem 1rem;
+          border-left: 1px solid $text-secondary;
+          font-family: 'Jost';
+          font-size: 1rem;
+          font-weight: 500;
+          &:hover {
+            text-decoration: underline;
           }
         }
-        font-family: 'Jost';
-        font-size: 1.24rem;
-        font-weight: 500;
-        position: relative;
-        &::after {
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          right: 16px;
-          display: grid;
-          place-items: center;
-          content: '>';
-        }
-        &:hover {
-          background-color: $text-secondary;
-          color: rgb(200, 200, 200);
+      }
+
+      &__parent {
+        &_button {
+          width: 100%;
+          padding: 0.6rem 2.8rem 0.6rem 1rem;
+          align-items: center;
+          display: flex;
+          border-radius: 8px;
+
+          gap: 0.42rem;
+          & svg {
+            width: 2rem;
+            path {
+              fill: currentColor;
+            }
+          }
+          font-family: 'Jost';
+          font-size: 1.24rem;
+          font-weight: 500;
+
+          position: relative;
+          &::after {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 16px;
+            display: grid;
+            place-items: center;
+            content: '>';
+          }
+          &:hover {
+            background-color: $text-secondary;
+            color: rgb(200, 200, 200);
+          }
         }
       }
     }
