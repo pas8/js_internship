@@ -8,6 +8,9 @@ import { use_check_for_auth } from '@utils/use_check_for_auth.util.js';
 import { use_toast } from '@utils/use_toast.util.js';
 import { get_order_statuses_arr } from '@utils/get_order_statuses_arr.util.js';
 import { to_capitalize } from '@utils/to_capitalize.util.js';
+import { convert_arr_values_to_obj } from '@utils/convert_arr_values_to_obj.util.js';
+import { set_up_addition_propertyies_utils } from '@utils/set_up_addition_propertyies_utils.util.js';
+
 import { use_validation_of_all_field } from '@utils/use_validation_of_all_field.util.js';
 import { set_up_category_menu } from '@utils/set_up_category_menu.util.js';
 import { use_to_generate_categories_content_html } from '@utils/use_to_generate_categories_content_html.util.js';
@@ -218,8 +221,10 @@ use_check_for_auth();
     if (!!err) {
       return use_toast(err, 'error');
     }
-    let { id, imgGallery, image, categories, _id, ...props } = JSON.parse(res);
+    let { id, imgGallery, image, categories, addition_propertyies, rating, _id, ...props } = JSON.parse(res);
     _id;
+    rating;
+
     editingDialogNode.style.display = 'grid';
 
     const use_to_generate_gallry_content_html = () =>
@@ -239,7 +244,9 @@ use_check_for_auth();
           <label>${to_capitalize(Object.keys(props).join(', '))}</label>
             ${Object.entries(props).map_join(
               ([name, value]) => `
-              <input class='input' placeholder='${to_capitalize(name)}' name='${name}' value='${value}'>
+              <input class='input' placeholder='${to_capitalize(name)}' name='${name}' value='${value}' type='${
+                name.toLowerCase() === 'color' ? 'color' : 'text'
+              }'>
 
               </input>
             `
@@ -253,6 +260,23 @@ use_check_for_auth();
               ${await use_to_generate_categories_content_html(categories)}
             </div>
           </div>
+          <div class="editing_dialog__content-addition_propertyies">
+            <label>Addition propertyies</label>
+            ${Object.entries(addition_propertyies).map_join(
+              ([key, value]) => `
+              <div class="editing_dialog__content-addition_propertyies__field">
+                <input class="editing_dialog__content-addition_propertyies__field_key_input input" placeholder='Key'  value='${key}'></input>
+                <input class="editing_dialog__content-addition_propertyies__field_value_input input" placeholder='Value'  value='${value}'></input>
+                <button class="editing_dialog__content-addition_propertyies__remove_filed_button">
+                  ${deleteSvg}
+                </button>
+              </div>
+            `
+            )}
+          
+            <button class="editing_dialog__content-addition_propertyies__new_field_button">+ New field</button>
+          </div>
+          
           <button class='button--contained editing_dialog__content-utils__save-button'>
             Save changes
           </button>
@@ -282,6 +306,7 @@ use_check_for_auth();
       });
     };
     set_up_img_gallry(editingDialogContentGalleryImgItemNodeArr);
+    set_up_addition_propertyies_utils('editing_dialog__content-addition_propertyies');
 
     const saveButtonNode = editingDialogNode.querySelector('.editing_dialog__content-utils__save-button');
     const closeButtonNode = editingDialogNode.querySelector('.close-button');
@@ -297,10 +322,22 @@ use_check_for_auth();
 
     saveButtonNode.addEventListener('click', async (e) => {
       e.preventDefault();
+      const addition_propertyies_node = editingDialogNode.querySelector(
+        '.editing_dialog__content-addition_propertyies'
+      );
+      const addition_propertyies_inputs_node_arr = [...addition_propertyies_node.querySelectorAll('input')];
+
+      if (addition_propertyies_inputs_node_arr.some((el) => !el.value)) {
+        return use_toast('Some addition properties field is empty ', 'error');
+      }
+
+      const addition_propertyies = convert_arr_values_to_obj(addition_propertyies_inputs_node_arr);
 
       const data = {
         ...Object.fromEntries([...new FormData(editingDialogNode.querySelector('form'))]),
-        categories,
+        categories: [...editingDialogNode.querySelectorAll('.category-button')]
+          .map((el) => el.getAttribute('category-id'))
+          .filter((el) => !!el),
         imgGallery,
         image,
         id,
@@ -311,7 +348,11 @@ use_check_for_auth();
         return use_toast(empty_field + ' is empty ', 'error');
       }
 
-      const [res, err] = await use_xml_http_request(`products?id=${id}`, 'POST', JSON.stringify(data));
+      const [res, err] = await use_xml_http_request(
+        `products?id=${id}`,
+        'POST',
+        JSON.stringify({ ...data, addition_propertyies })
+      );
 
       if (!!err) {
         return use_toast(err, 'error');
@@ -339,11 +380,11 @@ use_check_for_auth();
         </div>
         <div class="new_product_dialog__content-utils">
           <form>
-          <label>Price, rating, name, size</label>
+          <label>Price,  name, size, color</label>
               <input class="input" placeholder="Price" name="price" >
-              <input class="input" placeholder="Rating" name="rating" >
               <input class="input" placeholder="Name" name="name" >
               <input class="input" placeholder="Size" name="size">
+              <input class="input"  name="color" type="color">
           <div class="new_product_dialog__content-utils__categories">
             <label>
               Categories
@@ -353,6 +394,11 @@ use_check_for_auth();
                 + Add category
               </button>
             </div>
+          </div>
+          <div class="new_product_dialog__content-addition_propertyies">
+            <label>Addition propertyies</label>
+            <button class="new_product_dialog__content-addition_propertyies__new_field_button">+ New field</button>
+  
           </div>
           <button class="button--contained new_product_dialog__content-utils__save-button">
             Save changes
@@ -364,6 +410,7 @@ use_check_for_auth();
     const categoriesContentNode = document.querySelector('.new_product_dialog__content-utils__categories__content');
     const categoryMenuNode = document.querySelector('.categories_menu');
 
+    set_up_addition_propertyies_utils('new_product_dialog__content-addition_propertyies');
     set_up_category_menu(['add-category-button', [], categoryMenuNode, categoriesContentNode]);
 
     const saveButtonNode = new_product_dialog_node.querySelector('.new_product_dialog__content-utils__save-button');
@@ -375,6 +422,16 @@ use_check_for_auth();
 
     saveButtonNode.addEventListener('click', async (e) => {
       e.preventDefault();
+      const addition_propertyies_node = new_product_dialog_node.querySelector(
+        '.new_product_dialog__content-addition_propertyies'
+      );
+      const addition_propertyies_inputs_node_arr = [...addition_propertyies_node.querySelectorAll('input')];
+
+      if (addition_propertyies_inputs_node_arr.some((el) => !el.value)) {
+        return use_toast('Some addition properties field is empty ', 'error');
+      }
+
+      const addition_propertyies = convert_arr_values_to_obj(addition_propertyies_inputs_node_arr);
 
       const categories = [...new_product_dialog_node.querySelectorAll('.category-button')]
         .map((el) => el.getAttribute('category-id'))
@@ -390,6 +447,7 @@ use_check_for_auth();
       const data = {
         ...Object.fromEntries([...new FormData(new_product_dialog_node.querySelector('form'))]),
         categories,
+
         imgGallery,
         image,
       };
@@ -400,7 +458,11 @@ use_check_for_auth();
         return use_toast(empty_field + ' is empty ', 'error');
       }
 
-      const [res, err] = await use_xml_http_request(`new_product`, 'POST', JSON.stringify(data));
+      const [res, err] = await use_xml_http_request(
+        `new_product`,
+        'POST',
+        JSON.stringify({ ...data, addition_propertyies })
+      );
 
       if (!!err) {
         return use_toast(err, 'error');

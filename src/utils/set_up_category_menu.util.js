@@ -9,7 +9,7 @@ export const set_up_category_menu = ([className, categories, categoryMenuNode, c
   node.addEventListener('click', async (e) => {
     e.preventDefault();
 
-    const [res, error] = await use_xml_http_request('categories');
+    const [res, error] = await use_xml_http_request('all_children_categories');
     if (!!error) {
       return use_toast(error, 'error');
     }
@@ -53,7 +53,9 @@ export const set_up_category_menu = ([className, categories, categoryMenuNode, c
           return selectedCategories.push(id);
         }
         el.classList.remove('category_menu-item-button--selected');
-        selectedCategories = selectedCategories.filter((__) => __ != id);
+        selectedCategories = selectedCategories.filter((__) => {
+          return __ != id;
+        });
       });
     });
 
