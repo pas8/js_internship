@@ -12,12 +12,14 @@ import { set_up_basket_dialog } from '@utils/set_up_basket_dialog.util.js';
 import { set_up_active_header_link } from '@utils/set_up_active_header_link.util.js';
 import { set_up_header_burger } from '@utils/set_up_header_burger.util.js';
 import { set_up_wishlist } from '@utils/set_up_wishlist.util.js';
+import { set_up_catalog_dialog } from '@utils/set_up_catalog_dialog.util.js';
 import { defineCustomElements as initSkeleton } from 'skeleton-webcomponent-loader/loader/index.js';
 
 initSkeleton();
 set_up_basket_dialog();
 set_up_search_dialog();
 set_up_compare_dialog();
+set_up_catalog_dialog();
 set_up_active_header_link();
 set_up_wishlist()
 set_up_header_burger();

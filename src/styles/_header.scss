@@ -3,7 +3,6 @@
 header {
   z-index: 100;
 
-
   .menu-button {
     background-color: $header-utils-bgcolor;
     position: relative;
@@ -117,26 +116,56 @@ header {
       }
       &__logo {
         @include centered_flex;
-
-        & svg {
-          width: 10rem;
-          & path {
-            fill: $text-secondary;
-          }
-        }
+        font-size: 2.42rem;
+        font-family: 'Lobster Two';
       }
       &__utils {
         display: flex;
         align-items: center;
         gap: 1rem;
-        &-hotline {
+        &__catalog-button {
+          font-family: 'Jost';
           display: flex;
+          font-weight: 500;
+
+          font-size: 1.24rem;
           gap: 0.42rem;
-          & p {
-            font-family: 'Jost';
+          color: $text-thirdly;
+          border: 1px solid currentColor;
+          border-radius: 8px;
+          padding: 0.42rem 0.6rem;
+          transition: cubic-bezier(0.6, 0.04, 0.98, 0.335) 0.16s all;
+          & > svg {
+            width: 1.8rem;
+            path {
+              fill: currentColor;
+            }
           }
-          & .phone-number {
-            font-weight: 600;
+          &:hover {
+            color: $primary;
+          }
+
+          & .ripple {
+            background: $primary;
+            opacity: 0.42;
+            position: absolute;
+            display: none;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: animate 0.8s linear infinite;
+          }
+          overflow: hidden;
+          position: relative;
+          @keyframes animate {
+            0% {
+              width: 0px;
+              height: 0px;
+            }
+            100% {
+              width: 420px;
+              height: 420px;
+              opacity: 0;
+            }
           }
         }
         &-buttons-container {
@@ -220,5 +249,20 @@ header {
       position: fixed;
     }
     position: fixed;
+  }
+}
+
+.catalog_dialog {
+  @include dialog;
+  display: none;
+
+
+  &_content {
+
+&__title {
+
+  
+}
+
   }
 }
