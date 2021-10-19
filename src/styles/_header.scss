@@ -147,25 +147,6 @@ header {
 
           & .ripple {
             background: $primary;
-            opacity: 0.42;
-            position: absolute;
-            display: none;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            animation: animate 0.8s linear infinite;
-          }
-          overflow: hidden;
-          position: relative;
-          @keyframes animate {
-            0% {
-              width: 0px;
-              height: 0px;
-            }
-            100% {
-              width: 420px;
-              height: 420px;
-              opacity: 0;
-            }
           }
         }
         &-buttons-container {
@@ -256,13 +237,74 @@ header {
   @include dialog;
   display: none;
 
-
   &_content {
+    padding: 0.8rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    background-color: rgb(200, 200, 200);
+    &__title {
+      @include space-between_flex;
+      p {
+        font-size: 1.42rem;
+        font-weight: 500;
+        font-family: 'Jost';
+      }
+    }
+    &__close_button {
+      color: $text-secondary;
+      svg {
+        width: 2rem;
+        fill: currentColor;
+      }
+      &:hover {
+        color: $primary;
+      }
+    }
+    &__main,
+    nb-skeleton {
+      display: flex;
+      flex-direction: column;
+    }
+    &__main {
+      border: 1px solid $text-thirdly;
+      border-radius: 8px;
+      overflow: hidden;
+      &__parent_button {
+        width: 100%;
+        padding: 0.6rem 2.8rem 0.6rem 1rem;
+        align-items: center;
+        display: flex;
 
-&__title {
-
-  
-}
-
+        &:not(:last-child) {
+          border-bottom: 1px solid $light-grey;
+        }
+        gap: 0.42rem;
+        & svg {
+          width: 2rem;
+          path {
+            fill: currentColor;
+          }
+        }
+        font-family: 'Jost';
+        font-size: 1.24rem;
+        font-weight: 500;
+        position: relative;
+        &::after {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          right: 16px;
+          display: grid;
+          place-items: center;
+          content: '>';
+        }
+        &:hover {
+          background-color: $text-secondary;
+          color: rgb(200, 200, 200);
+        }
+      }
+    }
   }
 }
