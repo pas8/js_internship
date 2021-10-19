@@ -16,10 +16,14 @@ import { set_shop_pagination_propertyies } from '@utils/set_shop_pagination_prop
 window.localStorage.setItem('productsViewVariant', 'grid');
 
 (async () => {
-  const [json, error] = await use_xml_http_request(`products`);
+  const search_str = window.location.search;
+  const URL = search_str.startsWith('?category=') ? `products_of_${search_str}` : 'products';
+
+  const [json, error] = await use_xml_http_request(URL);
   if (error) {
     return console.log(error);
   }
+
   const allProductsArr = JSON.parse(json);
 
   set_shop_propertyies(allProductsArr);
