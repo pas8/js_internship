@@ -16,7 +16,7 @@ export const set_up_search = (
         searchSvgContainerNode.innerHTML = searchSvg;
         if (!this.value) return (searchResultContainerNode.style.display = 'none');
         const [res] = await use_xml_http_request(`search?${this.value}`);
-        // console.log(JSON.parse(res));
+
         const resultsArr = JSON.parse(res).map_join(({ caption, arr }) =>
           !arr.length
             ? ''
@@ -42,7 +42,7 @@ export const set_up_search = (
         searchResultContainerNode.style.display = 'flex';
 
         searchResultContainerNode.innerHTML = resultsArr;
-        addition_func();
+        addition_func &&   addition_func();
 
       },
       200,

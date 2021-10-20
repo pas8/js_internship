@@ -11,6 +11,22 @@ body {
   justify-content: center !important;
   height: 100vh;
 }
+
+.close-button {
+  padding: 0.42rem;
+  border-radius: 50%;
+  transition: cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.42s all;
+  height: min-content;
+  svg {
+    width: 1.42rem;
+  }
+  border: 1px solid transparent;
+
+  &:hover {
+    border-color: $text-secondary;
+  }
+}
+
 main {
   & .utils {
     display: flex;
@@ -203,20 +219,7 @@ main {
     align-items: center;
     padding: 0.42rem;
     gap: 0.42rem;
-    &__close-button {
-      padding: 0.42rem;
-      border-radius: 50%;
-      transition: cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.42s all;
-      height: min-content;
-      svg {
-        width: 1.42rem;
-      }
-      border: 1px solid transparent;
 
-      &:hover {
-        border-color: $text-secondary;
-      }
-    }
     &__save-button {
       background-color: transparent !important;
 
@@ -242,5 +245,27 @@ main {
   color: $primary !important;
   &:hover {
     color: red !important;
+  }
+}
+
+
+.list_of_open_orders {
+  @include dialog;
+  display: none;
+  &-content {
+    padding: 0.42rem;
+    background-color: rgb(245, 197, 197);
+    &__title {
+      p {
+        font-size: 1.42rem;
+      }
+      gap: 1rem;
+      display: flex;
+      align-items: center;
+    }
+    &__list {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }

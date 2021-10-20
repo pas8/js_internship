@@ -1,8 +1,8 @@
 import '@styles/payment_dialog.scss';
 import IMask from 'imask';
 import { use_toast } from '@utils/use_toast.util.js';
-
-
+import { get_basket } from '@utils/get_basket.util.js';
+import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
 
 const paymentCardNumberInputNode = document.querySelector('.payment_dialog-content__payment-methods__card-number');
 const paymentCardCVCInputNode = document.querySelector('.payment_dialog-content__payment-methods__card-cvc');
@@ -20,8 +20,7 @@ const date = IMask(paymentCardDateInputNode, { mask: '00 / 00' });
 
 const confirmOrderButton = document.querySelector('.payment_dialog-content__payment-methods__card-confirm');
 
-confirmOrderButton.addEventListener('click', () => {
-
+confirmOrderButton.addEventListener('click', async () => {
   if (cardNumber.value.length < 16) {
     return use_toast('Card value  is incorrect', 'error');
   }
@@ -35,9 +34,25 @@ confirmOrderButton.addEventListener('click', () => {
   if (cvc.value.length < 3) {
     return use_toast('CVC value   is incorrect', 'error');
   }
-  return use_toast(`Card data is correct, redirecting `, 'info');
-});
 
+  const contactData = JSON.parse(window.localStorage.getItem('contactData'));
+  const paymentData = { date: date.value, cvc: cvc.value, card_number: cardNumber.value, status: 'open' };
+  const [products] = get_basket();
+
+  const [res, error] = await use_xml_http_request(
+    'new_order',
+    'POST',
+    JSON.stringify({ contactData, paymentData, products })
+  );
+  if (!!error) return use_toast(error, 'error');
+
+  window.localStorage.removeItem('basket');
+  const basketNode = document.querySelector('.button-basket');
+  basketNode.classList.remove('with-label');
+
+  use_toast(res, 'info');
+  return window.location.replace('/pages/shop.html');
+});
 
 closeButtonNode.addEventListener('click', () => {
   document.querySelector('.payment_dialog').classList.add('payment_dialog--closed');

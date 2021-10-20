@@ -46,11 +46,6 @@
         @media screen and (max-width: $sm) {
           @include centered_flex;
         }
-        // flex-grow: 1;
-      }
-      &-properties {
-        // display: flex;
-        // flex-grow: 1;
       }
     }
     &-content {

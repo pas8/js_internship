@@ -17,7 +17,6 @@ window.localStorage.setItem('productsViewVariant', 'grid');
 const get_all_products = async () => {
   try {
     const data = await fetch(`${API_URL}/products`);
-    // const { data: allProductsArr } = await data.json();
     const allProductsArr = await data.json();
 
     set_shop_propertyies(allProductsArr);
@@ -59,8 +58,3 @@ productsViewButttonNodesArr.forEach((__, idx) => {
   });
 });
 
-// (async () => {
-//   const data = await fetch(`${API_URL}/products?model=MN2400B4Z`);
-//   const allProductsArr = await data.json();
-//   console.log(allProductsArr);
-// })();

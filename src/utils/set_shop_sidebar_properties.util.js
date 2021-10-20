@@ -107,7 +107,7 @@ export const set_shop_sidebar_properties = async (arr) => {
 
       const categoryId = el.getAttribute('category-id');
       const allProductsArr =
-        categoryId == 'all' ? arr : arr.filter(({ categories }) => categories.some(({ id }) => id == categoryId));
+        categoryId == 'all' ? arr : arr.filter(({ categories }) => categories.some((id ) => id == categoryId));
 
       set_shop_propertyies(allProductsArr, undefined, true);
       set_shop_pagination_propertyies(allProductsArr);

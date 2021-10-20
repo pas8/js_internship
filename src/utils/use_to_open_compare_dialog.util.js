@@ -1,5 +1,4 @@
 import { get_compare_ids } from '@utils/get_compare_ids.util.js';
-// import { to_capitalize } from '@utils/to_capitalize.util.js';
 import { set_up_compare_categories } from '@utils/set_up_compare_categories.util.js';
 import { use_product_promise } from '@utils/use_product_promise.util.js';
 
