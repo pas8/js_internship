@@ -28,11 +28,13 @@ export const set_up_new_product_dialog = () => {
         </div>
         <div class="new_product_dialog__content-utils">
           <form>
-          <label>Price,  name, size, color</label>
+          <label>Price,  name, size, color, description</label>
               <input class="input" placeholder="Price" name="price" >
               <input class="input" placeholder="Name" name="name" >
               <input class="input" placeholder="Size" name="size">
               <input class="input"  name="color" type="color">
+              <textarea   name='description' class='input' rows='4' placeholder='Description'>  </textarea>
+
           <div class="new_product_dialog__content-utils__categories">
             <label>
               Categories
@@ -49,7 +51,7 @@ export const set_up_new_product_dialog = () => {
   
           </div>
           <button class="button--contained new_product_dialog__content-utils__save-button">
-            Save changes
+          + Add new product
           </button>
         </form></div>
       </div>

@@ -34,7 +34,7 @@ export const set_up_new_category_dialog = () => {
           <label for='isParent'>Is parent?</label> 
           </div>
           <button class="button--contained new_category_dialog__content-utils__save-button">
-+ Add
+            + Add
           </button>
 
         </div>

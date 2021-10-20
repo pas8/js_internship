@@ -3,15 +3,6 @@ import { use_toast } from '@utils/use_toast.util.js';
 import closeSvg from '@svgs/close.svg';
 import saveSvg from '@svgs/save.svg';
 
-
-
-
-
-
-
-
-
-
 export const set_up_list_of_parent_categories = () => {
   const button_to_open_list_of_parent_category_node = document.querySelector(
     '.utils__open_list_of_parent_category_button'

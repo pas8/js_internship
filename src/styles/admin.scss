@@ -97,7 +97,7 @@ main {
                 fill: red;
               }
             }
-            & .item__edit-button:hover {
+            & .item__edit-button:hover, .item__copy-button:hover  {
               path {
                 fill: $primary;
               }

@@ -7,6 +7,7 @@ import { set_up_addition_propertyies_utils } from '@utils/set_up_addition_proper
 import { use_validation_of_all_field } from '@utils/use_validation_of_all_field.util.js';
 import { set_up_category_menu } from '@utils/set_up_category_menu.util.js';
 import { use_to_generate_categories_content_html } from '@utils/use_to_generate_categories_content_html.util.js';
+import { use_to_genegate_search_item_html } from '@utils/use_to_genegate_search_item_html.util.js';
 
 import deleteSvg from '@svgs/delete.svg';
 import editSvg from '@svgs/edit.svg';
@@ -17,6 +18,41 @@ import saveSvg from '@svgs/save.svg';
 export const set_up_search_items = () => {
   const allDeleteButtonNodeArr = document.querySelectorAll('.item__delete-button');
   const allEditButtonNodeArr = document.querySelectorAll('.item__edit-button');
+  const all_copy_button_node_arr = document.querySelectorAll('.item__copy-button');
+
+  [...all_copy_button_node_arr]?.forEach((el) => {
+    el.addEventListener('click', async () => {
+      const [href, queryId] = el.getAttribute('_id').split('||||');
+
+      const [copyied_product_json, err] = await use_xml_http_request(`${href.toLowerCase()}?id=${queryId}`);
+      const validated_json = copyied_product_json
+        .split('",')
+        .filter((str) => !str.includes(queryId))
+        .join('",');
+
+      const new_product_json = !validated_json.startsWith('{')
+        ? '{' + validated_json
+        : validated_json.endsWith('}')
+        ? validated_json
+        : validated_json + '"}';
+
+
+      const [new_json, error] = await use_xml_http_request(`new_product`, 'POST', new_product_json);
+      if (!!err || !!error) {
+        return use_toast(error, 'error');
+      }
+      const [id, message] = JSON.parse(new_json);
+
+
+      el.parentElement.insertAdjacentHTML(
+        'afterend',
+        use_to_genegate_search_item_html({ ...JSON.parse(new_product_json), caption: href, id })
+      );
+      set_up_search_items();
+
+      return use_toast(message, 'info');
+    });
+  });
 
   [...allDeleteButtonNodeArr]?.forEach((el) => {
     el?.addEventListener('click', async () => {
@@ -49,7 +85,17 @@ export const set_up_search_items = () => {
     if (!!err) {
       return use_toast(err, 'error');
     }
-    let { id, imgGallery, image, categories, addition_propertyies, rating, _id, ...props } = JSON.parse(res);
+    let {
+      id,
+      imgGallery,
+      image,
+      categories,
+      addition_propertyies,
+      description,
+      rating,
+      _id,
+      ...props
+    } = JSON.parse(res);
     _id;
     rating;
 
@@ -69,7 +115,7 @@ export const set_up_search_items = () => {
         </div>
         <div class='editing_dialog__content-utils'>
           <form>
-          <label>${to_capitalize(Object.keys(props).join(', '))}</label>
+          <label>${to_capitalize(Object.keys(props).join(', '))}, description</label>
             ${Object.entries(props).map_join(
               ([name, value]) => `
               <input class='input' placeholder='${to_capitalize(name)}' name='${name}' value='${value}' type='${
@@ -79,6 +125,7 @@ export const set_up_search_items = () => {
               </input>
             `
             )}
+            <textarea   name='description'  class='input' rows='4' placeholder='Description'>${description}  </textarea>
           <form>
           <div class='editing_dialog__content-utils__categories'>
             <label>
@@ -160,7 +207,6 @@ export const set_up_search_items = () => {
       }
 
       const addition_propertyies = convert_arr_values_to_obj(addition_propertyies_inputs_node_arr);
-
       const data = {
         ...Object.fromEntries([...new FormData(editingDialogNode.querySelector('form'))]),
         categories: [...editingDialogNode.querySelectorAll('.category-button')]
