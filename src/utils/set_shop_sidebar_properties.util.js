@@ -141,7 +141,6 @@ export const set_shop_sidebar_properties = async (arr, [is_search_category, sear
     window.filteringProps.price = [minValue, maxValue];
     const filter_proprtyies_arr = ['color', 'size'];
     const addition_propertyies_keys_arr = Object.keys(window.filteringProps.addition_propertyies);
-    console.log(window.filteringProps);
 
     const filteredArr = arr.filter(({ price, ...props }) => {
       if (
@@ -183,12 +182,6 @@ export const set_shop_sidebar_properties = async (arr, [is_search_category, sear
       const categoryId = el.getAttribute('category-id');
 
       window.location.replace(`/pages/shop.html${categoryId !='all' ? `?category=${categoryId}` : ''}`);
-      // const allProductsArr =
-      //   x ? arr : arr.filter(({ categories }) => categories.some((id) => id == categoryId));
-
-      // set_shop_propertyies(allProductsArr, undefined, true);
-      // set_shop_pagination_propertyies(allProductsArr);
-      // window.location.replace(el.textContent.toLowerCase());
     });
   });
 };
