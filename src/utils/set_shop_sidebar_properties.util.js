@@ -2,7 +2,7 @@ import { set_up_on_click_of_all_childrens } from '@utils/set_up_on_click_of_all_
 import { use_validation_of_siderbar_utils } from '@utils/use_validation_of_siderbar_utils.util.js';
 import { set_shop_propertyies } from '@utils/set_shop_propertyies.util.js';
 import { conver_rgb_to_hex } from '@utils/conver_rgb_to_hex.util.js';
-
+import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
 import { set_shop_pagination_propertyies } from '@utils/set_shop_pagination_propertyies.util.js';
 
 import filterSvg from '@svgs/filter.svg';
@@ -17,7 +17,7 @@ window.filteringProps = {
 
 window.isShopSidebarDialogOpen = false;
 
-export const set_shop_sidebar_properties = async (arr) => {
+export const set_shop_sidebar_properties = async (arr, [is_search_category, search_str]) => {
   const sidebarProductCategoriesNode = document.querySelector('.sidebar-content-of-product-categories');
   const sidebaFilterByPriceSliderNode = document.querySelector('.sidebar-content-of-filter-by-price-double-slider');
   const sidebaFilterByColorNode = document.querySelector('.sidebar-content-of-filter-by-color');
@@ -48,8 +48,8 @@ export const set_shop_sidebar_properties = async (arr) => {
     sidebarDialogButtonNode.innerHTML = categorySvg;
   });
 
-  const propertyies = await use_validation_of_siderbar_utils(arr);
-  const [categoriesArr, colorsArr, sizeArr, max, min, addition_propertyies] = propertyies;
+  const propertyies = await use_validation_of_siderbar_utils(arr, is_search_category);
+  let [categoriesArr, colorsArr, sizeArr, max, min, addition_propertyies] = propertyies;
 
   filter_by_addition_propertyies_node.innerHTML = Object.entries(addition_propertyies).map_join(
     ([key, value]) =>
@@ -88,11 +88,18 @@ export const set_shop_sidebar_properties = async (arr) => {
     );
   });
 
-  sidebarProductCategoriesNode.innerHTML = `
-  ${[{ id: 'all', name: 'All products' }, ...categoriesArr].map_join(
+  if (!!is_search_category) {
+    const [json, error] = await use_xml_http_request(`categories?id=${search_str.split('=')[1]}`);
+    if (error) {
+      return console.log(error);
+    }
+    categoriesArr.push(JSON.parse(json));
+  }
+
+  sidebarProductCategoriesNode.innerHTML = `${[{ id: 'all', name: 'All products' }, ...categoriesArr].map_join(
     ({ name, id }, i) =>
       `<div category-id='${id}' class='sidebar-content-of-product-categories__item  ${
-        i === 0 ? 'sidebar-content-of-product-categories__item--active' : ''
+        i === (is_search_category ? 1 : 0) ? 'sidebar-content-of-product-categories__item--active' : ''
       } '>${name} </div>`
   )}
   `;
@@ -174,11 +181,13 @@ export const set_shop_sidebar_properties = async (arr) => {
       el.classList.add('sidebar-content-of-product-categories__item--active');
 
       const categoryId = el.getAttribute('category-id');
-      const allProductsArr =
-        categoryId == 'all' ? arr : arr.filter(({ categories }) => categories.some((id) => id == categoryId));
 
-      set_shop_propertyies(allProductsArr, undefined, true);
-      set_shop_pagination_propertyies(allProductsArr);
+      window.location.replace(`/pages/shop.html${categoryId !='all' ? `?category=${categoryId}` : ''}`);
+      // const allProductsArr =
+      //   x ? arr : arr.filter(({ categories }) => categories.some((id) => id == categoryId));
+
+      // set_shop_propertyies(allProductsArr, undefined, true);
+      // set_shop_pagination_propertyies(allProductsArr);
       // window.location.replace(el.textContent.toLowerCase());
     });
   });
