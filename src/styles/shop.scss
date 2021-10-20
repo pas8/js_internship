@@ -70,7 +70,7 @@
           display: flex;
           flex-direction: column;
           & > p {
-            padding: 0.6rem  1rem;
+            padding: 0.6rem 1rem;
           }
           & > a {
             gap: 1rem;
@@ -125,7 +125,10 @@
       &__item {
         display: flex;
         flex-direction: column;
-        gap: 1.42rem;
+        &:nth-of-type(2) {
+          gap: 1.8rem;
+        }
+        gap: 0.8rem;
         &-title {
           font-weight: 700;
 
@@ -196,7 +199,8 @@
             }
           }
         }
-        & .sidebar-content-of-filter-by-size {
+        & .sidebar-content-of-filter-by-size,
+        .sidebar-content-of-filter-by-addition_propertyies {
           width: 100%;
 
           nb-skeleton {
@@ -220,7 +224,8 @@
             border-color: $primary !important;
             color: $background !important;
             &:hover {
-              cursor: default;
+            border-color: $background !important;
+
             }
           }
         }
@@ -344,5 +349,36 @@
         }
       }
     }
+  }
+}
+
+.sidebar-content-of-filter-by-size,
+.sidebar-content-of-filter-by-color {
+  flex-wrap: wrap;
+}
+
+.sidebar-content-of-filter-by-addition_propertyies {
+  flex-direction: column;
+  display: flex;
+  gap: 0.8rem;
+
+  & > div {
+    flex-direction: column;
+    display: flex;
+    gap: 0.42rem;
+
+    & > div {
+      display: flex;
+      button {
+        border-radius: 8px;
+      }
+      gap: 0.42rem;
+      flex-wrap: wrap;
+    }
+  }
+  .sub_title {
+    font-size: 1rem;
+    text-transform: capitalize;
+    font-weight: 600;
   }
 }

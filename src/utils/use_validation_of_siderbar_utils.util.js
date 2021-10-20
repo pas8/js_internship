@@ -3,16 +3,23 @@ import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
 export const use_validation_of_siderbar_utils = async (allProductsArr) => {
   let categoriesArr = [];
   let categoriesIdsArr = [];
-  let colorsArr = ['green', 'yellow', 'blue'];
+  let colorsArr = [];
   let pricesArr = [];
   let sizeArr = [];
+  let addition_propertyies_arr = {};
 
-  allProductsArr.forEach(async ({ categories, price, size }) => {
+  allProductsArr.forEach(async ({ categories, price, size, color, addition_propertyies }) => {
     categories.forEach((id) => {
       !categoriesIdsArr.includes(id) && categoriesIdsArr.push(id);
     });
     !sizeArr.includes(+size) && sizeArr.push(+size);
     pricesArr.push(price);
+    colorsArr.push(color);
+
+    Object.entries(addition_propertyies).forEach(([key, value]) => {
+      const is_includes = addition_propertyies_arr[key]?.includes(value);
+      if (!is_includes) addition_propertyies_arr[key] = [...(addition_propertyies_arr[key] || []), value];
+    });
   });
 
   const categoriesResultArr = await Promise.all(
@@ -21,9 +28,9 @@ export const use_validation_of_siderbar_utils = async (allProductsArr) => {
 
   categoriesResultArr.forEach(([item, error]) => {
     !error && categoriesArr.push(JSON.parse(item));
-  }); 
+  });
 
-  return [categoriesArr, colorsArr, sizeArr, Math.max(...pricesArr), ~~Math.min(...pricesArr)];
+  return [categoriesArr, colorsArr, sizeArr, Math.max(...pricesArr), ~~Math.min(...pricesArr),addition_propertyies_arr];
 };
 
 // import { use_uniq_count_arr } from '@utils/use_uniq_count_arr.util.js';
