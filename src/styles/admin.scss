@@ -32,7 +32,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 0.42rem;
 
     &__title {
       font-size: 2.8rem;
@@ -54,6 +54,10 @@ main {
 
         & > div {
           width: 100%;
+          &  input {
+            background: transparent;
+            padding: 0.42rem;
+          }
           & > p {
             padding: 0.42rem;
             font-weight: 600;
@@ -62,12 +66,16 @@ main {
           flex-direction: column;
           & .item {
             width: 100%;
-            border-bottom: 1px solid $ping;
+            &:not(:last-of-type) {
+              border-bottom: 1px solid $ping;
+            }
             align-items: center;
             padding: 0.42rem;
             gap: 0.42rem;
             display: flex;
             & p {
+              flex-grow: 1;
+              padding: 0.24rem 0;
               margin: 0 1rem;
             }
             & img {
@@ -107,7 +115,9 @@ main {
   }
 }
 
-.editing_dialog {
+.editing_dialog,
+.new_category_dialog,
+.new_product_dialog {
   @include dialog;
   display: none;
   &__content {
@@ -248,24 +258,66 @@ main {
   }
 }
 
-
 .list_of_open_orders {
   @include dialog;
   display: none;
   &-content {
     padding: 0.42rem;
-    background-color: rgb(245, 197, 197);
+    background-color: rgb(245, 239, 197);
+    gap: 0.42rem;
+    display: flex;
+    flex-direction: column;
     &__title {
+      @include space-between_flex;
+
       p {
         font-size: 1.42rem;
       }
       gap: 1rem;
-      display: flex;
       align-items: center;
     }
     &__list {
       display: flex;
-      flex-direction: column;
+      border: 1px solid $input-border-color;
+      padding: 1rem;
+      gap: 1.42rem;
+      & .column {
+        display: flex;
+        padding-right: 1.42rem;
+        &:not(:last-of-type) {
+          border-right: 1px solid $input-border-color;
+        }
+        flex-direction: column;
+        gap: 0.42rem;
+        &_status {
+          font-size: 1.2rem;
+          font-weight: 500;
+          text-transform: capitalize;
+        }
+        & > div {
+          display: flex;
+          flex-direction: column;
+          gap: 0.42rem;
+        }
+        &_item {
+          background-color: rgb(229, 243, 255);
+          border-radius: 8px;
+          padding: 0.42rem;
+          &:hover {
+            cursor: grab;
+          }
+        }
+      }
+    }
+  }
+}
+
+.new_product_dialog {
+  &__content {
+    background-color: rgb(234, 242, 255);
+
+    &-gallery {
+      gap: 0.42rem;
     }
   }
 }
