@@ -1,6 +1,5 @@
 @import './global.scss';
 
-
 .searching {
   &-dialog {
     @include dialog;
@@ -10,8 +9,10 @@
     }
   }
   &-content {
+    border-radius: 8px;
     &__title {
       font-family: 'Jost';
+
       padding: 0.42rem 0;
       @include space-between_flex;
       &-close-button {
@@ -20,7 +21,7 @@
         }
         &:hover {
           & path {
-          fill: $primary;
+            fill: $primary;
           }
         }
       }
@@ -34,6 +35,80 @@
       & input {
         font-size: 1.42rem;
         min-width: 360px;
+      }
+      flex-direction: column;
+      display: flex;
+      width: 100%;
+      position: relative;
+      & > button {
+        top: 16px;
+        & svg {
+          width: 1.8rem;
+        }
+      }
+      align-items: center;
+      &__result {
+        border: 1px solid $primary;
+        border-top: none;
+        background-color: $background;
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        & > div {
+          display: flex;
+          flex-direction: column;
+          & > p {
+            padding: 0.6rem 1rem;
+            font-weight: 600;
+            font-size: 1.08rem;
+            font-family: 'Jost';
+          }
+          & > a {
+            font-family: 'Jost';
+
+            gap: 1rem;
+            align-items: center;
+            & img {
+              width: 42px;
+              aspect-ratio: 1;
+            }
+            width: 100%;
+            text-align: left;
+            font-size: 0.92rem;
+
+            cursor: pointer;
+            &:not(:last-child) {
+              border-bottom: 1px solid $light-grey;
+            }
+            &:hover {
+              border-bottom-color: transparent;
+              background-color: $primary;
+              color: $background;
+            }
+            padding: 0.8rem 1rem;
+
+            display: flex;
+          }
+        }
+      }
+      &__input {
+        width: 100%;
+
+        padding-left: 3.2rem !important;
+      }
+      &__svg-container {
+        color: $text-thirdly;
+        & svg {
+          width: 1.6rem;
+          path {
+            fill: currentColor;
+          }
+        }
+        position: absolute;
+        left: 0.4rem;
+        &:hover {
+          color: $primary;
+        }
       }
     }
   }

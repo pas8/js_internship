@@ -27,7 +27,9 @@ export const set_up_search = (
                   ? customSearchingMapFunc(arr, caption)
                   : arr.map_join(
                       ({ name, id, image }) =>
-                        `<a href='product_details.html?${id}'>
+                        `<a href='${
+                          caption.startsWith('C') ? '/pages/shop.html?category=' : '/pages/product_details.html?'
+                        }${id}'>
                           ${image ? `<img src=${image} ></img>` : ''}
                           <p> ${name} </p> 
                         </a>`
@@ -36,14 +38,12 @@ export const set_up_search = (
             </div>`
         );
 
-
         if (!resultsArr.length) return (searchResultContainerNode.style.display = 'none');
         searchSvgContainerNode.innerHTML = closeSvg;
         searchResultContainerNode.style.display = 'flex';
 
         searchResultContainerNode.innerHTML = resultsArr;
-        addition_func &&   addition_func();
-
+        addition_func && addition_func();
       },
       200,
       true

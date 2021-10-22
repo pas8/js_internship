@@ -20,19 +20,19 @@ export const get_compare_table_html = (arr, categoryId, name) => {
       </div> 
       <div class='compare-content__table-content-row'> 
         ${arr
-          .filter(({ categories }) => categories.some(({ id }) => id == categoryId))
+          .filter(({ categories }) => categories.some(( id ) => id == categoryId))
           .map_join(
-            ({ title, image, id, price, rating = { count: 4 } }) =>
+            ({ name, image, id, price, rating }) =>
               `<div  class='compare-content__table-content-row__item' compare-id='${id}'>
                 <div  class='compare-content__table-content-row__item-preview'> 
                   <div  class='compare-content__table-content-row__item-preview__img'>
                     <img src='${image}'></img> 
                   </div>
                   <div  class='compare-content__table-content-row__item-preview__title'> 
-                  ${title}
+                  ${name}
                   </div>
                 </div>
-                ${[rating.count, price].map_join(
+                ${[rating, price].map_join(
                   (el) => `
                     <div  class='compare-content__table-content-row__item-property'>
                       ${el}
