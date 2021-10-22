@@ -17,7 +17,8 @@ window.localStorage.setItem('productsViewVariant', 'grid');
 
 (async () => {
   const search_str = window.location.search;
-  const URL = search_str.startsWith('?category=') ? `products_of_${search_str}` : 'products';
+  const is_search_category = search_str.startsWith('?category=')
+  const URL =  is_search_category ? `products_of_${search_str}` : 'products';
 
   const [json, error] = await use_xml_http_request(URL);
   if (error) {
@@ -27,7 +28,7 @@ window.localStorage.setItem('productsViewVariant', 'grid');
   const allProductsArr = JSON.parse(json);
 
   set_shop_propertyies(allProductsArr);
-  set_shop_sidebar_properties(allProductsArr);
+  set_shop_sidebar_properties(allProductsArr,[is_search_category,search_str]);
   set_shop_pagination_propertyies(allProductsArr);
 
   set_up_search([
