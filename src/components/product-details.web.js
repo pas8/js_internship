@@ -26,6 +26,8 @@ class ProductDetails extends HTMLElement {
     this.additionalInfo = JSON.parse(this.getAttribute('addition_propertyies')) || {};
   }
 
+// console.log()
+
   async connectedCallback() {
     this.categories = await get_categories_arr_from_arr_ids(this.getAttribute('categories')?.split(','));
 
@@ -190,16 +192,18 @@ class ProductDetails extends HTMLElement {
           // props.map((el, idx) => {
           // console.log(el, idx);
           // });
+
+          const token = window.localStorage.getItem('user_token');
           // props
 
           // !!emailOrPhone.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
           const [res, err] = await use_xml_http_request(
             `add_product_review?id=${this.id}`,
             'POST',
-            JSON.stringify({ ...props, rating })
+            JSON.stringify({ ...props, rating, token })
           );
-          if (!!err) return use_toast(err);
-          return use_toast(res);
+          if (!!err) return use_toast(err,'error');
+          return use_toast(res,'info');
         });
       });
     });
