@@ -2,6 +2,8 @@ import '@components/stars.web.js';
 import '@components/quantity-counter.web.js';
 import '@styles/_web-product-details.scss';
 import { set_product_to_basket } from '@utils/set_product_to_basket.util.js';
+import { get_correct_currency } from '@utils/get_correct_currency.util.js';
+import { get_categories_arr_from_arr_ids } from '@utils/get_categories_arr_from_arr_ids.util.js';
 
 import compareSvg from '@svgs/compare.svg';
 import favouriteSvg from '@svgs/favourite.svg';
@@ -11,23 +13,20 @@ class ProductDetails extends HTMLElement {
     super();
     this.imgsArr = [this.getAttribute('image'), ...(this.getAttribute('gallery')?.split(',') || [''])];
     this.activeImgIdx = 0;
-    this.price = `${this.getAttribute('price')}$`;
+    this.price = `${this.getAttribute('price')}${get_correct_currency()}`;
     this.tabIdx = 0;
     this.id = this.getAttribute('id');
-    this.title = this.getAttribute('caption');
+    this.caption = this.getAttribute('caption');
     this.ratingValue = this.getAttribute('rating-value');
     this.ratingCount = this.getAttribute('rating-count');
     this.description = this.getAttribute('description') || '';
     this.denotationPreview = [...this.description].filter((__, idx) => idx < 100).join('') + '...';
-
-    this.additionalInfo = [
-      { caption: 'Placeholder1', value: 'some value' },
-      { caption: 'Placeholder2', value: 'some value' },
-      { caption: 'Placeholder3', value: 'some value' },
-    ];
+    this.additionalInfo = JSON.parse(this.getAttribute('addition_propertyies')) || {};
   }
 
-  connectedCallback() {
+  async connectedCallback() {
+    this.categories = await get_categories_arr_from_arr_ids(this.getAttribute('categories')?.split(','));
+
     this.innerHTML = `
       <div class='product-details-content'>
       <div class='product-details-content__product-gallery'>
@@ -35,17 +34,19 @@ class ProductDetails extends HTMLElement {
           <img src=${this.imgsArr[0]}  />
         </div>
         <div class='product-details-content__product-gallery__tabs'>
-          ${this.imgsArr.map(
-            (src, idx) =>
-              `<img src='${src}' class='${idx === this.activeImgIdx ? 'active' : ''}' style=width:${
-                ~~(100 / this.imgsArr.length) + '%'
-              } />`
-          ).join('')}
+          ${this.imgsArr
+            .map(
+              (src, idx) =>
+                `<img src='${src}' class='${idx === this.activeImgIdx ? 'active' : ''}' style=width:${
+                  ~~(100 / this.imgsArr.length) + '%'
+                } />`
+            )
+            .join('')}
         </div>
       </div>
       <div class='product-details-content__info'>
         <div class='product-details-content__info-acticle'>
-          <div class='product-details-content__info-acticle__caption'>${this.title}</div>
+          <div class='product-details-content__info-acticle__caption'>${this.caption}</div>
           <div class='product-details-content__info-acticle__stars'>
             <stars-feedback value=${this.ratingValue}></stars-feedback>
             <p class='product-details-content__info-acticle__stars-denotation'>
@@ -60,7 +61,10 @@ class ProductDetails extends HTMLElement {
           </div>
           <div class='product-details-content__info-denotation__propertyies'>
             <p class='item'> SKU: BIA011</p>
-            <p class='item'>Categories: Chair, Solutions, W-ACS</p>
+            <p class='item'>Categories: ${this.categories.map_join(
+              ({ id, name }) => `<a href="/pages/shop.html?category=${id}">${name}</a>`,
+              ', '
+            )}</p>
             <p class='item'>Tags: Accessories, Gaming</p>
           </div>
         </div>
@@ -120,16 +124,34 @@ class ProductDetails extends HTMLElement {
     });
     const contentInfoExtendedTabsContentArr = [
       `<div class='description' > ${this.description}</div>`,
-      `<div class='additional-info'>${this.additionalInfo
-        ?.map(
-          ({ caption, value }) =>
-            `<div><p class='additional-info__caption'>${caption}:</p><p class='additional-info__value'> ${value}</p></div>`
-        )
-        .join('')}</div>`,
+      `<div class='additional-info'>${Object.entries(this.additionalInfo)?.map_join(
+        ([caption, value]) =>
+          `<div><p class='additional-info__caption'>* ${caption}:</p><p class='additional-info__value'> ${value}</p></div>`
+      )}</div>`,
+
       `<div class='review'>
-        <stars-feedback value='0'></stars-feedback>
-        
-      </div>`,
+          <div>
+            <p>Your Feedback</p>
+            <div class='rating'>
+
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          <form>
+            <input name='name' placeholder='Name' class='input'>
+            </input>
+            <input name='email' placeholder='Email' class='input'>
+            </input>
+            <textarea name='message' placeholder='Message' class='input'>
+            </textarea>
+            <button class='submit_button button--contained'>Send feedback</button>
+          </form>
+        </div>
+      `,
     ];
 
     const tabNodes = document.querySelectorAll('.product-details-content__info-extended__tabs-title');
@@ -143,6 +165,19 @@ class ProductDetails extends HTMLElement {
         tabNodes.forEach((el) => el.classList.remove(activeClass));
         __.classList.add(activeClass);
         tabContentNode.innerHTML = contentInfoExtendedTabsContentArr[this.tabIdx];
+
+        document?.querySelector('.rating')?.addEventListener('click', function (e) {
+          let action = 'add';
+          for (const span of this.children) {
+            span.classList[action]('active');
+            if (span === e.target) action = 'remove';
+          }
+        });
+        document?.querySelector('.submit_button')?.addEventListener('click', (e) => {
+          e.preventDefault();
+
+          console.log(...Object.fromEntries([...new FormData(document.querySelector('form'))]));
+        });
       });
     });
   }

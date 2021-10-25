@@ -1,6 +1,14 @@
 @import './global.scss';
 
 .product-details-content {
+  a {
+    font-weight: 600;
+    font-size: 1.08rem;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   width: 100%;
   display: flex;
   gap: 4rem;
@@ -34,6 +42,7 @@
 
       flex-wrap: nowrap;
       & img {
+        aspect-ratio: 1;
         filter: saturate(0.4);
       }
       & img:hover {
@@ -142,13 +151,14 @@
         gap: 1.42rem;
 
         &-title-row {
-          gap: 1rem;
+          gap: 2rem;
           display: flex;
         }
         &-title {
           transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.16s all;
           font-size: 1.24rem;
           font-weight: 500;
+          padding: 0;
           color: $input-border-color;
           &--active {
             color: $text-secondary;
@@ -167,10 +177,64 @@
           p {
             color: $text-thirdly;
           }
+
+          .review {
+            display: flex;
+            flex-direction: column;
+            gap: 0.42rem;
+            :first-child {
+              p {
+                font-weight: 600;
+              }
+              align-items: center;
+              @include space_between_flex;
+            }
+            .rating {
+              display: flex;
+              font-size: 0;
+            }
+            .rating span {
+              font-size: 2rem;
+            }
+            .rating span::before {
+              content: '☆';
+            }
+            .rating span.active::before {
+              content: '★';
+            }
+            .rating span:hover {
+              cursor: pointer;
+            }
+
+            form {
+              width: 100%;
+              display: flex;
+              flex-wrap: wrap;
+              gap: 0.42rem;
+              input {
+                width: calc(50% - 0.21rem);
+              }
+              textarea {
+                width: 100%;
+              }
+              button {
+                align-self: flex-end;
+              }
+            }
+          }
+
           .additional-info {
+            &__caption {
+              font-weight: 500;
+              font-size: 1.08rem;
+              text-transform: capitalize;
+            }
             & > div {
               display: flex;
               gap: 10px;
+            }
+            &__value {
+              font-size: 1.08rem;
             }
           }
         }
