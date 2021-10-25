@@ -7,6 +7,7 @@ import { get_categories_arr_from_arr_ids } from '@utils/get_categories_arr_from_
 import IMask from 'imask';
 
 import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
+import { get_avg_from_arr } from '@utils/get_avg_from_arr.util.js';
 import compareSvg from '@svgs/compare.svg';
 import favouriteSvg from '@svgs/favourite.svg';
 import { use_toast } from '@utils/use_toast.util.js';
@@ -18,17 +19,23 @@ class ProductDetails extends HTMLElement {
     this.price = `${this.getAttribute('price')}${get_correct_currency()}`;
     this.tabIdx = 0;
     this.id = this.getAttribute('id');
+    this.feedback = JSON.parse(this.getAttribute('feedback'));
+
     this.caption = this.getAttribute('caption');
-    this.ratingValue = this.getAttribute('rating-value');
-    this.ratingCount = this.getAttribute('rating-count');
+    this.avarage_rating_value = get_avg_from_arr(this.feedback.map(({ rating }) => rating));
+    this.ratingCount = this?.feedback?.length || 0;
     this.description = this.getAttribute('description') || '';
     this.denotationPreview = [...this.description].filter((__, idx) => idx < 100).join('') + '...';
     this.additionalInfo = JSON.parse(this.getAttribute('addition_propertyies')) || {};
+    this.genegate_feedback_item = ({ name, message,rating }) => `  <div class='product-details-content__feedback-item'>
+      <div title> <p name>${name}</p>    <stars-feedback value=${rating}></stars-feedback> </div>
+      <p message>${message}</p>
+    </div>`;
   }
 
-// console.log()
-
   async connectedCallback() {
+    console.log(this.feedback);
+
     this.categories = await get_categories_arr_from_arr_ids(this.getAttribute('categories')?.split(','));
 
     this.innerHTML = `
@@ -47,12 +54,15 @@ class ProductDetails extends HTMLElement {
             )
             .join('')}
         </div>
+        <div class='product-details-content__feedback'>
+        ${this.feedback.map((el) => this.genegate_feedback_item(el)).join('')}
+        </div>
       </div>
       <div class='product-details-content__info'>
         <div class='product-details-content__info-acticle'>
           <div class='product-details-content__info-acticle__caption'>${this.caption}</div>
           <div class='product-details-content__info-acticle__stars'>
-            <stars-feedback value=${this.ratingValue}></stars-feedback>
+            <stars-feedback value=${this.avarage_rating_value}></stars-feedback>
             <p class='product-details-content__info-acticle__stars-denotation'>
               ( ${this.ratingCount} customer reviews )
             </p>
@@ -156,7 +166,7 @@ class ProductDetails extends HTMLElement {
         </div>
       `,
     ];
-
+    const feedback_container_node = document.querySelector('.product-details-content__feedback');
     const tabNodes = document.querySelectorAll('.product-details-content__info-extended__tabs-title');
     const tabContentNode = document.querySelector('.product-details-content__info-extended__tabs-content');
 
@@ -187,23 +197,30 @@ class ProductDetails extends HTMLElement {
           e.preventDefault();
           const rating =
             [...document?.querySelector('.rating').children].filter((el) => !!el?.classList[0])?.length || 0;
-          const props = Object.fromEntries([...new FormData(form_node)]);
-          // email_mask.
-          // props.map((el, idx) => {
-          // console.log(el, idx);
-          // });
+          const form_data = [...new FormData(form_node)];
 
+          const name = form_data[0][1];
+          const message = form_data[2][1];
+
+          if (!name) return use_toast(form_data[0][0] + 'isEmpty', 'error');
+          if (!form_data[1][1].match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
+            return use_toast(form_data[1][0] + 'is not valid', 'error');
+          if (!message) return use_toast(form_data[2][0] + 'isEmpty', 'error');
+
+          const props = Object.fromEntries(form_data);
           const token = window.localStorage.getItem('user_token');
-          // props
 
-          // !!emailOrPhone.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
           const [res, err] = await use_xml_http_request(
             `add_product_review?id=${this.id}`,
             'POST',
             JSON.stringify({ ...props, rating, token })
           );
-          if (!!err) return use_toast(err,'error');
-          return use_toast(res,'info');
+          if (!!err) return use_toast(err, 'error');
+
+          if (res === '"Your comment was added"') {
+            feedback_container_node.insertAdjacentHTML('beforeend', this.genegate_feedback_item({ message, name }));
+          }
+          return use_toast(res, 'info');
         });
       });
     });
