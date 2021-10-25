@@ -4,10 +4,12 @@ import '@styles/_web-product-details.scss';
 import { set_product_to_basket } from '@utils/set_product_to_basket.util.js';
 import { get_correct_currency } from '@utils/get_correct_currency.util.js';
 import { get_categories_arr_from_arr_ids } from '@utils/get_categories_arr_from_arr_ids.util.js';
+import IMask from 'imask';
 
+import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
 import compareSvg from '@svgs/compare.svg';
 import favouriteSvg from '@svgs/favourite.svg';
-
+import { use_toast } from '@utils/use_toast.util.js';
 class ProductDetails extends HTMLElement {
   constructor() {
     super();
@@ -142,12 +144,11 @@ class ProductDetails extends HTMLElement {
             </div>
           </div>
           <form>
-            <input name='name' placeholder='Name' class='input'>
+            <input name='name' placeholder='Name' class='input' required>
             </input>
             <input name='email' placeholder='Email' class='input'>
             </input>
-            <textarea name='message' placeholder='Message' class='input'>
-            </textarea>
+            <textarea name='message' placeholder='Message' class='input' required></textarea>
             <button class='submit_button button--contained'>Send feedback</button>
           </form>
         </div>
@@ -156,6 +157,7 @@ class ProductDetails extends HTMLElement {
 
     const tabNodes = document.querySelectorAll('.product-details-content__info-extended__tabs-title');
     const tabContentNode = document.querySelector('.product-details-content__info-extended__tabs-content');
+
     tabNodes.forEach((__, idx) => {
       __.addEventListener('click', () => {
         const isCurrentTabSelected = this.tabIdx === idx;
@@ -166,6 +168,11 @@ class ProductDetails extends HTMLElement {
         __.classList.add(activeClass);
         tabContentNode.innerHTML = contentInfoExtendedTabsContentArr[this.tabIdx];
 
+        const form_node = document?.querySelector('form');
+
+        // const email_mask =
+        IMask(form_node?.children?.[1], { mask: /^\S*@?\S*$/ });
+
         document?.querySelector('.rating')?.addEventListener('click', function (e) {
           let action = 'add';
           for (const span of this.children) {
@@ -173,10 +180,26 @@ class ProductDetails extends HTMLElement {
             if (span === e.target) action = 'remove';
           }
         });
-        document?.querySelector('.submit_button')?.addEventListener('click', (e) => {
-          e.preventDefault();
 
-          console.log(...Object.fromEntries([...new FormData(document.querySelector('form'))]));
+        document?.querySelector('.submit_button')?.addEventListener('click', async (e) => {
+          e.preventDefault();
+          const rating =
+            [...document?.querySelector('.rating').children].filter((el) => !!el?.classList[0])?.length || 0;
+          const props = Object.fromEntries([...new FormData(form_node)]);
+          // email_mask.
+          // props.map((el, idx) => {
+          // console.log(el, idx);
+          // });
+          // props
+
+          // !!emailOrPhone.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
+          const [res, err] = await use_xml_http_request(
+            `add_product_review?id=${this.id}`,
+            'POST',
+            JSON.stringify({ ...props, rating })
+          );
+          if (!!err) return use_toast(err);
+          return use_toast(res);
         });
       });
     });
