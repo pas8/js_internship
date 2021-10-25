@@ -30,7 +30,29 @@
       text-align: center;
     }
   }
-
+  &__feedback {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.42rem;
+    &-item {
+      padding: 0.42rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      border: 1px solid $light-grey;
+      [title] {
+        display: flex;
+        justify-content: space-between;
+        [name] {
+          font-size: 1.42rem;
+        }
+      }
+      [message] {
+        color: $input-border-color;
+      }
+    }
+  }
   &__product-gallery {
     &__main-img {
       @include centered_flex;
