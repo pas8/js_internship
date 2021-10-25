@@ -10,8 +10,8 @@ import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
   const [json, error] = await use_xml_http_request(`products?id=${ID}`);
   if (!!error) return console.error(error, 'error');
 
-  const { name, description, image, price, categories, id, imgGallery, addition_propertyies } = JSON.parse(json);
-
+  const { name, description, image, price, categories, id, imgGallery, addition_propertyies,feedback } = JSON.parse(json);
+console.log(feedback)
   product_container.innerHTML = `
     <product-details 
       caption='${name}'
