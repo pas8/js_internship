@@ -16,11 +16,24 @@ import { set_up_button_ripple } from '@utils/set_up_button_ripple.util.js';
 import { to_delete_item_from_basket } from '@utils/to_delete_item_from_basket.util.js';
 import { use_auth_and_get_user_props } from '@utils/use_auth_and_get_user_props.util.js';
 import { set_up_log_in_dialog } from '@utils/set_up_log_in_dialog.util.js';
+import { set_up_login_user_values_of_checkout_from } from '@utils/set_up_login_user_values_of_checkout_from.util.js';
 
 (async () => {
   window.localStorage.setItem('isGiveInfo', 'false');
 
   const [is_auth, user, error] = await use_auth_and_get_user_props();
+  if (!!error || !is_auth) {
+    document
+      .querySelector('.article-denonatation__text')
+      .insertAdjacentHTML('afterend', `<button class="article-denonatation__button-log-in" >Log in</button>`);
+    const button_log_in_node = document.querySelector('.article-denonatation__button-log-in');
+    set_up_button_ripple(button_log_in_node, async () => {
+      document.body.insertAdjacentHTML('afterbegin', '<div class="_log_in_dialog"></div>');
+      set_up_log_in_dialog();
+    });
+  } else {
+    set_up_login_user_values_of_checkout_from(user);
+  }
 
   const contactEmailOrPhoneInputNode = document.querySelector('.form-contact-info__utils-email-or-phone-input');
   const contactPostalCodeInputNode = document.querySelector('.form-contact-info__utils-postal-code-input');
@@ -34,19 +47,6 @@ import { set_up_log_in_dialog } from '@utils/set_up_log_in_dialog.util.js';
   const paymentTitleNode = document.querySelector('.payment_dialog-content__header-title');
 
   const inferenceProductsContainerNode = document.querySelector('.inference-products');
-
-  if (!!error || !is_auth) {
-    document
-      .querySelector('.article-denonatation__text')
-      .insertAdjacentHTML('afterend', `<button class="article-denonatation__button-log-in" >Log in</button>`);
-    const button_log_in_node = document.querySelector('.article-denonatation__button-log-in');
-    set_up_button_ripple(button_log_in_node, async () => {
-      document.body.insertAdjacentHTML('afterbegin', '<div class="_log_in_dialog"></div>');
-      set_up_log_in_dialog();
-    });
-  } else {
-    console.log(user);
-  }
 
   const set_up_check_out = async () => {
     const [basketValue] = get_basket();
