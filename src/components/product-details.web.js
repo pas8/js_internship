@@ -222,7 +222,12 @@ class ProductDetails extends HTMLElement {
             'POST',
             JSON.stringify({ ...props, rating, token })
           );
-          if (!!err) return use_toast(err, 'error');
+          if (!!err) {
+            if ((err === 'Conflict')) {
+              return use_toast('Check previuous emails with auth token', 'error');
+            }
+            return use_toast(err, 'error');
+          }
 
           if (res === '"Your comment was added"') {
             feedback_container_node.insertAdjacentHTML(

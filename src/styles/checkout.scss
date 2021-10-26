@@ -107,7 +107,7 @@ main {
       &__button-log-in {
         border: 1px solid currentColor;
         white-space: nowrap;
-        padding:0.6rem 1.2rem;
+        padding: 0.6rem 1.2rem;
         font-size: 1.1rem;
         border-radius: 4px;
         transition: cubic-bezier(0.77, 0, 0.175, 1) 0.16s all;
@@ -141,24 +141,6 @@ main {
     flex-direction: column;
     gap: 0.42rem;
     &__item {
-      &-remove_button {
-        border: 1px solid $light-grey;
-        fill: currentColor;
-        transition: cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.16s all;
-        padding: 0.6rem;
-        border-radius: 50%;
-        svg {
-          width: 1.6rem;
-          fill: currentColor;
-          transition: cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.16s all;
-        }
-      }
-      &-remove_button:hover {
-        border-color:  currentColor;
-
-        color: red;
-      }
-
       @include space-between_flex;
       align-items: center;
       &-content {
@@ -236,4 +218,22 @@ main {
 
 .button-move-to-payment {
   align-self: flex-end;
+}
+
+.inference-products__item-remove_button,#_log_in_dialog__close_button {
+  border: 1px solid $light-grey;
+  fill: currentColor;
+  transition: cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.16s all;
+  padding: 0.6rem;
+  border-radius: 50%;
+  svg {
+    width: 1.6rem;
+    fill: currentColor;
+    transition: cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.16s all;
+  }
+  &:hover {
+    border-color: currentColor;
+
+    color: red;
+  }
 }
