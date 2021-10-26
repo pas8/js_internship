@@ -7,6 +7,8 @@ import { get_categories_arr_from_arr_ids } from '@utils/get_categories_arr_from_
 import IMask from 'imask';
 
 import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
+import { get_user } from '@utils/get_user.util.js';
+import { get_user_token } from '@utils/get_user_token.util.js';
 import { get_avg_from_arr } from '@utils/get_avg_from_arr.util.js';
 import compareSvg from '@svgs/compare.svg';
 import favouriteSvg from '@svgs/favourite.svg';
@@ -20,8 +22,7 @@ class ProductDetails extends HTMLElement {
     this.tabIdx = 0;
     this.id = this.getAttribute('id');
     this.feedback = JSON.parse(this.getAttribute('feedback'));
-    this.token = window.localStorage.getItem('user_token');
-
+    this.token =get_user_token();
     this.caption = this.getAttribute('caption');
     this.avarage_rating_value = get_avg_from_arr(this.feedback.map(({ rating }) => rating));
     this.ratingCount = this?.feedback?.length || 0;
@@ -43,7 +44,7 @@ class ProductDetails extends HTMLElement {
     } else {
       const { id } = JSON.parse(res);
       this.is_auth = true;
-      const [json, error] = await use_xml_http_request(`user?id=${id}`);
+      const [json, error] = await get_user(id);
       if (!!error) {
         return use_toast(error, 'err');
       }
