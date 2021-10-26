@@ -37,7 +37,19 @@ const img = {
   },
 };
 
-const pages = ['index', 'about', 'product_details', 'checkout', 'shop', 'wishlist', 'auth', 'admin','order_details','auth_user'];
+const pages = [
+  'index',
+  'about',
+  'product_details',
+  'checkout',
+  'shop',
+  'wishlist',
+  'auth',
+  'admin',
+  'order_details',
+  'auth_user',
+  'user_profile',
+];
 
 module.exports = {
   mode: 'development',

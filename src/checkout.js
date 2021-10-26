@@ -20,9 +20,9 @@ import { set_up_login_user_values_of_checkout_from } from '@utils/set_up_login_u
 
 (async () => {
   window.localStorage.setItem('isGiveInfo', 'false');
-  const [user,error] =await  get_user();
+  const [user, error] = await get_user();
 
-  if (!!error ) {
+  if (!!error) {
     document
       .querySelector('.article-denonatation__text')
       .insertAdjacentHTML('afterend', `<button class="article-denonatation__button-log-in" >Log in</button>`);
@@ -32,7 +32,7 @@ import { set_up_login_user_values_of_checkout_from } from '@utils/set_up_login_u
       set_up_log_in_dialog();
     });
   } else {
-    set_up_login_user_values_of_checkout_from(JSON.parse( user));
+    set_up_login_user_values_of_checkout_from(JSON.parse(user));
   }
 
   const contactEmailOrPhoneInputNode = document.querySelector('.form-contact-info__utils-email-or-phone-input');
