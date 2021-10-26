@@ -1,7 +1,7 @@
 import '@components/stars.web.js';
 import '@components/quantity-counter.web.js';
 import '@styles/_web-product-details.scss';
-import { set_product_to_basket } from '@utils/set_product_to_basket.util.js';
+import { set_up_utils_of_product } from '@utils/set_up_utils_of_product.util.js';
 import { get_correct_currency } from '@utils/get_correct_currency.util.js';
 import { get_categories_arr_from_arr_ids } from '@utils/get_categories_arr_from_arr_ids.util.js';
 import IMask from 'imask';
@@ -20,22 +20,35 @@ class ProductDetails extends HTMLElement {
     this.tabIdx = 0;
     this.id = this.getAttribute('id');
     this.feedback = JSON.parse(this.getAttribute('feedback'));
+    this.token = window.localStorage.getItem('user_token');
 
     this.caption = this.getAttribute('caption');
     this.avarage_rating_value = get_avg_from_arr(this.feedback.map(({ rating }) => rating));
     this.ratingCount = this?.feedback?.length || 0;
     this.description = this.getAttribute('description') || '';
     this.denotationPreview = [...this.description].filter((__, idx) => idx < 100).join('') + '...';
+
     this.additionalInfo = JSON.parse(this.getAttribute('addition_propertyies')) || {};
-    this.genegate_feedback_item = ({ name, message,rating }) => `  <div class='product-details-content__feedback-item'>
+    this.genegate_feedback_item = ({ name, message, rating }) => `  <div class='product-details-content__feedback-item'>
       <div title> <p name>${name}</p>    <stars-feedback value=${rating}></stars-feedback> </div>
       <p message>${message}</p>
     </div>`;
   }
 
   async connectedCallback() {
-    console.log(this.feedback);
+    const [res, err] = await use_xml_http_request(`auth_user?${this.token}`);
 
+    if (!!err) {
+      this.is_auth = false;
+    } else {
+      const { id } = JSON.parse(res);
+      this.is_auth = true;
+      const [json, error] = await use_xml_http_request(`user?id=${id}`);
+      if (!!error) {
+        return use_toast(error, 'err');
+      }
+      this.user = JSON.parse(json);
+    }
     this.categories = await get_categories_arr_from_arr_ids(this.getAttribute('categories')?.split(','));
 
     this.innerHTML = `
@@ -46,7 +59,7 @@ class ProductDetails extends HTMLElement {
         </div>
         <div class='product-details-content__product-gallery__tabs'>
           ${this.imgsArr
-            .map(
+            ?.map(
               (src, idx) =>
                 `<img src='${src}' class='${idx === this.activeImgIdx ? 'active' : ''}' style=width:${
                   ~~(100 / this.imgsArr.length) + '%'
@@ -55,7 +68,7 @@ class ProductDetails extends HTMLElement {
             .join('')}
         </div>
         <div class='product-details-content__feedback'>
-        ${this.feedback.map((el) => this.genegate_feedback_item(el)).join('')}
+        ${this.feedback?.map((el) => this.genegate_feedback_item(el)).join('')}
         </div>
       </div>
       <div class='product-details-content__info'>
@@ -75,10 +88,9 @@ class ProductDetails extends HTMLElement {
           </div>
           <div class='product-details-content__info-denotation__propertyies'>
             <p class='item'> SKU: BIA011</p>
-            <p class='item'>Categories: ${this.categories.map_join(
-              ({ id, name }) => `<a href="/pages/shop.html?category=${id}">${name}</a>`,
-              ', '
-            )}</p>
+            <p class='item'>Categories: ${this.categories
+              ?.map(({ id, name }) => `<a href="/pages/shop.html?category=${id}">${name}</a>`, ', ')
+              ?.join('')}</p>
             <p class='item'>Tags: Accessories, Gaming</p>
           </div>
         </div>
@@ -87,11 +99,11 @@ class ProductDetails extends HTMLElement {
             <p>Quantity:</p>
             <quantity-counter></quantity-counter>
           </div>
-          <button class='product-details-content__info-utils__add-to-cart-button button-outlined'> Add to cart</button>
-          <button class='product-details-content__info__utils-favourite button-outlined button'>
+          <button class='product-details-content__info-utils-add-to-card button button-outlined'> Add to cart</button>
+          <button class='product-details-content__info-utils-favourite button-outlined button'>
             ${favouriteSvg}
           </button>
-          <button class='product-details-content__info__utils-compare button-outlined button'>
+          <button class='product-details-content__info-utils-compare button-outlined button'>
             ${compareSvg}
           </button>
         </div>
@@ -118,11 +130,9 @@ class ProductDetails extends HTMLElement {
       </div>
 `;
 
-    const addToCardButtonNode = document.querySelector('.product-details-content__info-utils__add-to-cart-button');
+    const handleSetUp = set_up_utils_of_product(this.id, 'product-details-content__info-utils').bind(this);
+    handleSetUp();
 
-    addToCardButtonNode.addEventListener('click', () => {
-      set_product_to_basket(this.id);
-    });
     window.localStorage.getItem('basket');
 
     const previewGalleryNode = document.querySelector('.product-details-content__product-gallery__main-img');
@@ -156,9 +166,13 @@ class ProductDetails extends HTMLElement {
             </div>
           </div>
           <form>
-            <input name='name' placeholder='Name' class='input' required>
+            <input name='name' placeholder='Name' class='input' required ${
+              this.is_auth ? `readonly value='${this.user?.name}'` : ''
+            }>
             </input>
-            <input name='email' placeholder='Email' class='input'>
+            <input name='email' placeholder='Email' class='input'  ${
+              this.is_auth ? `readonly value='${this.user?.email}'` : ''
+            }>
             </input>
             <textarea name='message' placeholder='Message' class='input' required></textarea>
             <button class='submit_button button--contained'>Send feedback</button>
@@ -182,7 +196,6 @@ class ProductDetails extends HTMLElement {
 
         const form_node = document?.querySelector('form');
 
-        // const email_mask =
         IMask(form_node?.children?.[1], { mask: /^\S*@?\S*$/ });
 
         document?.querySelector('.rating')?.addEventListener('click', function (e) {
@@ -218,7 +231,7 @@ class ProductDetails extends HTMLElement {
           if (!!err) return use_toast(err, 'error');
 
           if (res === '"Your comment was added"') {
-            feedback_container_node.insertAdjacentHTML('beforeend', this.genegate_feedback_item({ message, name }));
+            feedback_container_node.insertAdjacentHTML('beforeend', this.genegate_feedback_item({ message, name,rating }));
           }
           return use_toast(res, 'info');
         });

@@ -151,7 +151,8 @@
           @include centered_flex;
         }
       }
-      &__add-to-cart-button {
+
+      &-add-to-card {
         padding: 0.8rem 1.2rem !important;
         font-weight: 500;
 
@@ -162,6 +163,12 @@
         &:hover {
           background-color: $primary;
         }
+      }
+      &-item--active {
+
+        background-color: $primary !important;
+        color: $background !important;
+
       }
     }
     &-extended {
