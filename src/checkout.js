@@ -4,12 +4,16 @@ import '@styles/checkout.scss';
 import './payment_dialog';
 
 import phoneSvg from '@svgs/phone.svg';
+import removeSvg from '@svgs/delete.svg';
 import IMask from 'imask';
 
 import { use_toast } from '@utils/use_toast.util.js';
 import { get_basket } from '@utils/get_basket.util.js';
 import { use_check_for_empty_product_ids_arr } from '@utils/use_check_for_empty_product_ids_arr.util.js';
 import { get_sum_from_arr } from '@utils/get_sum_from_arr.util.js';
+import { get_correct_currency } from '@utils/get_correct_currency.util.js';
+import { set_up_button_ripple } from '@utils/set_up_button_ripple.util.js';
+import { to_delete_item_from_basket } from '@utils/to_delete_item_from_basket.util.js';
 
 window.localStorage.setItem('isGiveInfo', 'false');
 
@@ -26,9 +30,9 @@ const paymentTitleNode = document.querySelector('.payment_dialog-content__header
 
 const inferenceProductsContainerNode = document.querySelector('.inference-products');
 
-const [basketValue] = get_basket();
+const set_up_check_out = async () => {
+  const [basketValue] = get_basket();
 
-(async () => {
   const [arr, error, uniqProductsCountAndIdArr] = await use_check_for_empty_product_ids_arr(basketValue, () => {
     window.location.replace('/pages/shop.html');
     return alert('Nothing was added to basket, redirecting to shop page');
@@ -36,14 +40,15 @@ const [basketValue] = get_basket();
 
   if (!!error) return console.log(error);
 
-  let allPricesArr = [];
+  const gengerage_inference_products_html = (arr) => {
+    let allPricesArr = [];
 
-  inferenceProductsContainerNode.innerHTML = arr.map_join(({ name, image, price }, idx) => {
-    return Array.from({ length: uniqProductsCountAndIdArr[idx]?.count }, () => {
-      allPricesArr.push(price);
+    inferenceProductsContainerNode.innerHTML = arr.map_join(({ name, image, price, id }, idx) => {
+      return Array.from({ length: uniqProductsCountAndIdArr[idx]?.count }, () => {
+        allPricesArr.push(price);
 
-      return ` 
-      <div class='inference-products__item'>
+        return ` 
+      <div class='inference-products__item' _id='${id}'>
         <div class='inference-products__item-content'>
           <div class='inference-products__item-content__img-wrapper'>
             <img src='${image}' ></img>
@@ -53,23 +58,40 @@ const [basketValue] = get_basket();
             <div class='inference-products__item-content__details-weight'>0.5kg</div>
           </div>
         </div>
-        <div class='inference-products__item-price'>$${price}</div>
+        <div class='inference-products__item-price'>${get_correct_currency()}${price}</div>
+        <button class='inference-products__item-remove_button'>${removeSvg}</button>
       </div>
       `;
-    }).join('');
-  });
+      }).join('');
+    });
 
-  const taxeslValue = arr.length;
+    const all_remove_buttons_arr = inferenceProductsContainerNode.querySelectorAll(
+      '.inference-products__item-remove_button'
+    );
 
-  const subtotatlValue = +get_sum_from_arr(allPricesArr).toFixed();
-  checkoutSubtotalNode.innerHTML = `$${subtotatlValue}.0`;
-  checkoutTaxesNode.innerHTML = `$${taxeslValue}.0`;
+    all_remove_buttons_arr.forEach((el) => {
+      set_up_button_ripple(el, () => {
+        const _id = el.parentElement.getAttribute('_id');
 
-  const totalValue = taxeslValue + subtotatlValue;
-  checkoutTotalNode.innerHTML = `$${totalValue}.0`;
-  paymentTitleNode.innerHTML = `$${totalValue}.0`;
-  checkoutShippingNode.innerHTML = 'Calculated at next step';
-})();
+        to_delete_item_from_basket(_id)
+
+        set_up_check_out();
+      });
+    });
+    const taxeslValue = arr.length;
+
+    const subtotatlValue = +get_sum_from_arr(allPricesArr).toFixed();
+    checkoutSubtotalNode.innerHTML = `$${subtotatlValue}.0`;
+    checkoutTaxesNode.innerHTML = `$${taxeslValue}.0`;
+
+    const totalValue = taxeslValue + subtotatlValue;
+    checkoutTotalNode.innerHTML = `$${totalValue}.0`;
+    paymentTitleNode.innerHTML = `$${totalValue}.0`;
+    checkoutShippingNode.innerHTML = 'Calculated at next step';
+  };
+  gengerage_inference_products_html(arr);
+};
+set_up_check_out();
 
 givemeinfoInputNodeArr.forEach((el) => {
   el.addEventListener('change', (e) => {
