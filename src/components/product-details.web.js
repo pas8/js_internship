@@ -36,11 +36,11 @@ class ProductDetails extends HTMLElement {
 
   async connectedCallback() {
     const [user, error] = await get_user();
-    this.is_auth = !!user;
+    this.is_auth = !error;
     if (!!error) {
       use_toast(error, 'err');
     } else {
-      this.user = user;
+      this.user = JSON.parse(user);
     }
 
     this.categories = await get_categories_arr_from_arr_ids(this.getAttribute('categories')?.split(','));
@@ -223,7 +223,7 @@ class ProductDetails extends HTMLElement {
             JSON.stringify({ ...props, rating, token })
           );
           if (!!err) {
-            if ((err === 'Conflict')) {
+            if (err === 'Conflict') {
               return use_toast('Check previuous emails with auth token', 'error');
             }
             return use_toast(err, 'error');
