@@ -15,6 +15,7 @@ import { get_correct_currency } from '@utils/get_correct_currency.util.js';
 import { set_up_button_ripple } from '@utils/set_up_button_ripple.util.js';
 import { to_delete_item_from_basket } from '@utils/to_delete_item_from_basket.util.js';
 import { use_auth_and_get_user_props } from '@utils/use_auth_and_get_user_props.util.js';
+import { set_up_log_in_dialog } from '@utils/set_up_log_in_dialog.util.js';
 
 (async () => {
   window.localStorage.setItem('isGiveInfo', 'false');
@@ -39,7 +40,10 @@ import { use_auth_and_get_user_props } from '@utils/use_auth_and_get_user_props.
       .querySelector('.article-denonatation__text')
       .insertAdjacentHTML('afterend', `<button class="article-denonatation__button-log-in" >Log in</button>`);
     const button_log_in_node = document.querySelector('.article-denonatation__button-log-in');
-    set_up_button_ripple(button_log_in_node, async () => {});
+    set_up_button_ripple(button_log_in_node, async () => {
+      document.body.insertAdjacentHTML('afterbegin', '<div class="_log_in_dialog"></div>');
+      set_up_log_in_dialog();
+    });
   } else {
     console.log(user);
   }
