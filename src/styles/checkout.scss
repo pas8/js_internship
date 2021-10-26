@@ -99,14 +99,23 @@ main {
     }
     &-denonatation {
       display: flex;
+      align-items: center;
       gap: 0.8rem;
       &__text {
         color: $text-thirdly;
       }
       &__button-log-in {
+        border: 1px solid currentColor;
+        white-space: nowrap;
+        padding:0.6rem 1.2rem;
+        font-size: 1.1rem;
+        border-radius: 4px;
+        transition: cubic-bezier(0.77, 0, 0.175, 1) 0.16s all;
+        height: fit-content;
         color: $primary;
         &:hover {
-          text-decoration: underline;
+          background-color: $primary;
+          color: $background;
         }
       }
     }

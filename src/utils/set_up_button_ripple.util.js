@@ -1,6 +1,6 @@
 import '@styles/__ripple.scss';
 
-export const set_up_button_ripple = (button_node, fn) => {
+export const set_up_button_ripple = (button_node, fn, is_prevent_default = true) => {
   button_node.insertAdjacentHTML('beforeend', `<span class='ripple'></span>`);
 
   const ripple_node = button_node.querySelector('.ripple');
@@ -9,6 +9,7 @@ export const set_up_button_ripple = (button_node, fn) => {
   button_node.style.position = 'relative';
 
   button_node.addEventListener('click', (e) => {
+    is_prevent_default && e.preventDefault();
     const { clientX, currentTarget, clientY } = e;
     const x = clientX - currentTarget.getBoundingClientRect().left;
     const y = clientY - currentTarget.getBoundingClientRect().top;
