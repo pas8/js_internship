@@ -10,5 +10,8 @@ import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
     return (node.innerHTML = `<h1>${err}</h1>`);
   }
   window.localStorage.setItem('user_token', token.split('?')[1]);
-  node.innerHTML = '<h1>All right</h1>';
+  alert()
+  const is_redirect  = confirm('All right, redict ro the profile page?')
+  is_redirect && window.location.replace('/pages/profile.html')
+
 })();

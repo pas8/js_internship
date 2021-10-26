@@ -14,15 +14,16 @@ import { get_sum_from_arr } from '@utils/get_sum_from_arr.util.js';
 import { get_correct_currency } from '@utils/get_correct_currency.util.js';
 import { set_up_button_ripple } from '@utils/set_up_button_ripple.util.js';
 import { to_delete_item_from_basket } from '@utils/to_delete_item_from_basket.util.js';
-import { use_auth_and_get_user_props } from '@utils/use_auth_and_get_user_props.util.js';
+import { get_user } from '@utils/get_user.util.js';
 import { set_up_log_in_dialog } from '@utils/set_up_log_in_dialog.util.js';
 import { set_up_login_user_values_of_checkout_from } from '@utils/set_up_login_user_values_of_checkout_from.util.js';
 
 (async () => {
   window.localStorage.setItem('isGiveInfo', 'false');
 
-  const [is_auth, user, error] = await use_auth_and_get_user_props();
-  if (!!error || !is_auth) {
+  const [user, error] = await get_user();
+
+  if (!!error ) {
     document
       .querySelector('.article-denonatation__text')
       .insertAdjacentHTML('afterend', `<button class="article-denonatation__button-log-in" >Log in</button>`);

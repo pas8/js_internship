@@ -7,11 +7,11 @@ import { get_categories_arr_from_arr_ids } from '@utils/get_categories_arr_from_
 import IMask from 'imask';
 
 import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
-import { use_auth_and_get_user_props } from '@utils/use_auth_and_get_user_props.util.js';
 import { get_avg_from_arr } from '@utils/get_avg_from_arr.util.js';
 import compareSvg from '@svgs/compare.svg';
 import favouriteSvg from '@svgs/favourite.svg';
 import { use_toast } from '@utils/use_toast.util.js';
+import { get_user } from '@utils/get_user.util';
 class ProductDetails extends HTMLElement {
   constructor() {
     super();
@@ -35,9 +35,9 @@ class ProductDetails extends HTMLElement {
   }
 
   async connectedCallback() {
-    const [is_auth, user, error] = await use_auth_and_get_user_props();
-    this.is_auth = is_auth;
-    if (error) {
+    const [user, error] = await get_user();
+    this.is_auth = !!user;
+    if (!!error) {
       use_toast(error, 'err');
     } else {
       this.user = user;

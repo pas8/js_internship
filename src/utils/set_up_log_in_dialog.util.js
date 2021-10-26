@@ -45,6 +45,6 @@ export const set_up_log_in_dialog = () => {
       return use_toast(err, 'error');
     }
     _node.remove();
-    use_toast(res, 'error');
+    use_toast(res, 'info');
   });
 };
