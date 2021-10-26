@@ -1,6 +1,14 @@
 @import './global.scss';
 
 .product-details-content {
+  a {
+    font-weight: 600;
+    font-size: 1.08rem;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   width: 100%;
   display: flex;
   gap: 4rem;
@@ -22,7 +30,29 @@
       text-align: center;
     }
   }
-
+  &__feedback {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.42rem;
+    &-item {
+      padding: 0.42rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      border: 1px solid $light-grey;
+      [title] {
+        display: flex;
+        justify-content: space-between;
+        [name] {
+          font-size: 1.42rem;
+        }
+      }
+      [message] {
+        color: $input-border-color;
+      }
+    }
+  }
   &__product-gallery {
     &__main-img {
       @include centered_flex;
@@ -34,6 +64,7 @@
 
       flex-wrap: nowrap;
       & img {
+        aspect-ratio: 1;
         filter: saturate(0.4);
       }
       & img:hover {
@@ -120,7 +151,8 @@
           @include centered_flex;
         }
       }
-      &__add-to-cart-button {
+
+      &-add-to-card {
         padding: 0.8rem 1.2rem !important;
         font-weight: 500;
 
@@ -132,6 +164,12 @@
           background-color: $primary;
         }
       }
+      &-item--active {
+
+        background-color: $primary !important;
+        color: $background !important;
+
+      }
     }
     &-extended {
       margin: 2rem 0;
@@ -142,13 +180,14 @@
         gap: 1.42rem;
 
         &-title-row {
-          gap: 1rem;
+          gap: 2rem;
           display: flex;
         }
         &-title {
           transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.16s all;
           font-size: 1.24rem;
           font-weight: 500;
+          padding: 0;
           color: $input-border-color;
           &--active {
             color: $text-secondary;
@@ -167,10 +206,64 @@
           p {
             color: $text-thirdly;
           }
+
+          .review {
+            display: flex;
+            flex-direction: column;
+            gap: 0.42rem;
+            :first-child {
+              p {
+                font-weight: 600;
+              }
+              align-items: center;
+              @include space_between_flex;
+            }
+            .rating {
+              display: flex;
+              font-size: 0;
+            }
+            .rating span {
+              font-size: 2rem;
+            }
+            .rating span::before {
+              content: '☆';
+            }
+            .rating span.active::before {
+              content: '★';
+            }
+            .rating span:hover {
+              cursor: pointer;
+            }
+
+            form {
+              width: 100%;
+              display: flex;
+              flex-wrap: wrap;
+              gap: 0.42rem;
+              input {
+                width: calc(50% - 0.21rem);
+              }
+              textarea {
+                width: 100%;
+              }
+              button {
+                margin-left: auto;
+              }
+            }
+          }
+
           .additional-info {
+            &__caption {
+              font-weight: 500;
+              font-size: 1.08rem;
+              text-transform: capitalize;
+            }
             & > div {
               display: flex;
               gap: 10px;
+            }
+            &__value {
+              font-size: 1.08rem;
             }
           }
         }

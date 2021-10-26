@@ -1,13 +1,13 @@
 import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
 import { set_up_button_ripple } from '@utils/set_up_button_ripple.util.js';
+import { set_up_close_button_of_catalog } from '@utils/set_up_close_button_of_catalog.util.js';
+import { set_up_children_category_elemnts_of_catalog } from '@utils/set_up_children_category_elemnts_of_catalog.util.js';
 
 export const set_up_catalog_dialog = () => {
-  const catalog_dialog_node = document.querySelector('.catalog_dialog');
   const catalog_dialog_content_main_node = document.querySelector('.catalog_dialog_content__main');
+  const [catalog_dialog_node] = set_up_close_button_of_catalog();
 
   const button_node = document.querySelector('.main-row__utils__catalog-button');
-
-  const catalog_dialog_content__close_button_node = document.querySelector('.catalog_dialog_content__close_button');
 
   set_up_button_ripple(button_node, async () => {
     catalog_dialog_node.style.display = 'grid';
@@ -23,7 +23,7 @@ export const set_up_catalog_dialog = () => {
         `<button parent_category_id='${id}' class='catalog_dialog_content__main__parent_button' ><svg viewBox='0 0 24 24'><path d='${d}'></path> </svg> ${name}</button>`
     )}</div> <div class='catalog_dialog_content__main__children'></div>`;
 
-    catalog_dialog_content_main_node.style.border = '1px solid rgb(16,16,16)'
+    catalog_dialog_content_main_node.style.border = '1px solid rgb(16,16,16)';
 
     const catalog_dialog_content_main_children_node = document.querySelector('.catalog_dialog_content__main__children');
     catalog_dialog_content_main_children_node.style.padding = '0px';
@@ -43,24 +43,8 @@ export const set_up_catalog_dialog = () => {
           return console.log(err);
         }
 
-        const children_categories = JSON.parse(json);
-
-        catalog_dialog_content_main_children_node.innerHTML = `${children_categories.map_join(
-          ({ name, id }) =>
-            `<button children_category_id='${id}' class='catalog_dialog_content__main__children_button' >${name}</button>`
-        )}`;
-
-        [...catalog_dialog_content_main_children_node.children].forEach((el) => {
-          el.addEventListener('click', () => {
-            const children_category_id = el.getAttribute('children_category_id');
-            window.location.replace(`/pages/shop.html?category=${children_category_id}`);
-          });
-        });
+        set_up_children_category_elemnts_of_catalog(json, catalog_dialog_content_main_children_node);
       });
     });
-  });
-
-  catalog_dialog_content__close_button_node.addEventListener('click', () => {
-    catalog_dialog_node.style.display = 'none';
   });
 };

@@ -1,33 +1,56 @@
 import '@components/stars.web.js';
 import '@components/quantity-counter.web.js';
 import '@styles/_web-product-details.scss';
-import { set_product_to_basket } from '@utils/set_product_to_basket.util.js';
+import { set_up_utils_of_product } from '@utils/set_up_utils_of_product.util.js';
+import { get_correct_currency } from '@utils/get_correct_currency.util.js';
+import { get_categories_arr_from_arr_ids } from '@utils/get_categories_arr_from_arr_ids.util.js';
+import IMask from 'imask';
 
+import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
+import { get_avg_from_arr } from '@utils/get_avg_from_arr.util.js';
 import compareSvg from '@svgs/compare.svg';
 import favouriteSvg from '@svgs/favourite.svg';
-
+import { use_toast } from '@utils/use_toast.util.js';
 class ProductDetails extends HTMLElement {
   constructor() {
     super();
     this.imgsArr = [this.getAttribute('image'), ...(this.getAttribute('gallery')?.split(',') || [''])];
     this.activeImgIdx = 0;
-    this.price = `${this.getAttribute('price')}$`;
+    this.price = `${this.getAttribute('price')}${get_correct_currency()}`;
     this.tabIdx = 0;
     this.id = this.getAttribute('id');
-    this.title = this.getAttribute('caption');
-    this.ratingValue = this.getAttribute('rating-value');
-    this.ratingCount = this.getAttribute('rating-count');
+    this.feedback = JSON.parse(this.getAttribute('feedback'));
+    this.token = window.localStorage.getItem('user_token');
+
+    this.caption = this.getAttribute('caption');
+    this.avarage_rating_value = get_avg_from_arr(this.feedback.map(({ rating }) => rating));
+    this.ratingCount = this?.feedback?.length || 0;
     this.description = this.getAttribute('description') || '';
     this.denotationPreview = [...this.description].filter((__, idx) => idx < 100).join('') + '...';
 
-    this.additionalInfo = [
-      { caption: 'Placeholder1', value: 'some value' },
-      { caption: 'Placeholder2', value: 'some value' },
-      { caption: 'Placeholder3', value: 'some value' },
-    ];
+    this.additionalInfo = JSON.parse(this.getAttribute('addition_propertyies')) || {};
+    this.genegate_feedback_item = ({ name, message, rating }) => `  <div class='product-details-content__feedback-item'>
+      <div title> <p name>${name}</p>    <stars-feedback value=${rating}></stars-feedback> </div>
+      <p message>${message}</p>
+    </div>`;
   }
 
-  connectedCallback() {
+  async connectedCallback() {
+    const [res, err] = await use_xml_http_request(`auth_user?${this.token}`);
+
+    if (!!err) {
+      this.is_auth = false;
+    } else {
+      const { id } = JSON.parse(res);
+      this.is_auth = true;
+      const [json, error] = await use_xml_http_request(`user?id=${id}`);
+      if (!!error) {
+        return use_toast(error, 'err');
+      }
+      this.user = JSON.parse(json);
+    }
+    this.categories = await get_categories_arr_from_arr_ids(this.getAttribute('categories')?.split(','));
+
     this.innerHTML = `
       <div class='product-details-content'>
       <div class='product-details-content__product-gallery'>
@@ -35,19 +58,24 @@ class ProductDetails extends HTMLElement {
           <img src=${this.imgsArr[0]}  />
         </div>
         <div class='product-details-content__product-gallery__tabs'>
-          ${this.imgsArr.map(
-            (src, idx) =>
-              `<img src='${src}' class='${idx === this.activeImgIdx ? 'active' : ''}' style=width:${
-                ~~(100 / this.imgsArr.length) + '%'
-              } />`
-          ).join('')}
+          ${this.imgsArr
+            ?.map(
+              (src, idx) =>
+                `<img src='${src}' class='${idx === this.activeImgIdx ? 'active' : ''}' style=width:${
+                  ~~(100 / this.imgsArr.length) + '%'
+                } />`
+            )
+            .join('')}
+        </div>
+        <div class='product-details-content__feedback'>
+        ${this.feedback?.map((el) => this.genegate_feedback_item(el)).join('')}
         </div>
       </div>
       <div class='product-details-content__info'>
         <div class='product-details-content__info-acticle'>
-          <div class='product-details-content__info-acticle__caption'>${this.title}</div>
+          <div class='product-details-content__info-acticle__caption'>${this.caption}</div>
           <div class='product-details-content__info-acticle__stars'>
-            <stars-feedback value=${this.ratingValue}></stars-feedback>
+            <stars-feedback value=${this.avarage_rating_value}></stars-feedback>
             <p class='product-details-content__info-acticle__stars-denotation'>
               ( ${this.ratingCount} customer reviews )
             </p>
@@ -60,7 +88,9 @@ class ProductDetails extends HTMLElement {
           </div>
           <div class='product-details-content__info-denotation__propertyies'>
             <p class='item'> SKU: BIA011</p>
-            <p class='item'>Categories: Chair, Solutions, W-ACS</p>
+            <p class='item'>Categories: ${this.categories
+              ?.map(({ id, name }) => `<a href="/pages/shop.html?category=${id}">${name}</a>`, ', ')
+              ?.join('')}</p>
             <p class='item'>Tags: Accessories, Gaming</p>
           </div>
         </div>
@@ -69,11 +99,11 @@ class ProductDetails extends HTMLElement {
             <p>Quantity:</p>
             <quantity-counter></quantity-counter>
           </div>
-          <button class='product-details-content__info-utils__add-to-cart-button button-outlined'> Add to cart</button>
-          <button class='product-details-content__info__utils-favourite button-outlined button'>
+          <button class='product-details-content__info-utils-add-to-card button button-outlined'> Add to cart</button>
+          <button class='product-details-content__info-utils-favourite button-outlined button'>
             ${favouriteSvg}
           </button>
-          <button class='product-details-content__info__utils-compare button-outlined button'>
+          <button class='product-details-content__info-utils-compare button-outlined button'>
             ${compareSvg}
           </button>
         </div>
@@ -100,11 +130,9 @@ class ProductDetails extends HTMLElement {
       </div>
 `;
 
-    const addToCardButtonNode = document.querySelector('.product-details-content__info-utils__add-to-cart-button');
+    const handleSetUp = set_up_utils_of_product(this.id, 'product-details-content__info-utils').bind(this);
+    handleSetUp();
 
-    addToCardButtonNode.addEventListener('click', () => {
-      set_product_to_basket(this.id);
-    });
     window.localStorage.getItem('basket');
 
     const previewGalleryNode = document.querySelector('.product-details-content__product-gallery__main-img');
@@ -120,20 +148,42 @@ class ProductDetails extends HTMLElement {
     });
     const contentInfoExtendedTabsContentArr = [
       `<div class='description' > ${this.description}</div>`,
-      `<div class='additional-info'>${this.additionalInfo
-        ?.map(
-          ({ caption, value }) =>
-            `<div><p class='additional-info__caption'>${caption}:</p><p class='additional-info__value'> ${value}</p></div>`
-        )
-        .join('')}</div>`,
-      `<div class='review'>
-        <stars-feedback value='0'></stars-feedback>
-        
-      </div>`,
-    ];
+      `<div class='additional-info'>${Object.entries(this.additionalInfo)?.map_join(
+        ([caption, value]) =>
+          `<div><p class='additional-info__caption'>* ${caption}:</p><p class='additional-info__value'> ${value}</p></div>`
+      )}</div>`,
 
+      `<div class='review'>
+          <div>
+            <p>Your Feedback</p>
+            <div class='rating'>
+
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          <form>
+            <input name='name' placeholder='Name' class='input' required ${
+              this.is_auth ? `readonly value='${this.user?.name}'` : ''
+            }>
+            </input>
+            <input name='email' placeholder='Email' class='input'  ${
+              this.is_auth ? `readonly value='${this.user?.email}'` : ''
+            }>
+            </input>
+            <textarea name='message' placeholder='Message' class='input' required></textarea>
+            <button class='submit_button button--contained'>Send feedback</button>
+          </form>
+        </div>
+      `,
+    ];
+    const feedback_container_node = document.querySelector('.product-details-content__feedback');
     const tabNodes = document.querySelectorAll('.product-details-content__info-extended__tabs-title');
     const tabContentNode = document.querySelector('.product-details-content__info-extended__tabs-content');
+
     tabNodes.forEach((__, idx) => {
       __.addEventListener('click', () => {
         const isCurrentTabSelected = this.tabIdx === idx;
@@ -143,6 +193,48 @@ class ProductDetails extends HTMLElement {
         tabNodes.forEach((el) => el.classList.remove(activeClass));
         __.classList.add(activeClass);
         tabContentNode.innerHTML = contentInfoExtendedTabsContentArr[this.tabIdx];
+
+        const form_node = document?.querySelector('form');
+
+        IMask(form_node?.children?.[1], { mask: /^\S*@?\S*$/ });
+
+        document?.querySelector('.rating')?.addEventListener('click', function (e) {
+          let action = 'add';
+          for (const span of this.children) {
+            span.classList[action]('active');
+            if (span === e.target) action = 'remove';
+          }
+        });
+
+        document?.querySelector('.submit_button')?.addEventListener('click', async (e) => {
+          e.preventDefault();
+          const rating =
+            [...document?.querySelector('.rating').children].filter((el) => !!el?.classList[0])?.length || 0;
+          const form_data = [...new FormData(form_node)];
+
+          const name = form_data[0][1];
+          const message = form_data[2][1];
+
+          if (!name) return use_toast(form_data[0][0] + 'isEmpty', 'error');
+          if (!form_data[1][1].match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
+            return use_toast(form_data[1][0] + 'is not valid', 'error');
+          if (!message) return use_toast(form_data[2][0] + 'isEmpty', 'error');
+
+          const props = Object.fromEntries(form_data);
+          const token = window.localStorage.getItem('user_token');
+
+          const [res, err] = await use_xml_http_request(
+            `add_product_review?id=${this.id}`,
+            'POST',
+            JSON.stringify({ ...props, rating, token })
+          );
+          if (!!err) return use_toast(err, 'error');
+
+          if (res === '"Your comment was added"') {
+            feedback_container_node.insertAdjacentHTML('beforeend', this.genegate_feedback_item({ message, name,rating }));
+          }
+          return use_toast(res, 'info');
+        });
       });
     });
   }

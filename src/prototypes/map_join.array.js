@@ -1,3 +1,3 @@
-Array.prototype.map_join = function (func) {
-  return this.map(func).join('');
+Array.prototype.map_join = function (func,as='') {
+  return this.map(func).join(as);
 };

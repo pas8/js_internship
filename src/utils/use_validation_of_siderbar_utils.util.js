@@ -1,4 +1,4 @@
-import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
+import { get_categories_arr_from_arr_ids } from '@utils/get_categories_arr_from_arr_ids.util.js';
 
 export const use_validation_of_siderbar_utils = async (allProductsArr, is_search_category) => {
   let categoriesArr = [];
@@ -22,14 +22,11 @@ export const use_validation_of_siderbar_utils = async (allProductsArr, is_search
       if (!is_includes) addition_propertyies_arr[key] = [...(addition_propertyies_arr[key] || []), value];
     });
   });
-  !is_search_category &&
-    (await Promise.all(categoriesIdsArr.map((id) => use_xml_http_request(`categories?id=${id}`)))).forEach(
-      ([item, error]) => {
-        !error && categoriesArr.push(JSON.parse(item));
-      }
-    );
+  if (!is_search_category) {
+    categoriesArr = await get_categories_arr_from_arr_ids(categoriesIdsArr);
+  }
 
-    return [
+  return [
     categoriesArr,
     colorsArr,
     sizeArr,

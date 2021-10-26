@@ -7,14 +7,14 @@ export function set_up_utils_of_product(id, className) {
   return function () {
     const handleOpenSearchDialog = use_to_open_seacrhing_dialog();
 
-    const addToCardButtonNode = this.querySelector(`.${className}-add-to-card`);
+    const addToCardButtonNode = this?.querySelector(`.${className}-add-to-card`);
     addToCardButtonNode.addEventListener('click', () => {
       addToCardButtonNode.classList.add(`${className}-item--active`);
       set_product_to_basket(id);
     });
-    const seacrhButtonNode = this.querySelector(`.${className}-search`);
+    const seacrhButtonNode = this?.querySelector(`.${className}-search`);
 
-    seacrhButtonNode.addEventListener('click', () => {
+    seacrhButtonNode && seacrhButtonNode?.addEventListener('click', () => {
       handleOpenSearchDialog();
     });
 
@@ -25,7 +25,6 @@ export function set_up_utils_of_product(id, className) {
       const isIncludes = set_product_to_wishlist(id);
       favouriteButtonNode.classList[isIncludes ? 'remove' : 'add'](`${className}-item--active`);
     });
-
     const compareButtonNode = this.querySelector(`.${className}-compare`);
 
     compareButtonNode.addEventListener('click', () => {

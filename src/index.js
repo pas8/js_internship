@@ -14,6 +14,8 @@ import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
 import { get_correct_currency } from '@utils/get_correct_currency.util.js';
 import { set_up_feature_products_tabs } from '@utils/set_up_feature_products_tabs.util.js';
 import { use_validation_of_siderbar_utils } from '@utils/use_validation_of_siderbar_utils.util.js';
+import { set_up_button_ripple } from '@utils/set_up_button_ripple.util.js';
+import { set_up_children_category_elemnts_of_catalog } from '@utils/set_up_children_category_elemnts_of_catalog.util.js';
 
 (async () => {
   const categoriesContainer = document.querySelector('.categories-row');
@@ -21,7 +23,9 @@ import { use_validation_of_siderbar_utils } from '@utils/use_validation_of_sider
   const specialContentProductsNode = document.querySelector('.specical-products__content-products');
 
   const [res, error] = await use_xml_http_request('products');
-  if (!!error) return console.log(error);
+  const [categories_json, err] = await use_xml_http_request('all_parent_categories');
+
+  if (!!error || !!err) return console.error(error, err);
 
   const data = JSON.parse(res);
   const productsArr = data.filter((__, idx) => idx < 6);
@@ -47,12 +51,27 @@ import { use_validation_of_siderbar_utils } from '@utils/use_validation_of_sider
   );
 
   categoriesContainer.innerHTML = `
-    ${productsArr.map_join(
-      ({ image, name, id }) =>
-        `<a class="categories-row__item" href='pages/product_details.html?${id}'> <img src='${image}'><p>${name
-          .split(' ')
-          .filter((__, idx) => idx < 1)
-          .join(' ')}</p></a>`
+    ${JSON.parse(categories_json).map_join(
+      ({ d, name, id }) =>
+        `<button class="categories-row__item" _id='${id}'> <svg viewBox='0 0 24 24'><path d="${d}"/></svg><p>${name}</p></button>`
     )}
   `;
+
+  [...categoriesContainer.children].forEach((el) => {
+    set_up_button_ripple(el, async () => {
+      const catalog_dialog_node = document.querySelector('.catalog_dialog');
+
+      catalog_dialog_node.style.display = 'grid';
+      const id = el.getAttribute('_id');
+
+      const [json, err] = await use_xml_http_request(`parent_category?id=${id}`);
+
+      if (err) {
+        return console.log(err);
+      }
+      const main_node = document.querySelector('.catalog_dialog_content__main');
+      main_node.style.flexDirection = 'column';
+      set_up_children_category_elemnts_of_catalog(json, main_node);
+    });
+  });
 })();
