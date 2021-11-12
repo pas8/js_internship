@@ -13,9 +13,6 @@ const paymentTitleNode = document.querySelector('.payment_dialog-content__header
 const totalValue = `$42.0`;
 paymentTitleNode.innerHTML = totalValue;
 
-const paymentTitleNode = document.querySelector('.payment_dialog-content__header-title');
-const totalValue = `$42.0`;
-paymentTitleNode.innerHTML = totalValue;
 
 const paymentCardNumberInputNode = document.querySelector('.payment_dialog-content__payment-methods__card-number');
 const main_node = document.querySelector('.payment_dialog-content__payment-methods');
