@@ -2,8 +2,12 @@ import '@styles/payment_dialog.scss';
 import IMask from 'imask';
 import { use_toast } from '@utils/use_toast.util.js';
 import { get_basket } from '@utils/get_basket.util.js';
+import { use_check_for_empty_product_ids_arr } from '@utils/use_check_for_empty_product_ids_arr.util.js';
+import { get_sum_from_arr } from '@utils/get_sum_from_arr.util.js';
+import { get_user_order_html } from '@utils/get_user_order_html.util.js';
 import { get_user_token } from '@utils/get_user_token.util.js';
 import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
+import '@styles/__user_order.scss';
 
 const paymentTitleNode = document.querySelector('.payment_dialog-content__header-title');
 const totalValue = `$42.0`;
@@ -27,9 +31,6 @@ const date = IMask(paymentCardDateInputNode, { mask: '00 / 00' });
 const confirmOrderButton = document.querySelector('.payment_dialog-content__payment-methods__card-confirm');
 
 confirmOrderButton.addEventListener('click', async () => {
-  paymentTitleNode.innerHTML = 'Thanks :)';
-  main_node.innerHTML = `<div></div>`
-
   if (cardNumber.value.length < 16) {
     return use_toast('Card value  is incorrect', 'error');
   }
@@ -49,18 +50,35 @@ confirmOrderButton.addEventListener('click', async () => {
   const [products] = get_basket();
   const token = get_user_token();
 
-  const [res, error] = await use_xml_http_request(
+  const [json, error] = await use_xml_http_request(
     'new_order',
     'POST',
     JSON.stringify({ contactData, paymentData, products, token })
   );
   if (!!error) return use_toast(error, 'error');
 
+  const id = JSON.parse(json);
+
+  use_toast('Order was added', 'info');
+  paymentTitleNode.innerHTML = 'Thanks :)';
+
+  const get_validated_products = async (products) => {
+    const _products = await use_check_for_empty_product_ids_arr(products, () => []);
+
+    if (!!_products[1]) return { ...products, _products: [] };
+    _products[1] = get_sum_from_arr(
+      _products?.[2].map(({ id, count }) => +_products[0].find((__) => __?.id === id)?.price * count)
+    );
+    return _products;
+  };
+  const _products = await get_validated_products(get_basket()[0]);
+
+  const user_order_props = { _products, status: 'Open', id };
+  main_node.innerHTML = `<div>${get_user_order_html(user_order_props)}</div>`;
+
   window.localStorage.removeItem('basket');
   const basketNode = document.querySelector('.button-basket');
   basketNode.classList.remove('with-label');
-
-  use_toast(res, 'info');
   // return window.location.replace('/pages/shop.html');
 });
 

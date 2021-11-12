@@ -1,7 +1,9 @@
 import '@styles/_user_profile.scss';
 import 'regenerator-runtime/runtime.js';
 import './header&footer';
+import './header&footer';
 import '@styles/_breadcrumb.scss';
+import '@styles/__user_order.scss';
 import { set_up_log_in_dialog } from '@utils/set_up_log_in_dialog.util.js';
 import { use_check_for_empty_product_ids_arr } from '@utils/use_check_for_empty_product_ids_arr.util.js';
 import { get_user } from '@utils/get_user.util.js';
@@ -10,7 +12,7 @@ import { get_user_order_html } from '@utils/get_user_order_html.util.js';
 
 (async () => {
   const [json, error] = await get_user();
-
+console.log(error)
   if (!!error) {
     set_up_log_in_dialog();
   } else {
