@@ -44,11 +44,15 @@ class ProductDetails extends HTMLElement {
 
     this.additionalInfo = JSON.parse(this.getAttribute('addition_propertyies')) || {};
 
-    this.genegate_feedback_item = async ({ by, message, rating }) => {
-      const global_user_info = await get_global_user_info(by);
+    this.genegate_feedback_item = async ({ _name, by, message, rating }) => {
+      let name;
+      if (!_name) {
+        const global_user_info = await get_global_user_info(by);
 
-      const { name } = global_user_info;
-
+        name = global_user_info.name;
+      } else {
+        name = _name;
+      }
       return `<div class='product-details-content__feedback-item'>
               <div title> <p name>${name}</p>    <stars-feedback value=${rating}></stars-feedback> </div>
               <p message>${message}</p>
@@ -228,9 +232,9 @@ class ProductDetails extends HTMLElement {
           const rating =
             [...document?.querySelector('.rating').children].filter((el) => !!el?.classList[0])?.length || 0;
           const form_data = [...new FormData(form_node)];
-
           const name = form_data[0][1];
           const message = form_data[2][1];
+          console.log(name);
 
           if (!name) return use_toast(form_data[0][0] + 'isEmpty', 'error');
           if (!form_data[1][1].match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
@@ -255,7 +259,7 @@ class ProductDetails extends HTMLElement {
           if (res === '"Your comment was added"') {
             feedback_container_node.insertAdjacentHTML(
               'beforeend',
-              await this.genegate_feedback_item({ message, name, rating })
+              await this.genegate_feedback_item({ message, _name: name, rating })
             );
           }
           return use_toast(res, 'info');

@@ -10,6 +10,7 @@ const totalValue = `$42.0`;
 paymentTitleNode.innerHTML = totalValue;
 
 const paymentCardNumberInputNode = document.querySelector('.payment_dialog-content__payment-methods__card-number');
+const main_node = document.querySelector('.payment_dialog-content__payment-methods');
 const paymentCardCVCInputNode = document.querySelector('.payment_dialog-content__payment-methods__card-cvc');
 const paymentCardDateInputNode = document.querySelector('.payment_dialog-content__payment-methods__card-date');
 const closeButtonNode = document.querySelector('.payment_dialog-content__header-close-button');
@@ -26,6 +27,9 @@ const date = IMask(paymentCardDateInputNode, { mask: '00 / 00' });
 const confirmOrderButton = document.querySelector('.payment_dialog-content__payment-methods__card-confirm');
 
 confirmOrderButton.addEventListener('click', async () => {
+  paymentTitleNode.innerHTML = 'Thanks :)';
+  main_node.innerHTML = `<div></div>`
+
   if (cardNumber.value.length < 16) {
     return use_toast('Card value  is incorrect', 'error');
   }
@@ -41,14 +45,14 @@ confirmOrderButton.addEventListener('click', async () => {
   }
 
   const contactData = JSON.parse(window.localStorage.getItem('contactData'));
-  const paymentData = { date: date.value, cvc: cvc.value, card_number: cardNumber.value, };
+  const paymentData = { date: date.value, cvc: cvc.value, card_number: cardNumber.value };
   const [products] = get_basket();
   const token = get_user_token();
 
   const [res, error] = await use_xml_http_request(
     'new_order',
     'POST',
-    JSON.stringify({ contactData, paymentData, products,token })
+    JSON.stringify({ contactData, paymentData, products, token })
   );
   if (!!error) return use_toast(error, 'error');
 
@@ -57,9 +61,8 @@ confirmOrderButton.addEventListener('click', async () => {
   basketNode.classList.remove('with-label');
 
   use_toast(res, 'info');
-  return window.location.replace('/pages/shop.html');
+  // return window.location.replace('/pages/shop.html');
 });
-
 
 closeButtonNode.addEventListener('click', () => {
   document.querySelector('.payment_dialog').classList.add('payment_dialog--closed');
