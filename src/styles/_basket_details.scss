@@ -6,6 +6,14 @@
     display: none;
   }
 
+  [placeholder] {
+
+    font-family:monospace;
+    margin:1rem 0rem -1rem;
+    font-weight: 600;
+    opacity: 0.8;
+    font-size: 1.8rem;
+    }
   &-content {
     display: flex;
     flex-direction: column;

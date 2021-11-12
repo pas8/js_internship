@@ -1,0 +1,74 @@
+@import './global.scss';
+main {
+  flex-grow: 1;
+  margin: auto;
+  position: relative;
+
+  h1 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-family: monospace;
+    font-size: 4rem;
+    transform: translate(-50%, -50%);
+  }
+  #button_log_out {
+    position: absolute !important;
+    top: 2rem;
+    padding: 0.42rem;
+    border-radius: 8px;
+    background-color: antiquewhite;
+    color: $text-secondary;
+    svg {
+      width: 2rem;
+      height: 2rem;
+      fill: currentColor;
+    }
+    &:hover {
+      background-color: rgba(255, 225, 187, 0.42);
+      color: $primary;
+    }
+    right: 1rem;
+  }
+  [content] {
+    padding: 2rem 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.42rem;
+    * {
+      font-family: 'Jost';
+    }
+    [item] {
+      gap: 0.8rem;
+      display: flex;
+      align-items: center;
+    }
+    [item_key] {
+      font-weight: 600;
+      font-size: 1.42rem;
+    }
+    [item_value] {
+      font-size: 1.42rem;
+    }
+    [order_list] {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.42rem;
+
+      & > div {
+        width: calc(50% - 0.42rem);
+      }
+      @media screen and (max-width: $md) {
+        & > div {
+          width: 100%;
+        }
+      }
+      @media screen and (min-width: $xl) {
+        & > div {
+          width: calc(33% - 0.42rem);
+        }
+      }
+    }
+  }
+}

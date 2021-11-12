@@ -91,6 +91,9 @@
               font-size: 1.24rem;
             }
             &-category {
+              display: flex;
+              gap: 1rem;
+              align-items: center;
               color: $input-border-color;
             }
           }

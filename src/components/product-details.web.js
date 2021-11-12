@@ -8,13 +8,28 @@ import IMask from 'imask';
 
 import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
 import { get_avg_from_arr } from '@utils/get_avg_from_arr.util.js';
+import { get_global_user_info } from '@utils/get_global_user_info.util.js';
+import { get_user } from '@utils/get_user.util.js';
 import compareSvg from '@svgs/compare.svg';
 import favouriteSvg from '@svgs/favourite.svg';
 import { use_toast } from '@utils/use_toast.util.js';
-import { get_user } from '@utils/get_user.util';
 class ProductDetails extends HTMLElement {
-  constructor() {
-    super();
+  async connectedCallback() {
+    this.innerHTML = `<div class='product-details__placeholder'>
+      <div>
+        <nb-skeleton height='600px' width='100%'></nb-skeleton>
+        <nb-skeleton height='200px' width='100%'></nb-skeleton>
+        <nb-skeleton height='80px' width='100%' count='4'></nb-skeleton>
+      </div>
+      <div>
+        <nb-skeleton height='40px' width='80%'></nb-skeleton>
+        <nb-skeleton height='80px' width='92%'></nb-skeleton>
+        <nb-skeleton height='60px' width='60%'></nb-skeleton>
+        <nb-skeleton height='142px' width='42%'></nb-skeleton>
+        <nb-skeleton height='100px' width='96%'></nb-skeleton>
+        <nb-skeleton height='200px' width='100%'></nb-skeleton>
+        </div>
+      </div>`;
     this.imgsArr = [this.getAttribute('image'), ...(this.getAttribute('gallery')?.split(',') || [''])];
     this.activeImgIdx = 0;
     this.price = `${this.getAttribute('price')}${get_correct_currency()}`;
@@ -28,19 +43,31 @@ class ProductDetails extends HTMLElement {
     this.denotationPreview = [...this.description].filter((__, idx) => idx < 100).join('') + '...';
 
     this.additionalInfo = JSON.parse(this.getAttribute('addition_propertyies')) || {};
-    this.genegate_feedback_item = ({ name, message, rating }) => `  <div class='product-details-content__feedback-item'>
-      <div title> <p name>${name}</p>    <stars-feedback value=${rating}></stars-feedback> </div>
-      <p message>${message}</p>
-    </div>`;
-  }
 
-  async connectedCallback() {
-    const [user, error] = await get_user();
-    this.is_auth = !error;
-    if (!!error) {
-      use_toast(error, 'err');
+    this.genegate_feedback_item = async ({ _name, by, message, rating }) => {
+      let name;
+      if (!_name) {
+        const global_user_info = await get_global_user_info(by);
+
+        name = global_user_info.name;
+      } else {
+        name = _name;
+      }
+      return `<div class='product-details-content__feedback-item'>
+              <div title> <p name>${name}</p>    <stars-feedback value=${rating}></stars-feedback> </div>
+              <p message>${message}</p>
+            </div>`;
+    };
+    this.feedback_html = (
+      await Promise.all(this.feedback?.map(async (el) => await this.genegate_feedback_item(el)))
+    ).join('');
+
+    const [json, err] = await get_user();
+    if (!!err) {
+      this.is_auth = false;
     } else {
-      this.user = JSON.parse(user);
+      this.user = JSON.parse(json);
+      this.is_auth = true;
     }
 
     this.categories = await get_categories_arr_from_arr_ids(this.getAttribute('categories')?.split(','));
@@ -62,7 +89,7 @@ class ProductDetails extends HTMLElement {
             .join('')}
         </div>
         <div class='product-details-content__feedback'>
-        ${this.feedback?.map((el) => this.genegate_feedback_item(el)).join('')}
+        ${this.feedback_html}
         </div>
       </div>
       <div class='product-details-content__info'>
@@ -205,9 +232,9 @@ class ProductDetails extends HTMLElement {
           const rating =
             [...document?.querySelector('.rating').children].filter((el) => !!el?.classList[0])?.length || 0;
           const form_data = [...new FormData(form_node)];
-
           const name = form_data[0][1];
           const message = form_data[2][1];
+          console.log(name);
 
           if (!name) return use_toast(form_data[0][0] + 'isEmpty', 'error');
           if (!form_data[1][1].match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
@@ -232,7 +259,7 @@ class ProductDetails extends HTMLElement {
           if (res === '"Your comment was added"') {
             feedback_container_node.insertAdjacentHTML(
               'beforeend',
-              this.genegate_feedback_item({ message, name, rating })
+              await this.genegate_feedback_item({ message, _name: name, rating })
             );
           }
           return use_toast(res, 'info');

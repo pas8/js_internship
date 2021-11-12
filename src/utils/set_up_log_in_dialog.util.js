@@ -5,7 +5,7 @@ import { use_toast } from '@utils/use_toast.util.js';
 import IMask from 'imask';
 import close_svg from '@svgs/close.svg';
 
-export const set_up_log_in_dialog = () => {
+export const set_up_log_in_dialog = (is_close_button_hidden ) => {
   const _class = '_log_in_dialog';
   const _node = document.querySelector('.' + _class);
 
@@ -13,7 +13,7 @@ export const set_up_log_in_dialog = () => {
   _node.innerHTML = `<div content>
     <div title>
       <p>Log in</p>
-      <button id='_log_in_dialog__close_button'>${close_svg} </button>
+    ${is_close_button_hidden ?  '' :  `<button id='_log_in_dialog__close_button'>${close_svg} </button>` }
 
     </div>
     <div main>

@@ -9,6 +9,8 @@ import '@components/quantity-counter.web.js';
 
 export const set_up_basket_dialog = () => {
   window.isBasketDialogOpen = false;
+  const basketContentSubmitNode = document.querySelector('.basket-content-submit');
+  basketContentSubmitNode.innerHTML = `<div class="basket-content-submit__total"><p class="basket-content-submit__total-caption"> Total:</p><div class="basket-content-submit__total-value"><nb-skeleton height='32px' width='100px' count='1'></nb-skeleton></div></div><a class="basket-content-submit__button-to-checkout button--contained" href="/pages/checkout.html">Submit</a></div>`;
 
   const BASKET_DIALOG_MAIN_CLASS = 'basket-content-main';
   const basketNode = document.querySelector('.button-basket');
@@ -20,13 +22,17 @@ export const set_up_basket_dialog = () => {
   const basketContentSubmitTotalValueNode = document.querySelector('.basket-content-submit__total-value');
 
   const TOTAL_PRODUCT_PRICE_VALUE_CLASS = `${BASKET_DIALOG_MAIN_CLASS}__product-item-content__utils-total-price__value`;
+
   const handleSetUpTotalPrice = () => {
     const get_total_price = use_to_count_total_value(TOTAL_PRODUCT_PRICE_VALUE_CLASS);
     basketContentSubmitTotalValueNode.innerHTML = get_total_price().toFixed(1) + get_correct_currency();
   };
   const handleSetPlaceholderAsBasketContent = () => {
-    basketDialogMainNode.innerHTML = `<p>No products was added yet.</p>`;
+    basketDialogMainNode.innerHTML = `<p placeholder>No products was added yet.</p>`;
+    basketContentSubmitNode.innerHTML = ``;
   };
+
+  handleSetUpTotalPrice();
 
   basketNode.addEventListener('click', async () => {
     window.isBasketDialogOen = !window.isBasketDialogOpen;
@@ -119,7 +125,7 @@ export const set_up_basket_dialog = () => {
         const [basketValue] = get_basket();
 
         if (basketValue.filter((__) => __ == id).length <= 1) return;
-        to_delete_item_from_basket(id)
+        to_delete_item_from_basket(id);
       });
 
       el.children[1].addEventListener(

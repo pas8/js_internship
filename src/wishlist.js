@@ -1,10 +1,12 @@
 import './header&footer';
 import '@styles/_breadcrumb.scss';
 import '@components/quantity-counter.web.js';
+import '@components/stars.web.js';
 import '@styles/wishlist.scss';
 import { get_correct_currency } from '@utils/get_correct_currency.util.js';
 import { get_basket } from '@utils/get_basket.util.js';
 import { get_wishlist_ids } from '@utils/get_wishlist_ids.util.js';
+import { get_avg_from_arr } from '@utils/get_avg_from_arr.util.js';
 import { set_product_to_basket } from '@utils/set_product_to_basket.util.js';
 import { use_check_for_empty_product_ids_arr } from '@utils/use_check_for_empty_product_ids_arr.util.js';
 import basketSvg from '@svgs/basket.svg';
@@ -20,7 +22,7 @@ import basketSvg from '@svgs/basket.svg';
   const wishlistTableContentNode = document.querySelector('.wishlist-table-content');
 
   wishlistTableContentNode.innerHTML = arr.map_join(
-    ({ name, manufacturer, price, image, id, value = uniqProductsCountAndIdArr.find((__) => __.id == id)?.count }) => `
+    ({ name, price, image, id, value = uniqProductsCountAndIdArr.find((__) => __.id == id)?.count, feedback }) => `
     <div class="wishlist-table-content__item">
       <div class="wishlist-table-content__item-preview">
         <div class="wishlist-table-content__item-preview__img">
@@ -30,7 +32,9 @@ import basketSvg from '@svgs/basket.svg';
         </div>
         <div class="wishlist-table-content__item-preview__denotation"> 
           <div class="wishlist-table-content__item-preview__denotation-title">${name}</div>
-          <div class="wishlist-table-content__item-preview__denotation-category">${manufacturer}</div>
+          <div class="wishlist-table-content__item-preview__denotation-category"><stars-feedback value='${get_avg_from_arr(
+            feedback.map(({ rating }) => rating)
+          )}'></stars-feedback> ${'( ' + feedback.length + ' reviews )'}</div>
         </div>
       </div>
       <div class="wishlist-table-content__item-propertyies">
@@ -39,11 +43,11 @@ import basketSvg from '@svgs/basket.svg';
         <div class="wishlist-table-content__item-propertyies__total">${price * value}${get_correct_currency()}</div>
       </div>
       <button class="wishlist-table-content__item-add-to-basket-button ${
-        get_basket()[0].includes(`${id}`) ? 'wishlist-table-content__item-add-to-basket-button--active' : ''
+        get_basket()[0]?.includes(`${id}`) ? 'wishlist-table-content__item-add-to-basket-button--active' : ''
       }" product-id='${id}'>
         ${basketSvg}
       </button>
-    </div>          
+    </div>
   `
   );
   const allAddToBaketNodeArr = wishlistTableContentNode.querySelectorAll(
@@ -68,9 +72,10 @@ import basketSvg from '@svgs/basket.svg';
     el.addEventListener('click', () => {
       const id = el.getAttribute('product-id');
       const [basket, basketLength] = get_basket();
-      const quantityOfThisProduct = basket.filter((__) => __ == id)?.length;
 
-      const isIncludes = basket.includes(id);
+      const quantityOfThisProduct = basket?.filter((__) => __ == id)?.length;
+
+      const isIncludes = basket?.includes(id);
       if (isIncludes) {
         const basketNode = document.querySelector('.button-basket');
         basketNode.setAttribute('data-label', basketLength - quantityOfThisProduct);

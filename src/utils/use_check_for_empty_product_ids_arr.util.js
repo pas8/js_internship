@@ -13,8 +13,6 @@ export const use_check_for_empty_product_ids_arr = async (dataArr, funcIfProduct
   const arr = await promiseAll;
 
   try {
-
-
     return [arr, null, uniqProductsCountAndIdArr];
   } catch (error) {
     return [null, error, uniqProductsCountAndIdArr];

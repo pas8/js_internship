@@ -1,0 +1,14 @@
+html
+  head
+    meta(charset="UTF-8")
+  body 
+    include ../includes/_header.pug
+    include ../mixins/+breadcrumb.pug
+    +breadcrumb('User profile')
+    div.toast.toast--closed
+    main.container 
+      h1 Reload page or auth with email link
+    div._log_in_dialog
+      
+    include ../includes/_footer.pug
+
