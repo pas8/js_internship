@@ -11,6 +11,7 @@ import { get_avg_from_arr } from '@utils/get_avg_from_arr.util.js';
 import compareSvg from '@svgs/compare.svg';
 import favouriteSvg from '@svgs/favourite.svg';
 import { use_toast } from '@utils/use_toast.util.js';
+import { get_user } from '@utils/get_user.util';
 class ProductDetails extends HTMLElement {
   constructor() {
     super();
@@ -20,8 +21,6 @@ class ProductDetails extends HTMLElement {
     this.tabIdx = 0;
     this.id = this.getAttribute('id');
     this.feedback = JSON.parse(this.getAttribute('feedback'));
-    this.token = window.localStorage.getItem('user_token');
-
     this.caption = this.getAttribute('caption');
     this.avarage_rating_value = get_avg_from_arr(this.feedback.map(({ rating }) => rating));
     this.ratingCount = this?.feedback?.length || 0;
@@ -36,19 +35,14 @@ class ProductDetails extends HTMLElement {
   }
 
   async connectedCallback() {
-    const [res, err] = await use_xml_http_request(`auth_user?${this.token}`);
-
-    if (!!err) {
-      this.is_auth = false;
+    const [user, error] = await get_user();
+    this.is_auth = !error;
+    if (!!error) {
+      use_toast(error, 'err');
     } else {
-      const { id } = JSON.parse(res);
-      this.is_auth = true;
-      const [json, error] = await use_xml_http_request(`user?id=${id}`);
-      if (!!error) {
-        return use_toast(error, 'err');
-      }
-      this.user = JSON.parse(json);
+      this.user = JSON.parse(user);
     }
+
     this.categories = await get_categories_arr_from_arr_ids(this.getAttribute('categories')?.split(','));
 
     this.innerHTML = `
@@ -228,10 +222,18 @@ class ProductDetails extends HTMLElement {
             'POST',
             JSON.stringify({ ...props, rating, token })
           );
-          if (!!err) return use_toast(err, 'error');
+          if (!!err) {
+            if (err === 'Conflict') {
+              return use_toast('Check previuous emails with auth token', 'error');
+            }
+            return use_toast(err, 'error');
+          }
 
           if (res === '"Your comment was added"') {
-            feedback_container_node.insertAdjacentHTML('beforeend', this.genegate_feedback_item({ message, name,rating }));
+            feedback_container_node.insertAdjacentHTML(
+              'beforeend',
+              this.genegate_feedback_item({ message, name, rating })
+            );
           }
           return use_toast(res, 'info');
         });

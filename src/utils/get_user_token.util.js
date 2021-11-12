@@ -1,0 +1,1 @@
+export const get_user_token = () =>  window.localStorage.getItem('user_token')

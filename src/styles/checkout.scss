@@ -99,14 +99,23 @@ main {
     }
     &-denonatation {
       display: flex;
+      align-items: center;
       gap: 0.8rem;
       &__text {
         color: $text-thirdly;
       }
       &__button-log-in {
+        border: 1px solid currentColor;
+        white-space: nowrap;
+        padding: 0.6rem 1.2rem;
+        font-size: 1.1rem;
+        border-radius: 4px;
+        transition: cubic-bezier(0.77, 0, 0.175, 1) 0.16s all;
+        height: fit-content;
         color: $primary;
         &:hover {
-          text-decoration: underline;
+          background-color: $primary;
+          color: $background;
         }
       }
     }
@@ -134,7 +143,6 @@ main {
     &__item {
       @include space-between_flex;
       align-items: center;
-
       &-content {
         display: flex;
         align-items: center;
@@ -165,7 +173,7 @@ main {
     }
   }
   &-price {
-    --skeleton-margin-bottom:0px;
+    --skeleton-margin-bottom: 0px;
     &__details {
       padding: 2rem 0;
       border-top: 1px solid $light-grey;
@@ -210,4 +218,22 @@ main {
 
 .button-move-to-payment {
   align-self: flex-end;
+}
+
+.inference-products__item-remove_button,#_log_in_dialog__close_button {
+  border: 1px solid $light-grey;
+  fill: currentColor;
+  transition: cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.16s all;
+  padding: 0.6rem;
+  border-radius: 50%;
+  svg {
+    width: 1.6rem;
+    fill: currentColor;
+    transition: cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.16s all;
+  }
+  &:hover {
+    border-color: currentColor;
+
+    color: red;
+  }
 }

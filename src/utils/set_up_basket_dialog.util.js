@@ -2,6 +2,8 @@ import { use_to_count_total_value } from '@utils/use_to_count_total_value.util.j
 import { get_basket } from '@utils/get_basket.util.js';
 import deleteSvg from '@svgs/delete.svg';
 import { get_correct_currency } from '@utils/get_correct_currency.util.js';
+import { to_delete_item_from_basket } from '@utils/to_delete_item_from_basket.util.js';
+
 import { use_check_for_empty_product_ids_arr } from '@utils/use_check_for_empty_product_ids_arr.util.js';
 import '@components/quantity-counter.web.js';
 
@@ -34,7 +36,7 @@ export const set_up_basket_dialog = () => {
     const [idsArr, idsArrLength] = get_basket();
 
     if (!idsArrLength) return handleSetPlaceholderAsBasketContent();
-    
+
     const [arr, error, uniqProductsCountAndIdArr] = await use_check_for_empty_product_ids_arr(
       idsArr,
       handleSetPlaceholderAsBasketContent
@@ -117,10 +119,7 @@ export const set_up_basket_dialog = () => {
         const [basketValue] = get_basket();
 
         if (basketValue.filter((__) => __ == id).length <= 1) return;
-
-        const idxToRemove = basketValue.findIndex((__) => __ == id);
-
-        window.localStorage.setItem('basket', basketValue?.filter((__, idx) => idx !== idxToRemove)?.join(' '));
+        to_delete_item_from_basket(id)
       });
 
       el.children[1].addEventListener(

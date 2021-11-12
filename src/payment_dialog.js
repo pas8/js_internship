@@ -2,6 +2,7 @@ import '@styles/payment_dialog.scss';
 import IMask from 'imask';
 import { use_toast } from '@utils/use_toast.util.js';
 import { get_basket } from '@utils/get_basket.util.js';
+import { get_user_token } from '@utils/get_user_token.util.js';
 import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
 
 const paymentCardNumberInputNode = document.querySelector('.payment_dialog-content__payment-methods__card-number');
@@ -36,13 +37,14 @@ confirmOrderButton.addEventListener('click', async () => {
   }
 
   const contactData = JSON.parse(window.localStorage.getItem('contactData'));
-  const paymentData = { date: date.value, cvc: cvc.value, card_number: cardNumber.value, status: 'open' };
+  const paymentData = { date: date.value, cvc: cvc.value, card_number: cardNumber.value, };
   const [products] = get_basket();
+  const token = get_user_token();
 
   const [res, error] = await use_xml_http_request(
     'new_order',
     'POST',
-    JSON.stringify({ contactData, paymentData, products })
+    JSON.stringify({ contactData, paymentData, products,token })
   );
   if (!!error) return use_toast(error, 'error');
 

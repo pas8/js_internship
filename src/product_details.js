@@ -11,6 +11,7 @@ import { use_xml_http_request } from '@utils/use_xml_http_request.util.js';
   if (!!error) return console.error(error, 'error');
 
   const { name, description, image, price, categories, id, imgGallery, addition_propertyies,feedback } = JSON.parse(json);
+  
   product_container.innerHTML = `
     <product-details 
       caption='${name}'
