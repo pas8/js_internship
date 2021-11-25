@@ -14,9 +14,10 @@ use_check_for_auth();
   const [json, error] = await use_xml_http_request(`orders?id=${ID}`);
   if (!!error) return use_toast(error, 'error');
 
-  const { id, _id, status, ...props } = JSON.parse(json);
+  const { id, by, _id, status, ...props } = JSON.parse(json);
   _id;
-
+  by;
+  
   main_node.insertAdjacentHTML(
     'beforeend',
     `<div class='id'>id:${id}</div>
