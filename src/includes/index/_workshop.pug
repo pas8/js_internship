@@ -1,0 +1,17 @@
+section(class='workshop')
+  svg(xmlns="http://www.w3.org/2000/svg", viewBox="0 0 1440 320",class='wave')
+    path(d="M0,288L26.7,261.3C53.3,235,107,181,160,165.3C213.3,149,267,171,320,176C373.3,181,427,171,480,170.7C533.3,171,587,181,640,192C693.3,203,747,213,800,224C853.3,235,907,245,960,229.3C1013.3,213,1067,171,1120,154.7C1173.3,139,1227,149,1280,154.7C1333.3,160,1387,160,1413,160L1440,160L1440,320L1413.3,320C1386.7,320,1333,320,1280,320C1226.7,320,1173,320,1120,320C1066.7,320,1013,320,960,320C906.7,320,853,320,800,320C746.7,320,693,320,640,320C586.7,320,533,320,480,320C426.7,320,373,320,320,320C266.7,320,213,320,160,320C106.7,320,53,320,27,320L0,320Z")
+
+  div(class='container workshop-row')
+    div(class='workshop-abstraction')
+      include ../../svgs/workshop.svg
+    div(class='workshop-content')
+      div(class='workshop-content__caption') Workshop Online
+      div(class='workshop-content__title')  Everything is sweet from Chocolate
+      div(class='workshop-content__text') Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      div(class='workshop-content__utils')
+        div.workshop-content__utils-inputs-wrapper
+          input(class='input',type='text',placeholder='Name') 
+          input(class='input',type='text',placeholder='Email') 
+        textarea(class='input',type='text',placeholder='Messages',rows='4') 
+        button(class='workshop-content__utils-submit-button button--contained') SEND REQUESTION

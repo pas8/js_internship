@@ -1,0 +1,163 @@
+@import './global.scss';
+
+.wishlist {
+  width: 100%;
+  margin: 4rem 0;
+  display: flex;
+  justify-content: center;
+  * {
+    font-family: 'Jost';
+  }
+  &-table {
+    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    &__header {
+      padding-bottom: 2rem;
+      border-bottom: 1px solid $input-border-color;
+      @include space-between_flex;
+      &__placeholder {
+        width: 3.6rem;
+        height: 100%;
+      }
+      font-weight: 500;
+
+      font-size: 1.24rem;
+
+      &__product-name {
+        width: 360px;
+        font-weight: 700;
+        font-size: 1.42rem;
+
+        @media screen and (min-width: $lg) {
+          width: 420px;
+          justify-content: flex-start;
+        }
+
+        @media screen and (min-width: $xl) {
+          width: 600px;
+        }
+
+        @media screen and (max-width: $md) {
+          text-align: center;
+
+          width: 142px;
+        }
+        @media screen and (max-width: $sm) {
+          @include centered_flex;
+        }
+      }
+    }
+    &-content {
+      display: flex;
+      gap: 2rem;
+      flex-direction: column;
+      &__item {
+        border-bottom: 1px solid $light-grey;
+        padding-bottom: 2rem;
+        @include space-between_flex;
+        align-items: center;
+        &-preview {
+          @media screen and (min-width: $lg) {
+            width: 420px;
+            justify-content: flex-start;
+          }
+
+          @media screen and (min-width: $xl) {
+            width: 600px;
+          }
+          @include centered_flex;
+          width: 360px;
+          gap: 1rem;
+
+          @media screen and (max-width: $md) {
+            flex-direction: column;
+            width: 142px;
+            text-align: center;
+          }
+
+          &__img {
+            @include centered_flex;
+            img {
+              width: 142px;
+              aspect-ratio: 1;
+            }
+          }
+          &__denotation {
+            display: flex;
+            flex-direction: column;
+            &-title {
+              font-weight: 500;
+              font-size: 1.24rem;
+            }
+            &-category {
+              display: flex;
+              gap: 1rem;
+              align-items: center;
+              color: $input-border-color;
+            }
+          }
+        }
+
+        &-add-to-basket-button {
+          height: fit-content;
+          & svg {
+            transition: cubic-bezier(0.4, 0, 0.07, 1) 0.16s all;
+            padding: 0.4rem;
+            border: 1px solid transparent;
+
+            width: 2.6rem;
+            &:hover {
+              border-color: $text-secondary;
+            }
+          }
+
+          &--active {
+            & path {
+              fill: $primary;
+            }
+            & svg {
+              border-color: $primary;
+              &:hover {
+                border-color: red;
+                path {
+                  fill: red;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.wishlist-table-content__item-propertyies,
+.wishlist-table__header__properties {
+  @include centered_flex;
+  flex-grow: 1;
+  @media screen and (max-width: $sm) {
+    flex-direction: column;
+  }
+  gap: 1rem;
+  & > div {
+    @media screen and (min-width: $lg) {
+      width: 160px;
+  
+      }
+    @media screen and (min-width: $xl) {
+    width: 200px;
+
+    }
+    width: 142px;
+    @include centered_flex;
+    @media screen and (max-width: $md) {
+      width: 116px;
+    }
+  }
+  &__price,
+  &__total {
+    font-size: 1.08rem;
+    font-weight: 500;
+  }
+}

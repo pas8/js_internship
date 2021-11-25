@@ -1,0 +1,116 @@
+@import './global.scss';
+
+.footer {
+  @include centered_flex;
+  flex-direction: column;
+  &-row {
+    @include centered_flex;
+  }
+  &-copyright {
+    width: 100%;
+    @include centered_flex;
+
+    &__wrapper {
+      padding: 0.8rem;
+      svg {
+        fill: $text-secondary;
+      }
+      p {
+        font-family: 'Jost';
+      }
+      @include space-between_flex;
+    }
+
+    background-color: $light-grey;
+  }
+  &-content {
+    padding: 4rem 0;
+    width: 100%;
+    @include space-between_flex;
+
+    &-about {
+      width: 33%;
+      border-right: 1px solid $light-grey;
+      display: flex;
+      gap: 0.8rem;
+      flex-direction: column;
+      &__schedule {
+        p {
+          font-family: 'Jost';
+        }
+      }
+      &__title {
+        font-size: 2.8rem;
+        font-family: 'Lobster Two';
+      }
+    }
+    &-info {
+      width: 66%;
+      padding: 2rem 4rem;
+      @include space-between_flex;
+
+      &__links {
+        font-family: 'Jost';
+
+        &-title {
+          color: $text-secondary;
+          font-weight: 600;
+          font-size: 1.2rem;
+          margin-bottom: 1rem;
+        }
+        &-content {
+          display: flex;
+          flex-direction: column;
+          gap: 0.42rem;
+          a {
+            color: $input-border-color;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+      .email {
+        margin-top: 1rem;
+      }
+    }
+  }
+
+  @media screen and (max-width: $md) {
+
+    &-content {
+      &-about {
+        @include centered_flex;
+        padding-bottom: 4rem;
+        p {
+          text-align: center;
+        }
+        border-right: 0;
+        border-bottom: 1px solid $input-border-color;
+      }
+      flex-direction: column;
+      & > div {
+        width: 100% !important;
+      }
+    }
+  }
+
+  @media screen and (max-width: $sm) {
+    &-content {
+
+      &-info {
+        gap: 2rem;
+        & div {
+
+          @include centered_flex;
+        flex-direction: column;
+
+        }
+        flex-direction: column;
+        @include centered_flex;
+
+        
+      }
+    }
+  }
+}

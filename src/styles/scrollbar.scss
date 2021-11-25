@@ -1,0 +1,29 @@
+
+@import './colors.scss';
+
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: red green;
+}
+*::-webkit-scrollbar-track {
+  background: $header-utils-bgcolor ;
+
+}
+*::-webkit-scrollbar-thumb {
+  background-color: $input-border-color;
+  border-radius: 6px;
+  &:hover {
+    background-color: $primary;
+
+    
+  }
+}
+
+
+*::-webkit-scrollbar   {
+
+  background: gray;
+  width: 8px;
+
+}

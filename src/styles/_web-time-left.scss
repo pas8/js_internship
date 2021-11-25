@@ -1,0 +1,26 @@
+@import './global.scss';
+
+.time {
+  @include centered_flex;
+  padding: 0.42rem 0.92rem;
+  border: 1px solid red;
+  &-item {
+    display: flex;
+    align-items: center;
+    font-family: 'Jost';
+
+    &__value {
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+    &__caption {
+      margin-left: 0.2rem;
+      padding-top: 0.2rem;
+      font-size: 1rem;
+    }
+    &__dispencer {
+      font-size: 1.2rem;
+      margin: 0 0.8rem;
+    }
+  }
+}

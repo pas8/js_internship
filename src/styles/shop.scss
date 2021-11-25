@@ -1,0 +1,384 @@
+@import './global.scss';
+
+.shop {
+  margin: 4rem auto;
+  * {
+    font-family: 'Jost';
+  }
+  gap: 3.6rem;
+
+  display: flex;
+  &__sidebar {
+    width: 240px;
+
+    @media screen and (max-width: $md) {
+      @include dialog;
+      width: 100%;
+    }
+    &--closed {
+      @media screen and (max-width: $md) {
+        display: none;
+      }
+    }
+    &-row {
+      @media screen and (max-width: $md) {
+        background-color: $header-utils-bgcolor;
+        padding: 2rem;
+        width: 420px;
+      }
+      @media screen and (max-width: $xm) {
+        width: 80vw;
+      }
+
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    & .sidebar-container-of-filter-button {
+      & button {
+        background-color: transparent;
+        @include centered_flex;
+        svg {
+          width: 1.8rem;
+          path {
+            fill: currentColor;
+          }
+        }
+        width: 100%;
+        border-color: currentColor;
+        font-size: 1.24rem;
+      }
+    }
+    &-search {
+      position: relative;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      &__result {
+        position: absolute;
+        top: calc(100% - 2px);
+        border: 1px solid $primary;
+        background-color: $background;
+        right: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10;
+        display: none;
+        flex-direction: column;
+        & > div {
+          display: flex;
+          flex-direction: column;
+          & > p {
+            padding: 0.6rem 1rem;
+          }
+          & > a {
+            gap: 1rem;
+            align-items: center;
+            & img {
+              width: 20%;
+            }
+            width: 100%;
+            text-align: left;
+            font-size: 0.92rem;
+
+            cursor: pointer;
+            &:not(:last-child) {
+              border-bottom: 1px solid $light-grey;
+            }
+            &:hover {
+              border-bottom-color: transparent;
+              background-color: $primary;
+              color: $background;
+            }
+            padding: 0.8rem 1rem;
+
+            display: flex;
+          }
+        }
+      }
+      &__input {
+        width: 100%;
+
+        padding-left: 2.8rem !important;
+      }
+      &__svg-container {
+        color: $text-thirdly;
+        & svg {
+          width: 1.6rem;
+          path {
+            fill: currentColor;
+          }
+        }
+        position: absolute;
+        left: 0.4rem;
+        &:hover {
+          color: $primary;
+        }
+      }
+    }
+    &-utils {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+
+      &__item {
+        display: flex;
+        flex-direction: column;
+        &:nth-of-type(2) {
+          gap: 1.8rem;
+        }
+        gap: 0.8rem;
+        &-title {
+          font-weight: 700;
+
+          font-size: 1.42rem;
+        }
+
+        & .sidebar-content-of-product-categories {
+          display: flex;
+          flex-direction: column;
+          gap: 0.8rem;
+          &__item {
+            font-size: 1.08rem;
+            color: $input-border-color;
+            &:hover {
+              color: $text-thirdly;
+              cursor: pointer;
+            }
+            &--active {
+              font-weight: 800;
+              color: $primary;
+            }
+          }
+          padding-bottom: 2rem;
+          border-bottom: 1px solid $input-border-color;
+        }
+        & .sidebar-content-of-filter-by-price {
+          display: flex;
+          flex-direction: column;
+          gap: 1.42rem;
+          &__caption {
+            color: $input-border-color;
+          }
+          & > div {
+            display: flex;
+            gap: 0.42rem;
+            width: 100%;
+            double-range,
+            nb-skeleton {
+              width: 100%;
+            }
+          }
+        }
+
+        & .sidebar-content-of-filter-by-color {
+          width: 100%;
+
+          nb-skeleton {
+            width: 100%;
+          }
+          display: flex;
+          gap: 0.42rem;
+          &__item {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+
+            filter: grayscale(1);
+            border: 1px solid transparent;
+
+            transition: cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.16s all;
+            &:hover {
+              cursor: pointer;
+              filter: grayscale(0.2);
+            }
+            &--active {
+              border: 1px solid $primary;
+              filter: grayscale(0);
+            }
+          }
+        }
+        & .sidebar-content-of-filter-by-size,
+        .sidebar-content-of-filter-by-addition_propertyies {
+          width: 100%;
+
+          nb-skeleton {
+            width: 100%;
+          }
+          display: flex;
+          gap: 0.42rem;
+          & button {
+            font-weight: 500;
+
+            padding: 0.42rem 0.8rem;
+            font-size: 1rem;
+            color: $input-border-color;
+            border: 1px solid currentColor;
+            &:hover {
+              color: $text-thirdly;
+            }
+          }
+          &__item--active {
+            background-color: $primary !important;
+            border-color: $primary !important;
+            color: $background !important;
+            &:hover {
+            border-color: $background !important;
+
+            }
+          }
+        }
+      }
+    }
+  }
+  &__products {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    width: calc(100% - 240px);
+    @media screen and (max-width: $md) {
+      width: 100%;
+    }
+
+    &-utils {
+      display: flex;
+      justify-content: flex-end;
+      gap: 40px;
+      --skeleton-margin-bottom: 0px;
+      &__result-counter {
+        font-size: 1.24rem;
+        display: flex;
+        align-items: center;
+      }
+
+      width: 100%;
+
+      &__content {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 0.42rem;
+        & > button {
+          padding: 0.42rem;
+          @include centered_flex;
+
+          border: 1px solid $input-border-color;
+          & svg {
+            width: 1.42rem;
+            & path {
+              fill: $text-thirdly;
+            }
+          }
+          &:hover {
+            border-color: $text-thirdly;
+          }
+        }
+
+        &-sidebar-dialog-button {
+          &--active {
+            position: fixed;
+            top: 8px;
+            right: 8px;
+            z-index: 1000001;
+            background-color: $header-utils-bgcolor !important;
+            border-radius: 50%;
+            border: none !important;
+            & svg {
+              padding: 0.2rem !important;
+              width: 2.6rem !important;
+              path {
+                transition: cubic-bezier(0.55, 0.055, 0.675, 0.19) 0.16s all;
+                fill: $text-secondary !important;
+              }
+            }
+            &:hover {
+              path {
+                fill: $primary !important;
+              }
+            }
+          }
+          @media screen and (min-width: $md) {
+            display: none !important;
+          }
+        }
+
+        & .button--active {
+          background-color: $primary;
+          border-color: $primary !important;
+          & path {
+            fill: $background;
+          }
+        }
+      }
+    }
+    &-row {
+      display: flex;
+      justify-content: center;
+
+      flex-wrap: wrap;
+      gap: 1.42rem;
+    }
+    &-pagination {
+      display: flex;
+      gap: 0.42rem;
+      justify-content: center;
+      &__button {
+        font-weight: 800;
+        transition: cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.16s all;
+        & path {
+          fill: currentColor;
+        }
+        color: $input-border-color;
+        border: 1px solid currentColor;
+        font-size: 1rem;
+        width: 2.8rem;
+        height: 2.8rem;
+        &:hover {
+          color: $text-thirdly;
+        }
+        &--active {
+          background-color: $primary;
+          color: $background;
+          border-color: $primary;
+          &:hover {
+            color: $background;
+            cursor: default;
+          }
+        }
+      }
+    }
+  }
+}
+
+.sidebar-content-of-filter-by-size,
+.sidebar-content-of-filter-by-color {
+  flex-wrap: wrap;
+}
+
+.sidebar-content-of-filter-by-addition_propertyies {
+  flex-direction: column;
+  display: flex;
+  gap: 0.8rem;
+
+  & > div {
+    flex-direction: column;
+    display: flex;
+    gap: 0.42rem;
+
+    & > div {
+      display: flex;
+      button {
+        border-radius: 8px;
+      }
+      gap: 0.42rem;
+      flex-wrap: wrap;
+    }
+  }
+  .sub_title {
+    font-size: 1rem;
+    text-transform: capitalize;
+    font-weight: 600;
+  }
+}

@@ -1,6 +1,7 @@
 const path = require('path');
 const miniCss = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const pug = {
   test: /\.pug$/,
@@ -13,38 +14,105 @@ const scss = {
 };
 
 const babel = {
-  test: /\.js$/,
-  exclude: '/node_modules',
-  loader: { loader: 'babel-loader', options: { presets: ['@babel/preset-env'] } },
+  test: /\.m?js$/,
+  exclude: /(node_modules|bower_components)/,
+  use: {
+    loader: 'babel-loader',
+    options: {
+      presets: ['@babel/preset-env'],
+    },
+  },
 };
-const  img = {
-test:/\.(png|jpg|jpeg)$/,
-use:['file-loader']
 
-}
+const svg = {
+  test: /\.svg$/,
+  loader: 'svg-inline-loader',
+};
+
+const img = {
+  loader: 'file-loader',
+  test: /\.(png|jpe?g|gif)$/i,
+  options: {
+    name: 'assets/[name].[ext]',
+  },
+};
+
+const pages = [
+  'index',
+  'about',
+  'product_details',
+  'checkout',
+  'shop',
+  'wishlist',
+  'auth',
+  'admin',
+  'order_details',
+  'auth_user',
+  'user_profile',
+];
 
 module.exports = {
   mode: 'development',
-  entry: '/src/index.js',
+  entry: {
+    ...pages.reduce((config, page) => {
+      config[page] = path.resolve(__dirname, `src/${page}.js`);
+      return config;
+    }, {}),
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
   devServer: {
     static: {
       directory: path.join(__dirname, 'dist'),
     },
   },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+    alias: {
+      '@includes': path.resolve(__dirname, 'src/includes'),
+      '@styles': path.resolve(__dirname, 'src/styles'),
+      '@prototypes': path.resolve(__dirname, 'src/prototypes'),
+      '@assets': path.resolve(__dirname, 'src/assets'),
+      '@utils': path.resolve(__dirname, 'src/utils'),
+      '@components': path.resolve(__dirname, 'src/components'),
+      '@svgs': path.resolve(__dirname, 'src/svgs'),
+      '@config': path.resolve(__dirname, 'src/config'),
+    },
+  },
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: 'scripts/[name].js',
+    chunkFilename: 'chunks/[name].bundle.js',
+    path: path.resolve(__dirname, 'dist/'),
   },
+
   module: {
-    rules: [pug, scss,img],
+    rules: [pug, scss, svg, img, babel],
   },
-  plugins: [
-    new miniCss({
-      filename: 'style.css',
-    }),
-    new HtmlWebpackPlugin({
-      template: '/src/index.pug',
-      filename: 'index.html',
-    }),
-  ],
+  plugins: []
+    .concat(
+      pages.map(
+        (page) =>
+          new HtmlWebpackPlugin({
+            inject: true,
+            template: path.resolve(__dirname, `src/pages/${page}.pug`),
+            filename: page === 'index' ? `${page}.html` : `pages/${page}.html`,
+
+            chunks: [page],
+          })
+      )
+    )
+    .concat(
+      pages.map(
+        (page) =>
+          new miniCss({
+            ignoreOrder: true,
+            filename: `styles/[name].css`,
+          })
+      )
+    )
+
+    .concat(new ESLintPlugin()),
 };

@@ -1,0 +1,13 @@
+@import './breadcrumb';
+
+.product-details {
+  @include centered_flex;
+  margin: 4rem 0;
+  &__placeholder {
+    display: flex;
+    gap: 1rem;
+    & > div {
+      width: 50%;
+    }
+  }
+}

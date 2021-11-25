@@ -1,0 +1,1 @@
+export const get_order_statuses_arr = () => ['open','shipping','arrived','closed']

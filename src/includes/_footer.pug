@@ -1,0 +1,37 @@
+footer.footer
+      div.footer-row.container
+        div.footer-content
+          div.footer-content-about
+            p.footer-content-about__title OrgaFresh
+            div.footer-content-about__schedule 
+              p Monday – Saturday: 8:00 am – 4:00pm
+              p Sunday: 9:00 am – 5:00pm
+          div.footer-content-info
+            div.footer-content-info__links 
+              div.footer-content-info__links-title Quick links
+              div.footer-content-info__links-content
+                -var  quickLinksArr = [{href:'about_us',caption:'About us'},{href:'blog',caption:'Blog'},{href:'check_out',caption:'Check out'},{href:'contact',caption:'Contact'}]
+                  each item in quickLinksArr
+                    a(href=item.href) #{item.caption}
+            div.footer-content-info__links 
+              div.footer-content-info__links-title Categories
+              div.footer-content-info__links-content
+                -var  footerCategoriesArr = [{href:'Fresh Fruits',caption:'Fresh Fruits'},{href:'Fresh Meats',caption:'Fresh Meats'},{href:'/grain_&_nuts',caption:'Grain & Nuts'},{href:'/smothie',caption:'Smothie'}]
+                  each categoriesItem in footerCategoriesArr
+                    a(href=categoriesItem.href) #{categoriesItem.caption}
+            div.footer-content-info__links 
+              div.footer-content-info__links-title Help Center
+              div.footer-content-info__links-content
+                -var  helpCenterArr =   [{href:'Privacy Policy',caption:'Privacy Policy'},{href:'Terms & Conditions',caption:'Terms & Conditions'},{href:'Returns Policy',caption:'Returns Policy'},{href:'Help & FAQs',caption:'Help & FAQs'}]
+                  each helpCenterItem in helpCenterArr
+                    a(href=helpCenterItem.href ) #{helpCenterItem.caption}
+            div.footer-content-info__links 
+              div.footer-content-info__links-title Contact info
+              div.footer-content-info__links-content
+                p 29 Rue du Bourg Tibourg,
+                p 75004 Paris, France
+                p.email Organicfood@gmail.com
+      div.footer-copyright
+        div.footer-copyright__wrapper.container
+          p Copyright © 2020 Avitexthemes Inc. All rights reserved
+          social-utils

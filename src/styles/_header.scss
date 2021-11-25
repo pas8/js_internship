@@ -1,0 +1,358 @@
+@import './global.scss';
+
+header {
+  z-index: 100;
+
+  .menu-button {
+    background-color: $header-utils-bgcolor;
+    position: relative;
+    display: none;
+  }
+
+  width: 100%;
+  flex-direction: column;
+
+  @include centered_flex;
+  & .utils {
+    width: 100%;
+    @include centered_flex;
+
+    background-color: $header-utils-bgcolor;
+
+    &-row {
+      padding: 0.42rem 0;
+      @include space-between_flex;
+      &__contact-info {
+        display: flex;
+        & svg {
+          width: 1rem;
+          & path {
+            fill: $text-secondary;
+          }
+        }
+        &__email {
+          padding-left: 2rem;
+          margin-left: 2rem;
+          border-left: 2px solid $text-secondary;
+          display: flex;
+          align-items: center;
+          gap: 0.42rem;
+          p {
+            font-family: 'Jost';
+          }
+        }
+      }
+      &__utils {
+        font-family: 'Jost';
+        gap: 2rem;
+        display: flex;
+
+        &-item {
+          display: flex;
+          gap: 0.42rem;
+          & svg {
+            & path {
+              fill: $text-secondary;
+            }
+
+            width: 1rem;
+          }
+        }
+      }
+    }
+  }
+  .wrapper {
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+  }
+
+  & .main {
+    width: 100%;
+    @include centered_flex;
+    &-row {
+      @include space-between_flex;
+      &__links {
+        display: flex;
+        gap: 1rem;
+        &__link-wrapper {
+          cursor: pointer;
+          @include centered_flex;
+          padding: 0.42rem;
+          height: 4rem;
+          position: relative;
+
+          &:hover {
+            &::before {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              width: 100%;
+              height: 4px;
+              background-color: $text-secondary;
+            }
+          }
+          &--active {
+            color: $primary;
+            &::before {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              width: 100%;
+              height: 4px;
+              background-color: $primary;
+            }
+          }
+        }
+
+        a {
+          font-size: 1.2rem;
+          font-family: 'Jost';
+        }
+      }
+      &__logo {
+        @include centered_flex;
+        font-size: 2.42rem;
+        font-family: 'Lobster Two';
+      }
+      &__utils {
+        display: flex;
+        align-items: center;
+        gap: 0.42rem;
+        &__catalog-button {
+          font-family: 'Jost';
+          display: flex;
+          font-weight: 500;
+
+          font-size: 1.24rem;
+          gap: 0.42rem;
+          color: $text-thirdly;
+          border: 1px solid currentColor;
+          border-radius: 8px;
+          padding: 0.42rem 0.6rem;
+          transition: cubic-bezier(0.6, 0.04, 0.98, 0.335) 0.16s all;
+          & > svg {
+            width: 1.8rem;
+            path {
+              fill: currentColor;
+            }
+          }
+          &:hover {
+            color: $primary;
+          }
+
+          & .ripple {
+            background: $primary;
+          }
+        }
+        &-buttons-container {
+          border: 1px solid;
+          padding: 0.1rem 0.2rem;
+          border-radius: 8px;
+          align-items: center;
+          display: flex;
+          gap: 0.42rem;
+          & button {
+            border: none !important;
+            &:hover svg {
+              color: $primary !important;
+              fill: currentColor !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: $md) {
+    @include centered_flex;
+    position: fixed;
+    background-color: transparent;
+    inset: -100%;
+    &.closed {
+      .wrapper {
+        display: none;
+      }
+    }
+    &.open {
+      inset: 0;
+
+      background-color: #000000cc;
+
+      .wrapper {
+        width: auto;
+        flex-direction: column-reverse;
+
+        .utils-row {
+          flex-direction: column-reverse;
+          padding-bottom: 1rem;
+          gap: 0.8rem;
+          & > div {
+            @include centered_flex;
+          }
+          &__utils {
+            border-bottom: 1px solid $light-grey;
+            border-top: 1px solid $light-grey;
+            padding: 0.42rem 0;
+          }
+        }
+        background-color: $header-utils-bgcolor;
+        display: flex;
+      }
+
+      .main-row {
+        flex-direction: column-reverse;
+        align-items: center;
+        padding: 1rem 0;
+        &__logo {
+          margin: 1rem 0;
+          order: 3;
+        }
+        &__links {
+          gap: 0;
+          flex-direction: column;
+        }
+      }
+    }
+
+    .menu-button {
+      top: 8px;
+      z-index: 10;
+      padding: 0.42rem;
+      @include centered_flex;
+      &:hover {
+        cursor: pointer;
+        & path {
+          fill: $primary;
+        }
+      }
+      & svg {
+        width: 2rem;
+      }
+      right: 8px;
+      border-radius: 50%;
+      & path {
+        transition: cubic-bezier(0.165, 0.84, 0.44, 1) 0.16s all;
+        fill: $text-secondary;
+      }
+      position: fixed;
+    }
+    position: fixed;
+  }
+}
+
+.catalog_dialog {
+  @include dialog;
+  display: none;
+
+  &_content {
+    padding: 0.8rem;
+    border-radius: 8px;
+    $catalog_bg: rgb(255, 221, 221);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    background-color: $catalog_bg;
+    &__title {
+      @include space-between_flex;
+      p {
+        font-size: 1.8rem;
+        font-weight: 500;
+        font-family: 'Jost';
+      }
+    }
+    &__close_button {
+      color: $text-secondary;
+      svg {
+        width: 2rem;
+        fill: currentColor;
+      }
+      &:hover {
+        color: $primary;
+      }
+    }
+    nb-skeleton {
+      display: flex;
+      flex-direction: column;
+    }
+    &__main {
+      border-radius: 8px;
+      display: flex;
+      overflow: hidden;
+
+      &__children {
+        flex-direction: column;
+        display: flex;
+        justify-content: center;
+        &_button {
+          padding: 0.42rem 0 0.42rem 1rem;
+          border-left: 1px solid $text-secondary;
+          font-family: 'Jost';
+          font-size: 1.42rem;
+          font-weight: 500;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      &__parent {
+        &_button {
+          width: 100%;
+          padding: 0.6rem 2.8rem 0.6rem 1rem;
+          align-items: center;
+          display: flex;
+          border-radius: 8px;
+
+          gap: 0.8rem;
+          & svg {
+            width: 2rem;
+            path {
+              fill: currentColor;
+            }
+          }
+          font-family: 'Jost';
+          font-size: 1.6rem;
+          letter-spacing: 2px;
+
+          font-weight: 500;
+
+          position: relative;
+          &::after {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 16px;
+            display: grid;
+            place-items: center;
+            content: '>';
+          }
+          &:hover {
+            background-color: $text-secondary;
+            color: $catalog_bg;
+          }
+        }
+      }
+    }
+  }
+}
+
+a.icon-button {
+  border-radius: 8px;
+  // margin-left: 4px;
+  width: 2.42rem;
+  height: 2.42rem;
+  border-color: currentColor;
+  svg {
+    fill: currentColor;
+  }
+  &:hover {
+    border-color: $primary !important;
+
+    background-color: $primary;
+    color: $background !important;
+  }
+}

@@ -1,0 +1,79 @@
+html
+  head
+    meta(charset="UTF-8")
+  body 
+    include ../includes/_header.pug
+    include ../mixins/+breadcrumb.pug
+    +breadcrumb('Shop') 
+    main.shop.container
+      div.shop__sidebar.shop__sidebar--closed
+        div.shop__sidebar-row
+          div.shop__sidebar-search
+            input.shop__sidebar-search__input.input(placeholder='Search...')
+            button.shop__sidebar-search__svg-container
+              include ../svgs/search.svg
+            div.shop__sidebar-search__result
+          div.shop__sidebar-utils
+            div.shop__sidebar-utils__item
+              div.shop__sidebar-utils__item-title Product categories
+              div.shop__sidebar-utils__item-content.sidebar-content-of-product-categories
+                nb-skeleton(height='24px',width='100%',count='4')
+            div.shop__sidebar-utils__item
+              div.shop__sidebar-utils__item-title Filter by price
+              div.shop__sidebar-utils__item-content.sidebar-content-of-filter-by-price
+                div.sidebar-content-of-filter-by-price-double-slider
+                  nb-skeleton(height='24px',width='100%',count='1')
+                div 
+                  div.sidebar-content-of-filter-by-price__caption Price
+                  div.sidebar-content-of-filter-by-price__value
+                    nb-skeleton(height='24px',width='80px',count='1')
+            div.shop__sidebar-utils__item
+              div.shop__sidebar-utils__item-title Filter by color
+              div.shop__sidebar-utils__item-content.sidebar-content-of-filter-by-color
+                nb-skeleton(height='24px',width='100%',count='1')
+            div.shop__sidebar-utils__item
+              div.shop__sidebar-utils__item-title Filter by size
+              div.shop__sidebar-utils__item-content.sidebar-content-of-filter-by-size
+                nb-skeleton(height='24px',width='100%',count='2')
+            div.shop__sidebar-utils__item
+              div.shop__sidebar-utils__item-title Filter by propertyies
+              div.sidebar-content-of-filter-by-addition_propertyies
+                nb-skeleton(height='42px',width='100%',count='4')
+            div.sidebar-container-of-filter-button
+              nb-skeleton(height='60px',width='100%',count='1')
+          
+
+
+
+
+      div.shop__products
+        div.shop__products-utils
+          div.shop__products-utils__result-counter
+            nb-skeleton(height='42px',width='360px',count='1')
+
+          div.shop__products-utils__content
+            button.shop__products-utils__content-grid-view-button
+              include ../svgs/grid_view.svg
+            button.shop__products-utils__content-list-view-button
+              include ../svgs/list_view.svg
+            button.shop__products-utils__content-sidebar-dialog-button
+              include ../svgs/category.svg
+
+            
+          
+
+        div.shop__products-row
+            -const placeholderArr = Array.from({length:12})
+            each item in placeholderArr
+              nb-skeleton(height='320px',width='240px',count='1')
+        div.shop__products-pagination
+            nb-skeleton(height='60px',width='360px',count='1')
+
+
+
+
+
+
+
+    include ../includes/_footer.pug
+    
